@@ -1,4 +1,4 @@
-package hqnguyen.sfu.restaurantinspector.model;
+package model;
 
 import java.util.List;
 
