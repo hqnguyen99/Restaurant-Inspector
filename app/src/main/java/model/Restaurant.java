@@ -1,18 +1,16 @@
 package model;
 
-import androidx.annotation.NonNull;
-
 public class Restaurant {
-    String trackingNumber;
+    String id;
     String name;
     String address;
     String city;
     String type;
-    Double latitude;
-    Double longitude;
+    double latitude;
+    double longitude;
 
-    Restaurant(
-            String trackingNumber,
+    public Restaurant(
+            String id,
             String name,
             String address,
             String city,
@@ -20,7 +18,7 @@ public class Restaurant {
             double latitude,
             double longitude
     ) {
-        this.trackingNumber = trackingNumber;
+        this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;
@@ -29,10 +27,9 @@ public class Restaurant {
         this.longitude = longitude;
     }
 
-    @NonNull
     @Override
     public String toString() {
-        return "Number: " + trackingNumber +
+        return "Number: " + id +
             "\nName: " + name +
             "\nAddress: " + address +
             "\nCity: " + city +
