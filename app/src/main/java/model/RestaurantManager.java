@@ -26,6 +26,17 @@ public class RestaurantManager {
         restaurantList.remove(restaurant);
     }
 
+    public void getViolationNumbers(List<Restaurant> restaurants ,  List<Inspection> inspections){
+        for (Restaurant r : restaurants) {
+            for (Inspection i : inspections){
+                if(i.getId().equals(r.getId())){
+                    //what to put here?
+                }
+            }
+        }
+    }
+
+
     public void setListFromFile(File file) {
         if (file.exists() && !file.isDirectory()) {
             restaurantList.clear();
