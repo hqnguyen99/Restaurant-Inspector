@@ -1,5 +1,6 @@
 package hqnguyen.sfu.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,10 @@ import hqnguyen.sfu.UIClasses.RestaurantAdapter;
 import hqnguyen.sfu.UIClasses.TestRestaurant;
 
 public class RestaurantActivity extends AppCompatActivity {
+    private ArrayList<TestRestaurant> testRestaurants;
+
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RestaurantAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -25,14 +28,31 @@ public class RestaurantActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ArrayList<TestRestaurant> testRestaurants = new ArrayList<>();
+        createRestaurantList();
+        buildRecyclerView();
+    }
+
+    private void createRestaurantList() {
+        testRestaurants = new ArrayList<>();
         addTestRestaurant(testRestaurants);
+    }
+
+    private void buildRecyclerView() {
         recyclerView = findViewById(R.id.restaurant_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         adapter = new RestaurantAdapter(testRestaurants);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = InspectionActivity.makeLaunchIntent(RestaurantActivity.this, position);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addTestRestaurant(ArrayList<TestRestaurant> testRestaurant) {

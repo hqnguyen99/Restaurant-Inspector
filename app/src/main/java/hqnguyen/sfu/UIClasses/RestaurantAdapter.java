@@ -18,6 +18,15 @@ import model.Restaurant;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<TestRestaurant> restaurantList;
 
+    private OnItemClickListener restaurantListener;
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        restaurantListener = listener;
+    }
+
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageViewRestaurantIcon;
         public ImageView imageViewHazardLevelIcon;
@@ -25,14 +34,25 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         public TextView textViewNumberFound;
         public TextView textViewDateFromNow;
 
-        public RestaurantViewHolder(@NonNull View itemView) {
+        public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-
             imageViewRestaurantIcon = itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
             textViewRestaurantName = itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
             imageViewHazardLevelIcon = itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
             textViewNumberFound = itemView.findViewById(R.id.textView_restaurant_activity_issue);
             textViewDateFromNow = itemView.findViewById(R.id.textView_restaurant_activity_date);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -44,7 +64,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
-        RestaurantViewHolder restaurantViewHolder = new RestaurantViewHolder(view);
+        RestaurantViewHolder restaurantViewHolder = new RestaurantViewHolder(view, restaurantListener);
         return restaurantViewHolder;
     }
 

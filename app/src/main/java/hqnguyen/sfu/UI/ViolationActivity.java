@@ -1,5 +1,7 @@
 package hqnguyen.sfu.UI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 public class ViolationActivity extends AppCompatActivity {
+    private static final String INSPECTION_POSITION = "inspection position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +22,12 @@ public class ViolationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
+    public static Intent makeLaunchIntent(Context c, int position){
+        Intent intent = new Intent(c, InspectionActivity.class);
+        intent.putExtra(INSPECTION_POSITION, position);
+        return intent;
+    }
 }
