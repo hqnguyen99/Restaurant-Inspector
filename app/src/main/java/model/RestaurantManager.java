@@ -30,7 +30,9 @@ public class RestaurantManager {
         for (Restaurant r : restaurants) {
             for (Inspection i : inspections){
                 if(i.getId().equals(r.getId())){
+                    //matches ids of restaurants to ids of inspection
                     //what to put here?
+
                 }
             }
         }
