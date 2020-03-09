@@ -15,7 +15,8 @@ public enum AppData implements DataSingleton{
     INSTANCE {
         private RestaurantManager restaurantManager;
         private InspectionManager inspectionManager;
-        private Map<String, RestaurantInspectionsPair> entries = new LinkedHashMap<>();
+        private Map<String, RestaurantInspectionsPair> entries;
+        private List<String> keyList;
 
         @Override
         public void init(BufferedReader restaurantReader, BufferedReader inspectionReader) {
@@ -28,6 +29,7 @@ public enum AppData implements DataSingleton{
             }
 
             makePairs();
+            generateKeyList();
         }
 
         @Override
@@ -35,7 +37,22 @@ public enum AppData implements DataSingleton{
             return entries;
         }
 
+        @Override
+        public RestaurantInspectionsPair getEntryAtIndex(int index) {
+            return entries.get(keyList.get(index));
+        }
+
+        @Override
+        public int size() {
+            return keyList.size();
+        }
+
         private void makePairs() {
+            if (entries != null) {
+                return;
+            }
+
+            entries = new LinkedHashMap<>();
             List<Restaurant> restaurants = restaurantManager.getRestaurantList();
 
             // Create new Pairs for each restaurant in restaurantManager's underlying ArrayList
@@ -56,5 +73,14 @@ public enum AppData implements DataSingleton{
             }
 
         }
+
+        private void generateKeyList() {
+            if (keyList != null) {
+                return;
+            }
+
+            keyList = new ArrayList<>(entries.keySet());
+        }
+
     }
 }

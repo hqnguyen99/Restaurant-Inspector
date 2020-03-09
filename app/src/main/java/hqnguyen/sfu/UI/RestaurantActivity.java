@@ -2,25 +2,35 @@ package hqnguyen.sfu.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
 import hqnguyen.sfu.UIClasses.RestaurantAdapter;
 import hqnguyen.sfu.UIClasses.TestRestaurant;
+import model.AppData;
+import model.DataSingleton;
 
 public class RestaurantActivity extends AppCompatActivity {
-    private ArrayList<TestRestaurant> testRestaurants;
+    private DataSingleton data;
 
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+//    private ImageView imageViewRestaurantIcon;
+    //private ImageView imageViewHazardLevelIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,20 +38,30 @@ public class RestaurantActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         createRestaurantList();
         buildRecyclerView();
+//        imageViewRestaurantIcon = findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
+//        imageViewRestaurantIcon.setImageResource(randomGenerateRestaurantIcon());
+//        imageViewHazardLevelIcon = findViewById(R.id.imageView_restaurant_activity_warning_level);
+//        imageViewHazardLevelIcon.setImageResource(generateHazardLevelIcon());
     }
 
     private void createRestaurantList() {
-        testRestaurants = new ArrayList<>();
-        addTestRestaurant(testRestaurants);
+        data = AppData.INSTANCE;
+        InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        data.init(
+                new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
+                new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
+        );
     }
 
     private void buildRecyclerView() {
         recyclerView = findViewById(R.id.restaurant_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new RestaurantAdapter(testRestaurants);
+        adapter = new RestaurantAdapter();
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -55,26 +75,14 @@ public class RestaurantActivity extends AppCompatActivity {
         });
     }
 
-    private void addTestRestaurant(ArrayList<TestRestaurant> testRestaurant) {
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 12, "24 days", "Noodle"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 24, "May 12", "Rice"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 36, "May 2018", "Taco"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 12, "14 days", "Noodle"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 24, "Feb 12", "Rice"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 36, "Jan 2018", "Taco"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 12, "9 days", "Noodle"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 24, "Mar 12", "Rice"));
-            testRestaurant.add(new TestRestaurant(randomGenerateRestaurantIcon(), randomGenerateHazardLevelIcon(), 36, "Oct 2018", "Taco"));
-        }
+//    private int randomGenerateRestaurantIcon() {
+//        Random rand = new Random();
+//        int n = rand.nextInt(4);
+//        String restaurantIcon = "restaurant_" + n;
+//        return getResources().getIdentifier(restaurantIcon, "drawable", RestaurantActivity.this.getPackageName());
+//    }
 
-    private int randomGenerateRestaurantIcon() {
-        Random rand = new Random();
-        int n = rand.nextInt(4);
-        String restaurantIcon = "restaurant_" + n;
-        return getResources().getIdentifier(restaurantIcon, "drawable", RestaurantActivity.this.getPackageName());
-    }
-
-    private int randomGenerateHazardLevelIcon() {
+    private int generateHazardLevelIcon() {
         Random rand = new Random();
         int n = rand.nextInt(101);
         String hazardLevelIcon;
@@ -88,4 +96,7 @@ public class RestaurantActivity extends AppCompatActivity {
         return getResources().getIdentifier(hazardLevelIcon, "drawable", RestaurantActivity.this.getPackageName());
     }
 
+    private void dateIntelFormat(LocalDate localDate){
+
+    }
 }

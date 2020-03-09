@@ -16,6 +16,10 @@ import android.widget.TextView;
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
+    TextView textViewRestaurantName;
+    TextView textViewRestaurantAddress;
+    TextView textViewRestaurantCoords;
+
     private int position;
 
     @Override
@@ -25,12 +29,12 @@ public class InspectionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        extractDataFromIntent();
     }
 
     private void extractDataFromIntent() {
         Intent intent = getIntent();
-        position = intent.getIntExtra(RESTAURANT_POSITION,0);
+        position = intent.getIntExtra(RESTAURANT_POSITION, 0);
     }
 
     public static Intent makeLaunchIntent(Context c, int position){

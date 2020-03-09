@@ -1,5 +1,6 @@
 package hqnguyen.sfu.UIClasses;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
 import hqnguyen.sfu.UI.R;
+import model.AppData;
+import model.DataSingleton;
 import model.Restaurant;
+import model.RestaurantInspectionsPair;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
-    private ArrayList<TestRestaurant> restaurantList;
+    private DataSingleton data;
 
     private OnItemClickListener restaurantListener;
     public interface OnItemClickListener{
@@ -28,19 +33,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     }
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageViewRestaurantIcon;
-        public ImageView imageViewHazardLevelIcon;
         public TextView textViewRestaurantName;
         public TextView textViewNumberFound;
         public TextView textViewDateFromNow;
+        public ImageView imageViewRestaurantIcon;
 
         public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            imageViewRestaurantIcon = itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
             textViewRestaurantName = itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
-            imageViewHazardLevelIcon = itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
             textViewNumberFound = itemView.findViewById(R.id.textView_restaurant_activity_issue);
             textViewDateFromNow = itemView.findViewById(R.id.textView_restaurant_activity_date);
+            imageViewRestaurantIcon = itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,8 +59,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    public RestaurantAdapter(ArrayList<TestRestaurant> exampleList){
-        restaurantList = exampleList;
+    public RestaurantAdapter(){
+        data = AppData.INSTANCE;
     }
 
     @NonNull
@@ -68,19 +71,19 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return restaurantViewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        TestRestaurant current = restaurantList.get(position);
+        RestaurantInspectionsPair current = data.getEntryAtIndex(position);
 
-        holder.imageViewRestaurantIcon.setImageResource(current.getImageViewRestaurantIcon());
-        holder.imageViewHazardLevelIcon.setImageResource(current.getImageViewHazardLevel());
-        holder.textViewRestaurantName.setText(current.getRestaurantName());
-        holder.textViewNumberFound.setText(String.valueOf(current.getNumberIssueFound()));
-        holder.textViewDateFromNow.setText(current.getDateFromNow());
+        holder.textViewRestaurantName.setText(current.getRestaurant().getName());
+        holder.textViewNumberFound.setText(String.valueOf(current.getNumViolations()));
+        holder.textViewDateFromNow.setText(Long.toString(current.daysFromNewestInspection()));
+        holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
     }
 
     @Override
     public int getItemCount() {
-        return restaurantList.size();
+        return data.size();
     }
 }
