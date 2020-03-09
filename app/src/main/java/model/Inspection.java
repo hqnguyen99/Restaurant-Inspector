@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Inspection implements Comparable<Inspection> {
     String id;
-    int inspectionDate;
+    int date;
     String inspType;
     int numCrit;
     int nonNumCrit;
@@ -21,7 +21,7 @@ public class Inspection implements Comparable<Inspection> {
             List<Integer> violationNums
     ) {
         this.id = id;
-        this.inspectionDate = inspectionData;
+        this.date = inspectionData;
         this.inspType = inspType;
         this.numCrit = numCrit;
         this.nonNumCrit = nonNumCrit;
@@ -33,8 +33,8 @@ public class Inspection implements Comparable<Inspection> {
         return id;
     }
 
-    public int getInspectionDate() {
-        return inspectionDate;
+    public int getDate() {
+        return date;
     }
 
     public String getInspType() {
@@ -60,7 +60,7 @@ public class Inspection implements Comparable<Inspection> {
     @Override
     public String toString() {
         return "Number: " + id +
-                "\nInspection Data: " + inspectionDate +
+                "\nInspection Data: " + date +
                 "\nType: " + inspType +
                 "\nCritcal?: " + numCrit +
                 "\nnon Critical?: " + nonNumCrit +
@@ -71,7 +71,7 @@ public class Inspection implements Comparable<Inspection> {
     // Compare by date
     @Override
     public int compareTo(Inspection other) {
-        return (this.getInspectionDate() - other.getInspectionDate());
+        return (this.getDate() - other.getDate());
     }
 
     private String getViolationNumsString() {
