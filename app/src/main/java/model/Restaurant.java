@@ -1,6 +1,6 @@
 package model;
 
-public class Restaurant {
+public class Restaurant implements Comparable<Restaurant> {
     String id;
     String name;
     String address;
@@ -64,5 +64,11 @@ public class Restaurant {
             "\nType: " + type +
             "\nLatitude: " + latitude +
             "\nLongitude: " + longitude;
+    }
+
+    // Compare by name
+    @Override
+    public int compareTo(Restaurant other) {
+        return this.getName().compareTo(other.getName());
     }
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReadWriteLock;
 
+import static java.util.Collections.sort;
+
 public class RestaurantManager {
     private List<Restaurant> restaurantList = new ArrayList<>();
 
@@ -20,6 +22,7 @@ public class RestaurantManager {
 
     public void add(Restaurant restaurant) {
         restaurantList.add(restaurant);
+        sort(restaurantList);
     }
 
     public void remove(Restaurant restaurant) {
@@ -43,7 +46,7 @@ public class RestaurantManager {
                     values[i] = values[i].replaceAll("^\"|\"$", "");
                 }
 
-                restaurantList.add(new Restaurant(
+                add(new Restaurant(
                         values[0],
                         values[1],
                         values[2],
