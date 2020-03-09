@@ -60,13 +60,13 @@ public class Restaurant implements Comparable<Restaurant> {
 
     @Override
     public String toString() {
-        return "Number: " + id +
-            "\nName: " + name +
-            "\nAddress: " + address +
-            "\nCity: " + city +
-            "\nType: " + type +
-            "\nLatitude: " + latitude +
-            "\nLongitude: " + longitude;
+        return  "\nId: " + id +
+                "\nName: " + name +
+                "\nAddress: " + address +
+                "\nCity: " + city +
+                "\nType: " + type +
+                "\nLatitude: " + latitude +
+                "\nLongitude: " + longitude;
     }
 
     // Compare by name

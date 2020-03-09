@@ -62,13 +62,13 @@ public class Inspection implements Comparable<Inspection> {
 
     @Override
     public String toString() {
-        return "Number: " + id +
-                "\nInspection Data: " + date +
-                "\nType: " + inspType +
-                "\nCritcal?: " + numCrit +
-                "\nnon Critical?: " + numNonCrit +
-                "\nHazard Rating: " + hazardRating +
-                "\nViolation Numbers: " +  getViolationNumsString();
+        return  "\n\tId: " + id +
+                "\n\tInspection Date: " + date +
+                "\n\tType: " + inspType +
+                "\n\tCritcal?: " + numCrit +
+                "\n\tnon Critical?: " + numNonCrit +
+                "\n\tHazard Rating: " + hazardRating +
+                "\n\tViolation Numbers: " +  getViolationNumsString() + '\n';
     }
 
     // Compare by date, the smaller number (older date)

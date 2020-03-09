@@ -5,10 +5,10 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.reverseOrder;
 import static java.util.Collections.sort;
 
 /**
@@ -44,8 +44,19 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         numViolations += inspection.getNumCrit() + inspection.numNonCrit;
     }
 
+    public String newestHazardRating() {
+        return inspections.get(0).hazardRating;
+    }
+
+    /**
+     * @return null if list of inspections is empty
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    LocalDate newestInspectionDate() {
+    public LocalDate newestInspectionDate() {
+        if (inspections.isEmpty()) {
+            return null;
+        }
+
         int remainder = inspections.get(0).getDate();
         int year = remainder / 10000;
         remainder %= 10000;
@@ -56,8 +67,35 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         return LocalDate.of(year, month, dayOfMonth);
     }
 
+    /**
+     * @return -1 if no inspection date is found
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public long daysFromNewestInspection() {
+        LocalDate inspectionDate = newestInspectionDate();
+
+        if (inspectionDate == null) {
+            return -1;
+        }
+
+        return ChronoUnit.DAYS.between(inspectionDate, LocalDate.now());
+    }
+
     @Override
     public int compareTo(RestaurantInspectionsPair other) {
         return this.restaurant.compareTo(other.restaurant);
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result += restaurant.toString() + "\n";
+
+        for (Inspection i : inspections) {
+            result += "Inspection:";
+            result += i.toString();
+        }
+
+        return result;
     }
 }
