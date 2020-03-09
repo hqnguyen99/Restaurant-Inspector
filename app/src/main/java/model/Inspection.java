@@ -7,26 +7,26 @@ public class Inspection implements Comparable<Inspection> {
     int date;
     String inspType;
     int numCrit;
-    int nonNumCrit;
+    int numNonCrit;
     String hazardRating;
-    List<Integer> violationNums;
+    List<Integer> violationIds;
 
     public Inspection(
             String id,
             int inspectionData,
             String inspType,
             int numCrit,
-            int nonNumCrit,
+            int numNonCrit,
             String hazardRating,
-            List<Integer> violationNums
+            List<Integer> violationIds
     ) {
         this.id = id;
         this.date = inspectionData;
         this.inspType = inspType;
         this.numCrit = numCrit;
-        this.nonNumCrit = nonNumCrit;
+        this.numNonCrit = numNonCrit;
         this.hazardRating = hazardRating;
-        this.violationNums = violationNums;
+        this.violationIds = violationIds;
     }
 
     public String getId() {
@@ -45,16 +45,16 @@ public class Inspection implements Comparable<Inspection> {
         return numCrit;
     }
 
-    public int getNonNumCrit() {
-        return nonNumCrit;
+    public int getNumNonCrit() {
+        return numNonCrit;
     }
 
     public String getHazardRating() {
         return hazardRating;
     }
 
-    public List<Integer> getViolationNums() {
-        return violationNums;
+    public List<Integer> getViolationIds() {
+        return violationIds;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Inspection implements Comparable<Inspection> {
                 "\nInspection Data: " + date +
                 "\nType: " + inspType +
                 "\nCritcal?: " + numCrit +
-                "\nnon Critical?: " + nonNumCrit +
+                "\nnon Critical?: " + numNonCrit +
                 "\nHazard Rating: " + hazardRating +
                 "\nViolation Numbers: " +  getViolationNumsString();
     }
@@ -77,10 +77,10 @@ public class Inspection implements Comparable<Inspection> {
     private String getViolationNumsString() {
         String result = "";
 
-        for (int i = 0; i < violationNums.size(); i++) {
-            result += violationNums.get(i);
+        for (int i = 0; i < violationIds.size(); i++) {
+            result += violationIds.get(i);
 
-            if (i != violationNums.size() - 1) {
+            if (i != violationIds.size() - 1) {
                 result += ", ";
             }
         }
