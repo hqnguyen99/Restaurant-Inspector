@@ -65,7 +65,7 @@ public class Inspection implements Comparable<Inspection> {
         return  "\n\tId: " + id +
                 "\n\tInspection Date: " + date +
                 "\n\tType: " + inspType +
-                "\n\tCritcal?: " + numCrit +
+                "\n\tCritical?: " + numCrit +
                 "\n\tnon Critical?: " + numNonCrit +
                 "\n\tHazard Rating: " + hazardRating +
                 "\n\tViolation Numbers: " +  getViolationNumsString() + '\n';
