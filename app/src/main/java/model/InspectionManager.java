@@ -23,7 +23,7 @@ public class InspectionManager {
         setListFromFile(reader);
     }
 
-    public List<Inspection> getInspectionList() {
+    List<Inspection> getInspectionList() {
         return inspectionList;
     }
 
@@ -43,7 +43,7 @@ public class InspectionManager {
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                String values[] = line.split(",|\\|");
+                String[] values = line.split("[,|]");
 
                 for (int i = 0; i < values.length; i++) {
                     values[i] = values[i].replaceAll("^\"|\"$", "");
@@ -56,7 +56,11 @@ public class InspectionManager {
                 for (int i = START; i < values.length; i += 4) {
                     try {
                         violationNums.add(Integer.parseInt(values[i]));
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                        Log.wtf("InspectionManager",
+                                "Error when adding/converting string " + values[i]);
+                        e.getStackTrace();
+                    }
                 }
 
                 add(new Inspection(

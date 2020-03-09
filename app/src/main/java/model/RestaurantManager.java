@@ -43,7 +43,7 @@ public class RestaurantManager {
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                String values[] = line.split(",");
+                String[] values = line.split(",");
 
                 for (int i = 0; i < values.length; i++) {
                     values[i] = values[i].replaceAll("^\"|\"$", "");
