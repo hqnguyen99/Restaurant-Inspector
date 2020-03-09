@@ -1,16 +1,17 @@
-# Build files
-/*/build/
+# Android Studio
+build/
+/captures
+.navigation
+.idea
+.gradle
+*.iml
+.externalNativeBuild
 
 # Config files
 local.properties
 
-# Gradle generated
-.idea/
 
 # OS-specific
 .DS_Store
+Thumbs.db
 
-.idea/
-*.iml
-/captures
-.externalNativeBuild
