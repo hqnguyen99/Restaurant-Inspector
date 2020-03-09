@@ -5,8 +5,10 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.reverseOrder;
 import static java.util.Collections.sort;
 
 /**
@@ -38,7 +40,7 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
 
     void addInspection(Inspection inspection) {
         inspections.add(inspection);
-        sort(inspections);
+        sort(inspections, Collections.<Inspection>reverseOrder());
         numViolations += inspection.getNumCrit() + inspection.numNonCrit;
     }
 

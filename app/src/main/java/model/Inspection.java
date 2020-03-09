@@ -71,7 +71,8 @@ public class Inspection implements Comparable<Inspection> {
                 "\nViolation Numbers: " +  getViolationNumsString();
     }
 
-    // Compare by date
+    // Compare by date, the smaller number (older date)
+    // will be ordered first between two numbers
     @Override
     public int compareTo(Inspection other) {
         return (this.getDate() - other.getDate());
