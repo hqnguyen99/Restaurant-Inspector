@@ -29,6 +29,34 @@ public class Inspection {
         this.violationNums = violationNums;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getInspectionData() {
+        return inspectionData;
+    }
+
+    public String getInspType() {
+        return inspType;
+    }
+
+    public int getNumCrit() {
+        return numCrit;
+    }
+
+    public int getNonNumCrit() {
+        return nonNumCrit;
+    }
+
+    public String getHazardRating() {
+        return hazardRating;
+    }
+
+    public List<Integer> getViolationNums() {
+        return violationNums;
+    }
+
     @Override
     public String toString() {
         return "Number: " + id +
