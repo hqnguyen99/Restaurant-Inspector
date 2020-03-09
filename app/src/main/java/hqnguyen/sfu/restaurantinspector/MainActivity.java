@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import hqnguyen.sfu.UI.R;
 import model.AppData;
 import model.DataSingleton;
 import model.RestaurantInspectionsPair;
