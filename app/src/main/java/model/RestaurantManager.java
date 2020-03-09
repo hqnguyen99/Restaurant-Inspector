@@ -8,10 +8,10 @@ import java.util.Scanner;
 import java.util.concurrent.locks.ReadWriteLock;
 
 public class RestaurantManager {
-    private List<Restaurant> restaurantList;
+    private List<Restaurant> restaurantList = new ArrayList<>();
 
-    public RestaurantManager() {
-        restaurantList = new ArrayList<>();
+    RestaurantManager(String filePath) {
+        setListFromFile(new File(filePath));
     }
 
     public List<Restaurant> getRestaurantList() {
@@ -26,7 +26,7 @@ public class RestaurantManager {
         restaurantList.remove(restaurant);
     }
 
-    public void setListFromFile(File file) {
+    private void setListFromFile(File file) {
         if (file.exists() && !file.isDirectory()) {
             restaurantList.clear();
         }
@@ -61,4 +61,5 @@ public class RestaurantManager {
             System.exit(-1);
         }
     }
+
 }

@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InspectionManager {
-    private List<Inspection> inspectionList;
+    private List<Inspection> inspectionList = new ArrayList<>();
 
-    public InspectionManager() {
-        inspectionList = new ArrayList<>();
+    InspectionManager(String filePath) {
+        setListFromFile(new File(filePath));
     }
 
     public List<Inspection> getInspectionList() {
@@ -25,7 +25,7 @@ public class InspectionManager {
         inspectionList.remove(inspection);
     }
 
-    public void setListFromFile(File file) {
+    private void setListFromFile(File file) {
         if (file.exists() && !file.isDirectory()) {
             inspectionList.clear();
         }
