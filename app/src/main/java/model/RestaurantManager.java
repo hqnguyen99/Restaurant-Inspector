@@ -41,7 +41,7 @@ public class RestaurantManager {
 
         try {
             reader.readLine();
-            
+
             while ((line = reader.readLine()) != null) {
                 String values[] = line.split(",");
 

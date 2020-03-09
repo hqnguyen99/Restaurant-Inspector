@@ -1,5 +1,6 @@
 package model;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,11 +23,11 @@ public class AppData {
         AppData.inspectionManager = inspectionManager;
     }
 
-    public static void init(String restaurantDataPath, String inspectionDataPath) {
+    public static void init(BufferedReader restaurantReader, BufferedReader inspectionReader) {
         if (INSTANCE == null) {
             INSTANCE = new AppData(
-              new RestaurantManager(restaurantDataPath),
-              new InspectionManager(inspectionDataPath)
+              new RestaurantManager(restaurantReader),
+              new InspectionManager(inspectionReader)
             );
             makePairs();
         }
