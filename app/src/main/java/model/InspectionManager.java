@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.util.Collections.sort;
+
 public class InspectionManager {
     private List<Inspection> inspectionList = new ArrayList<>();
 
@@ -19,6 +21,7 @@ public class InspectionManager {
 
     public void add(Inspection inspection) {
         inspectionList.add(inspection);
+        sort(inspectionList);
     }
 
     public void remove(Inspection inspection) {
@@ -46,13 +49,13 @@ public class InspectionManager {
                 List<Integer> violationNums = new ArrayList<>();
                 final int START = 6;
 
-                for (int i = START; i < values.length; i+=4) {
+                for (int i = START; i < values.length; i += 4) {
                     try {
                         violationNums.add(Integer.parseInt(values[i]));
                     } catch (Exception e) { }
                 }
 
-                inspectionList.add(new Inspection(
+                add(new Inspection(
                         values[0],
                         Integer.parseInt(values[1]),
                         values[2],

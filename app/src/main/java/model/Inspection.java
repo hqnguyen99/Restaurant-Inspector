@@ -2,9 +2,9 @@ package model;
 
 import java.util.List;
 
-public class Inspection {
+public class Inspection implements Comparable<Inspection> {
     String id;
-    int inspectionData;
+    int inspectionDate;
     String inspType;
     int numCrit;
     int nonNumCrit;
@@ -21,7 +21,7 @@ public class Inspection {
             List<Integer> violationNums
     ) {
         this.id = id;
-        this.inspectionData = inspectionData;
+        this.inspectionDate = inspectionData;
         this.inspType = inspType;
         this.numCrit = numCrit;
         this.nonNumCrit = nonNumCrit;
@@ -33,8 +33,8 @@ public class Inspection {
         return id;
     }
 
-    public int getInspectionData() {
-        return inspectionData;
+    public int getInspectionDate() {
+        return inspectionDate;
     }
 
     public String getInspType() {
@@ -60,12 +60,18 @@ public class Inspection {
     @Override
     public String toString() {
         return "Number: " + id +
-                "\nInspection Data: " + inspectionData +
+                "\nInspection Data: " + inspectionDate +
                 "\nType: " + inspType +
                 "\nCritcal?: " + numCrit +
                 "\nnon Critical?: " + nonNumCrit +
                 "\nHazard Rating: " + hazardRating +
                 "\nViolation Numbers: " +  getViolationNumsString();
+    }
+
+    // Compare by date
+    @Override
+    public int compareTo(Inspection other) {
+        return (this.getInspectionDate() - other.getInspectionDate());
     }
 
     private String getViolationNumsString() {
