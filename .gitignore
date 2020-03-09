@@ -2,7 +2,8 @@
 build/
 /captures
 .navigation
-.idea
+/gradle/
+/.idea/
 .gradle
 *.iml
 .externalNativeBuild
