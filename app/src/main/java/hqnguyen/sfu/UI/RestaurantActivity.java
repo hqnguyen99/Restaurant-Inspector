@@ -29,8 +29,6 @@ public class RestaurantActivity extends AppCompatActivity {
     private RestaurantAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-//    private ImageView imageViewRestaurantIcon;
-    //private ImageView imageViewHazardLevelIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +39,6 @@ public class RestaurantActivity extends AppCompatActivity {
 
         createRestaurantList();
         buildRecyclerView();
-//        imageViewRestaurantIcon = findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
-//        imageViewRestaurantIcon.setImageResource(randomGenerateRestaurantIcon());
-//        imageViewHazardLevelIcon = findViewById(R.id.imageView_restaurant_activity_warning_level);
-//        imageViewHazardLevelIcon.setImageResource(generateHazardLevelIcon());
     }
 
     private void createRestaurantList() {
@@ -73,30 +67,5 @@ public class RestaurantActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-//    private int randomGenerateRestaurantIcon() {
-//        Random rand = new Random();
-//        int n = rand.nextInt(4);
-//        String restaurantIcon = "restaurant_" + n;
-//        return getResources().getIdentifier(restaurantIcon, "drawable", RestaurantActivity.this.getPackageName());
-//    }
-
-    private int generateHazardLevelIcon() {
-        Random rand = new Random();
-        int n = rand.nextInt(101);
-        String hazardLevelIcon;
-        if (n < 30) {
-            hazardLevelIcon = "hazard_low";
-        } else if (n < 70) {
-            hazardLevelIcon = "hazard_medium";
-        } else {
-            hazardLevelIcon = "hazard_high";
-        }
-        return getResources().getIdentifier(hazardLevelIcon, "drawable", RestaurantActivity.this.getPackageName());
-    }
-
-    private void dateIntelFormat(LocalDate localDate){
-
     }
 }
