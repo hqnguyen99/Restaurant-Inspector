@@ -40,6 +40,8 @@ public class InspectionManager {
         String line = "";
 
         try {
+            reader.readLine();
+
             while ((line = reader.readLine()) != null) {
                 String values[] = line.split(",|\\|");
 
