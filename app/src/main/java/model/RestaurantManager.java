@@ -9,8 +9,15 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 import static java.util.Collections.sort;
 
+ /**
+ * Contains the data of all restaurants.
+ * Loads data into underlying its ArrayList if initialized with a csv filepath
+ */
 public class RestaurantManager {
     private List<Restaurant> restaurantList = new ArrayList<>();
+
+    RestaurantManager() {
+    }
 
     RestaurantManager(String filePath) {
         setListFromFile(new File(filePath));

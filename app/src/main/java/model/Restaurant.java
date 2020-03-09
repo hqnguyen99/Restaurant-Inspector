@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Stores information about a restaurant
+ */
 public class Restaurant implements Comparable<Restaurant> {
     String id;
     String name;

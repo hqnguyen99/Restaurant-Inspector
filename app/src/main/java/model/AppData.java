@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Singleton class that holds a map of Restaurant/Inspections entries
+ * using the restaurant id as the key
+ */
 public class AppData {
-    private static AppData instance = null;
+    private static AppData INSTANCE = null;
     private static RestaurantManager restaurantManager;
     private static InspectionManager inspectionManager;
     public static Map<String, RestaurantInspectionsPair> entries = new LinkedHashMap<>();
@@ -19,8 +23,8 @@ public class AppData {
     }
 
     public static void init(String restaurantDataPath, String inspectionDataPath) {
-        if (instance == null) {
-            instance = new AppData(
+        if (INSTANCE == null) {
+            INSTANCE = new AppData(
               new RestaurantManager(restaurantDataPath),
               new InspectionManager(inspectionDataPath)
             );
@@ -29,7 +33,7 @@ public class AppData {
     }
 
     public static AppData getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private static void makePairs() {

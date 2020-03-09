@@ -8,8 +8,15 @@ import java.util.Scanner;
 
 import static java.util.Collections.sort;
 
+/**
+ * Contains the data of all inspections (of multiple restaurants).
+ * Loads data into underlying its ArrayList if initialized with a csv filepath
+ */
 public class InspectionManager {
     private List<Inspection> inspectionList = new ArrayList<>();
+
+    InspectionManager () {
+    }
 
     InspectionManager(String filePath) {
         setListFromFile(new File(filePath));

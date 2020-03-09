@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Stores information about a single inspection
+ */
 public class Inspection implements Comparable<Inspection> {
     String id;
     int date;

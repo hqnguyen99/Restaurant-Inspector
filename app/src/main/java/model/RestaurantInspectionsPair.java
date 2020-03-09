@@ -5,11 +5,14 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.sort;
 
+/**
+ * Stores a restaurant and all of its inspections.
+ * Sorted by restaurant name in lexicographical order.
+ */
 public class RestaurantInspectionsPair implements Comparable<RestaurantInspectionsPair> {
     Restaurant restaurant;
     List<Inspection> inspections;
