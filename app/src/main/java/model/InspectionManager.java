@@ -1,10 +1,11 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static java.util.Collections.sort;
 
@@ -18,8 +19,8 @@ public class InspectionManager {
     InspectionManager () {
     }
 
-    InspectionManager(String filePath) {
-        setListFromFile(new File(filePath));
+    InspectionManager(BufferedReader reader) {
+        setListFromFile(reader);
     }
 
     public List<Inspection> getInspectionList() {
@@ -35,17 +36,11 @@ public class InspectionManager {
         inspectionList.remove(inspection);
     }
 
-    private void setListFromFile(File file) {
-        if (file.exists() && !file.isDirectory()) {
-            inspectionList.clear();
-        }
+    private void setListFromFile(BufferedReader reader) {
+        String line = "";
 
         try {
-            Scanner in = new Scanner(file);
-            in.nextLine();
-
-            while (in.hasNextLine()) {
-                String line = in.nextLine();
+            while ((line = reader.readLine()) != null) {
                 String values[] = line.split(",|\\|");
 
                 for (int i = 0; i < values.length; i++) {
@@ -72,12 +67,9 @@ public class InspectionManager {
                         violationNums
                 ));
             }
-
-            in.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("Invalid File.");
+        } catch (IOException e) {
+            Log.wtf("InspectionManager", "Error reading file on line " + line, e);
             e.printStackTrace();
-            System.exit(-1);
         }
     }
 }
