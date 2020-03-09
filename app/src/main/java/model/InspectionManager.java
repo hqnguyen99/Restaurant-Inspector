@@ -50,17 +50,27 @@ public class InspectionManager {
                 }
 
                 // get the list of violation numbers
-                List<Integer> violationNums = new ArrayList<>();
+                List<Violation> violations = new ArrayList<>();
                 final int START = 6;
+                final int SEGMENTS_PER_VIOLATION = 4;
 
-                for (int i = START; i < values.length; i += 4) {
+                for (int i = START; i < values.length; i += SEGMENTS_PER_VIOLATION) {
+                    int violationNum = -1;
+
                     try {
-                        violationNums.add(Integer.parseInt(values[i]));
+                        violationNum = Integer.parseInt(values[i]);
                     } catch (Exception e) {
                         Log.wtf("InspectionManager",
-                                "Error when adding/converting string " + values[i]);
+                                "Error when converting string " + values[i] + " to int");
                         e.getStackTrace();
                     }
+
+                    violations.add(new Violation(
+                            violationNum,
+                            values[i + 1],
+                            values[i + 2],
+                            values[i + 3]
+                    ));
                 }
 
                 add(new Inspection(
@@ -70,7 +80,7 @@ public class InspectionManager {
                         Integer.parseInt(values[3]),
                         Integer.parseInt(values[4]),
                         values[5],
-                        violationNums
+                        violations
                 ));
             }
         } catch (IOException e) {

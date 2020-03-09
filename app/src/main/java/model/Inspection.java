@@ -12,7 +12,7 @@ public class Inspection implements Comparable<Inspection> {
     int numCrit;
     int numNonCrit;
     String hazardRating;
-    List<Integer> violationIds;
+    List<Violation> violations;
 
     public Inspection(
             String id,
@@ -21,7 +21,7 @@ public class Inspection implements Comparable<Inspection> {
             int numCrit,
             int numNonCrit,
             String hazardRating,
-            List<Integer> violationIds
+            List<Violation> violations
     ) {
         this.id = id;
         this.date = inspectionData;
@@ -29,7 +29,7 @@ public class Inspection implements Comparable<Inspection> {
         this.numCrit = numCrit;
         this.numNonCrit = numNonCrit;
         this.hazardRating = hazardRating;
-        this.violationIds = violationIds;
+        this.violations = violations;
     }
 
     public String getId() {
@@ -56,8 +56,8 @@ public class Inspection implements Comparable<Inspection> {
         return hazardRating;
     }
 
-    public List<Integer> getViolationIds() {
-        return violationIds;
+    public List<Violation> getViolations() {
+        return violations;
     }
 
     @Override
@@ -79,16 +79,18 @@ public class Inspection implements Comparable<Inspection> {
     }
 
     private String getViolationNumsString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < violationIds.size(); i++) {
-            result += violationIds.get(i);
+        final int NUM_VIOLATIONS = violations.size();
 
-            if (i != violationIds.size() - 1) {
-                result += ", ";
+        for (int i = 0; i < NUM_VIOLATIONS; i++) {
+            result.append(violations.get(i).violationNum);
+
+            if (i != NUM_VIOLATIONS - 1) {
+                result.append(", ");
             }
         }
 
-        return result;
+        return result.toString();
     }
 }
