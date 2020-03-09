@@ -16,8 +16,8 @@ import static java.util.Collections.sort;
  * Sorted by restaurant name in lexicographical order.
  */
 public class RestaurantInspectionsPair implements Comparable<RestaurantInspectionsPair> {
-    Restaurant restaurant;
-    List<Inspection> inspections;
+    private Restaurant restaurant;
+    private List<Inspection> inspections;
 
     private int numViolations;
 
@@ -88,14 +88,14 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
 
     @Override
     public String toString() {
-        String result = "";
-        result += restaurant.toString() + "\n";
+        StringBuilder result = new StringBuilder();
+        result.append(restaurant.toString()).append("\n");
 
         for (Inspection i : inspections) {
-            result += "Inspection:";
-            result += i.toString();
+            result.append("Inspection:");
+            result.append(i.toString());
         }
 
-        return result;
+        return result.toString();
     }
 }
