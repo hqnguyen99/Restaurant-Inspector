@@ -12,7 +12,7 @@ import static java.util.Collections.sort;
 
 public class RestaurantInspectionsPair implements Comparable<RestaurantInspectionsPair> {
     Restaurant restaurant;
-    List<Inspection> inspections = new ArrayList<>();
+    List<Inspection> inspections;
 
     private int numViolations;
 
@@ -21,7 +21,15 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         this.inspections = inspections;
     }
 
-    int getNumViolations() {
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public List<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public int getNumViolations() {
         return numViolations;
     }
 
