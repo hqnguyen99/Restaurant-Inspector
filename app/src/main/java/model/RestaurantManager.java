@@ -1,17 +1,26 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.locks.ReadWriteLock;
 
+import static java.util.Collections.sort;
+
+ /**
+ * Contains the data of all restaurants.
+ * Loads data into underlying its ArrayList if initialized with a csv filepath
+ */
 public class RestaurantManager {
-    private List<Restaurant> restaurantList;
+    private List<Restaurant> restaurantList = new ArrayList<>();
 
-    public RestaurantManager() {
-        restaurantList = new ArrayList<>();
+    RestaurantManager() {
+    }
+
+    RestaurantManager(BufferedReader reader) {
+        setListFromFile(reader);
     }
 
     public List<Restaurant> getRestaurantList() {
@@ -20,30 +29,27 @@ public class RestaurantManager {
 
     public void add(Restaurant restaurant) {
         restaurantList.add(restaurant);
+        sort(restaurantList);
     }
 
     public void remove(Restaurant restaurant) {
         restaurantList.remove(restaurant);
     }
 
-    public void setListFromFile(File file) {
-        if (file.exists() && !file.isDirectory()) {
-            restaurantList.clear();
-        }
+    private void setListFromFile(BufferedReader reader) {
+        String line = "";
 
         try {
-            Scanner in = new Scanner(file);
-            in.nextLine();
+            reader.readLine();
 
-            while (in.hasNextLine()) {
-                String line = in.nextLine();
-                String values[] = line.split(",");
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
 
                 for (int i = 0; i < values.length; i++) {
                     values[i] = values[i].replaceAll("^\"|\"$", "");
                 }
 
-                restaurantList.add(new Restaurant(
+                add(new Restaurant(
                         values[0],
                         values[1],
                         values[2],
@@ -53,12 +59,10 @@ public class RestaurantManager {
                         Double.parseDouble(values[6])
                 ));
             }
-
-            in.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("Invalid File.");
+        } catch (IOException e) {
+            Log.wtf("RestaurantManager", "Error reading file on line " + line, e);
             e.printStackTrace();
-            System.exit(-1);
         }
     }
+
 }

@@ -2,55 +2,95 @@ package model;
 
 import java.util.List;
 
-public class Inspection {
+/**
+ * Stores information about a single inspection
+ */
+public class Inspection implements Comparable<Inspection> {
     String id;
-    int inspectionData;
+    int date;
     String inspType;
     int numCrit;
-    int nonNumCrit;
+    int numNonCrit;
     String hazardRating;
-    List<Integer> violationNums;
+    List<Violation> violations;
 
     public Inspection(
             String id,
             int inspectionData,
             String inspType,
             int numCrit,
-            int nonNumCrit,
+            int numNonCrit,
             String hazardRating,
-            List<Integer> violationNums
+            List<Violation> violations
     ) {
         this.id = id;
-        this.inspectionData = inspectionData;
+        this.date = inspectionData;
         this.inspType = inspType;
         this.numCrit = numCrit;
-        this.nonNumCrit = nonNumCrit;
+        this.numNonCrit = numNonCrit;
         this.hazardRating = hazardRating;
-        this.violationNums = violationNums;
+        this.violations = violations;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public String getInspType() {
+        return inspType;
+    }
+
+    public int getNumCrit() {
+        return numCrit;
+    }
+
+    public int getNumNonCrit() {
+        return numNonCrit;
+    }
+
+    public String getHazardRating() {
+        return hazardRating;
+    }
+
+    public List<Violation> getViolations() {
+        return violations;
     }
 
     @Override
     public String toString() {
-        return "Number: " + id +
-                "\nInspection Data: " + inspectionData +
-                "\nType: " + inspType +
-                "\nCritcal?: " + numCrit +
-                "\nnon Critical?: " + nonNumCrit +
-                "\nHazard Rating: " + hazardRating +
-                "\nViolation Numbers: " +  getViolationNumsString();
+        return  "\n\tId: " + id +
+                "\n\tInspection Date: " + date +
+                "\n\tType: " + inspType +
+                "\n\tCritical?: " + numCrit +
+                "\n\tnon Critical?: " + numNonCrit +
+                "\n\tHazard Rating: " + hazardRating +
+                "\n\tViolation Numbers: " +  getViolationNumsString() + '\n';
+    }
+
+    // Compare by date, the smaller number (older date)
+    // will be ordered first between two numbers
+    @Override
+    public int compareTo(Inspection other) {
+        return (this.getDate() - other.getDate());
     }
 
     private String getViolationNumsString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < violationNums.size(); i++) {
-            result += violationNums.get(i);
+        final int NUM_VIOLATIONS = violations.size();
 
-            if (i != violationNums.size() - 1) {
-                result += ", ";
+        for (int i = 0; i < NUM_VIOLATIONS; i++) {
+            result.append(violations.get(i).violationNum);
+
+            if (i != NUM_VIOLATIONS - 1) {
+                result.append(", ");
             }
         }
 
-        return result;
+        return result.toString();
     }
 }

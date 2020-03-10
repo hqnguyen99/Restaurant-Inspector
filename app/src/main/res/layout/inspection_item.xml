@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView_inspection_activity_hazard_level_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_critical_issue_found_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Critical issue found: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_critical_issue_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number"
+            android:textSize="20sp"
+            android:layout_toEndOf="@+id/textView_inspection_activity_critical_issue_found_title" />
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_noncritical_issue_found_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non-Critical issue found: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/textView_inspection_activity_critical_issue_found_title"
+            android:layout_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_noncritical_issue_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number"
+            android:textSize="20sp"
+            android:layout_below="@+id/textView_inspection_activity_critical_issue_found_title"
+            android:layout_toEndOf="@+id/textView_inspection_activity_noncritical_issue_found_title" />
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last inspection: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/textView_inspection_activity_noncritical_issue_found_title"
+            android:layout_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/textView_inspection_activity_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="20sp"
+            android:layout_below="@+id/textView_inspection_activity_noncritical_issue_found_title"
+            android:layout_toEndOf="@+id/textView_inspection_activity_date_title" />
+
+    </RelativeLayout>>
+
+</androidx.cardview.widget.CardView>

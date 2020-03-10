@@ -1,9 +1,18 @@
-*.iml
-.gradle
-/local.properties
-/.idea/
-.DS_Store
-/build
+# Android Studio
+build/
 /captures
+.navigation
+/gradle/*
+/.idea/*
+.gradle
+*.iml
 .externalNativeBuild
+
+# Config files
+local.properties
+
+# OS-specific
+.DS_Store
+Thumbs.db
 .cxx
+

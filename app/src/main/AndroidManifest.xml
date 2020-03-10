@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hqnguyen.sfu.restaurantinspector">
+    package="hqnguyen.sfu.UI">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name="hqnguyen.sfu.UI.ViolationActivity"
+            android:label="@string/title_activity_violation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="hqnguyen.sfu.UI.InspectionActivity"
+            android:label="@string/title_activity_inspection"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="hqnguyen.sfu.UI.RestaurantActivity"
+            android:label="@string/title_activity_restaurant"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="hqnguyen.sfu.UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
