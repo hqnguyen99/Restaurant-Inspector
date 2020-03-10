@@ -27,14 +27,12 @@ import model.Violation;
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
-
-
     private DataSingleton data;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private int position;
+    private int restaurantPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class InspectionActivity extends AppCompatActivity {
     }
 
     private void setupRestaurantInfor() {
-        Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
+        Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_name);
         TextView textViewRestaurantAddress = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_address);
         TextView textViewRestaurantCoords = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_coords);
@@ -62,29 +60,29 @@ public class InspectionActivity extends AppCompatActivity {
 
     private void extractDataFromIntent() {
         Intent intent = getIntent();
-        position = intent.getIntExtra(RESTAURANT_POSITION, 0);
+        restaurantPosition = intent.getIntExtra(RESTAURANT_POSITION, 0);
     }
 
     private void buildRecyclerView() {
         recyclerView = findViewById(R.id.inspection_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new InspectionAdapter(position);
+        adapter = new InspectionAdapter(restaurantPosition);
         //Toast.makeText(getApplicationContext(), adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Intent intent = ViolationActivity.makeLaunchIntent(InspectionActivity.this, position);
+            public void onItemClick(int inspectionPosition) {
+                Intent intent = ViolationActivity.makeLaunchIntent(InspectionActivity.this, restaurantPosition, inspectionPosition );
                 startActivity(intent);
             }
         });
     }
 
-    public static Intent makeLaunchIntent(Context c, int position){
+    public static Intent makeLaunchIntent(Context c, int restaurantPosition){
         Intent intent = new Intent(c, InspectionActivity.class);
-        intent.putExtra(RESTAURANT_POSITION, position);
+        intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         return intent;
     }
 }
