@@ -12,9 +12,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import hqnguyen.sfu.UIClasses.InspectionAdapter;
 import hqnguyen.sfu.UIClasses.ViolationAdapter;
@@ -54,7 +56,7 @@ public class ViolationActivity extends AppCompatActivity {
     private void extractDataFromIntent() {
         Intent intent = getIntent();
         restaurantPosition = intent.getIntExtra(RESTAURANT_POSITION, 0);
-        inspectionPosition = intent.getIntExtra(RESTAURANT_POSITION,0);
+        inspectionPosition = intent.getIntExtra(INSPECTION_POSITION,0);
     }
 
     private void setupInspectionDetail() {
@@ -66,6 +68,7 @@ public class ViolationActivity extends AppCompatActivity {
         ImageView imageViewHazardLevel = (ImageView) findViewById(R.id.imageView_violation_activity_hazard_level_icon);
 
         inspection = data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
+        Log.i("msg",String.valueOf(inspectionPosition));
 
         textViewInspectionDate.setText(String.valueOf(inspection.getDate()));
         textViewInspectionType.setText(inspection.getInspType());
@@ -73,12 +76,15 @@ public class ViolationActivity extends AppCompatActivity {
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
         textViewHarzardLevel.setText(String.valueOf(inspection.getHazardRating()));
         switch (inspection.getHazardRating()){
-            case "LOW" :
+            case "Low" :
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_low);
-            case "MEDIUM" :
+                break;
+            case "Medium" :
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_medium);
-            case "HIGH" :
+                break;
+            case "High" :
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_high);
+                break;
         }
     }
 
@@ -87,9 +93,14 @@ public class ViolationActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         adapter = new ViolationAdapter(inspection);
-        //Toast.makeText(getApplicationContext(), adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getApplicationContext(),inspection.getViolations().get(position).getfullDescription(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
