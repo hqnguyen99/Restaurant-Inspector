@@ -1,6 +1,9 @@
 package model;
 
-public class Restaurant {
+/**
+ * Stores information about a restaurant
+ */
+public class Restaurant implements Comparable<Restaurant> {
     String id;
     String name;
     String address;
@@ -8,62 +11,6 @@ public class Restaurant {
     String type;
     double latitude;
     double longitude;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
 
     public Restaurant(
             String id,
@@ -83,14 +30,48 @@ public class Restaurant {
         this.longitude = longitude;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public String toString() {
-        return "Number: " + id +
-            "\nName: " + name +
-            "\nAddress: " + address +
-            "\nCity: " + city +
-            "\nType: " + type +
-            "\nLatitude: " + latitude +
-            "\nLongitude: " + longitude;
+        return  "\nId: " + id +
+                "\nName: " + name +
+                "\nAddress: " + address +
+                "\nCity: " + city +
+                "\nType: " + type +
+                "\nLatitude: " + latitude +
+                "\nLongitude: " + longitude;
+    }
+
+    // Compare by name
+    @Override
+    public int compareTo(Restaurant other) {
+        return this.getName().compareTo(other.getName());
     }
 }
