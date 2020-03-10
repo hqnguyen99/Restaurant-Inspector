@@ -12,18 +12,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hqnguyen.sfu.UIClasses.InspectionAdapter;
-import hqnguyen.sfu.UIClasses.RestaurantAdapter;
 import model.AppData;
 import model.DataSingleton;
-import model.Inspection;
 import model.Restaurant;
-import model.Violation;
 
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";

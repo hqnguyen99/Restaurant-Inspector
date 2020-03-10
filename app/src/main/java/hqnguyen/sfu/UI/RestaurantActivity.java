@@ -2,7 +2,6 @@ package hqnguyen.sfu.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,12 +12,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Random;
 
 import hqnguyen.sfu.UIClasses.RestaurantAdapter;
-import hqnguyen.sfu.UIClasses.TestRestaurant;
 import model.AppData;
 import model.DataSingleton;
 
