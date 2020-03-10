@@ -12,15 +12,12 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import java.util.concurrent.TimeoutException;
 
 import hqnguyen.sfu.UI.R;
-import hqnguyen.sfu.UI.RestaurantActivity;
 import model.AppData;
 import model.DataSingleton;
-import model.Restaurant;
 import model.RestaurantInspectionsPair;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -98,16 +95,37 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
 
         // Generate hazard level icon based on hazard level
-//        if () {
-//            holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
-//        } else if () {
-//            holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
-//        } else if{
-//            holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
-//        }
+        switch (current.newestHazardRating()) {
+            case "Low":
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
+                break;
+            case "Moderate":
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
+                break;
+            case "High":
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
+                break;
+            default:
+                break;
+        }
 
-        // Get right date
-        //holder.textViewDateFromNow.setText(Long.toString(current.daysFromNewestInspection()));
+        // Get date with correct format
+        LocalDate inspectionDate = current.newestInspectionDate();
+        long daysFromNewestInspection  = current.daysFromNewestInspection();
+
+        if (daysFromNewestInspection == -1) {
+            holder.textViewDateFromNow.setText("None");
+        } else if (daysFromNewestInspection <= 30) {
+            holder.textViewDateFromNow.setText((int)daysFromNewestInspection);
+        } else if (daysFromNewestInspection < 365) {
+            holder.textViewDateFromNow.setText(
+                    inspectionDate.format(DateTimeFormatter.ofPattern("LLL dd"))
+            );
+        } else {
+            holder.textViewDateFromNow.setText(
+                    inspectionDate.format((DateTimeFormatter.ofPattern("LLL dd yyyy")))
+            );
+        }
     }
 
     @Override

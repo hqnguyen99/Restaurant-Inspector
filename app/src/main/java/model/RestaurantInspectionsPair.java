@@ -45,7 +45,7 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
     }
 
     public String newestHazardRating() {
-        return inspections.get(0).hazardRating;
+        return inspections.isEmpty() ? "" : inspections.get(0).hazardRating;
     }
 
     /**

@@ -3,7 +3,7 @@ build/
 /captures
 .navigation
 /gradle/*
-/.idea/*
+/.idea/
 .gradle
 *.iml
 .externalNativeBuild
@@ -11,8 +11,7 @@ build/
 # Config files
 local.properties
 
-
 # OS-specific
 .DS_Store
 Thumbs.db
-
+.cxx
