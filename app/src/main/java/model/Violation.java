@@ -22,6 +22,10 @@ public class Violation {
     public String getfullDescription(){
         return critOrNot + description + repeat;
     }
+    public String getBriefDescription(){
+        return violationNum + critOrNot;
+    }
+
 
     public ViolationType getType(){
         //food(200),pest(304,305),equipment(300),location(100), employee(400), certification(500)
