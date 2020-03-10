@@ -1,14 +1,10 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class Violation {
     int violationNum;
-    String critOrNot;
-    String description;
-    String repeat;
+    private String critOrNot;
+    private String description;
+    private String repeat;
 
     Violation(int violationNum,
               String critOrNot,
@@ -24,8 +20,36 @@ public class Violation {
 
     //getting full description into 1 string
     public String getfullDescription(){
-        String fullDescription = critOrNot + description + repeat;
-        return fullDescription;
+        return critOrNot + description + repeat;
+    }
+
+    public ViolationType getType(){
+        //food(200),pest(304,305),equipment(300),location(100), employee(400), certification(500)
+
+        if(violationNum == 304 || violationNum == 305){//in the case of pests
+            return ViolationType.PEST;
+        }
+
+        int type = violationNum / 100;
+        switch (type){
+            case 1:
+                return ViolationType.LOCATION;
+            case 2:
+                return ViolationType.FOOD;
+            case 3:
+                return ViolationType.EQUIPMENT;
+            case 4:
+                return ViolationType.EMPLOYEE;
+            case 5:
+                return ViolationType.CERTIFICATION;
+            default:
+                return null;
+        }
+
+    }
+
+    public boolean isCrit(){
+        return critOrNot == "Critical";
     }
 
     //getters and setters
