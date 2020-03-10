@@ -100,15 +100,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             Inspection newestInspection = current.getInspections().get(0);
             setViewHazardLevelIcon(holder, newestInspection);
             setViewDateFromNow(holder, newestInspection);
+        } else {
+            holder.textViewDateFromNow.setText("None");
         }
     }
 
     private void setViewDateFromNow(@NonNull RestaurantViewHolder holder, Inspection inspection) {
         int daysFromNewestInspection = (int) DateUtil.daysFromNow(inspection.getDate());
 
-        if (daysFromNewestInspection == -1) {
-            holder.textViewDateFromNow.setText("None");
-        } else if (daysFromNewestInspection <= 30) {
+        if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(daysFromNewestInspection);
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
