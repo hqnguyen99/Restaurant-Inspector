@@ -29,7 +29,7 @@ public class InspectionActivity extends AppCompatActivity {
 
     private DataSingleton data;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private InspectionAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private int restaurantPosition;
