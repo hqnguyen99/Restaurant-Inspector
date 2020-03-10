@@ -3,7 +3,7 @@ build/
 /captures
 .navigation
 /gradle/*
-/.idea/*
+/.idea/
 .gradle
 *.iml
 .externalNativeBuild
@@ -15,4 +15,3 @@ local.properties
 .DS_Store
 Thumbs.db
 .cxx
-
