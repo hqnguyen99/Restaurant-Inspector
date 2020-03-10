@@ -74,9 +74,22 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     @Override
     public void onBindViewHolder(@NonNull InspectionViewHolder holder, int position) {
 
-        holder.textViewNumberOfCriticalIssues.setText(String.valueOf(inspectionsList.get(position).getNumCrit()));
-        holder.textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspectionsList.get(position).getNumNonCrit()));
-        holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
+        Inspection inspection = inspectionsList.get(position);
+        holder.textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
+        holder.textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
+        switch (inspection.getHazardRating()){
+            case LOW:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
+                break;
+            case MODERATE:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
+                break;
+            case HIGH:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
+                break;
+
+        }
+
     }
 
     @Override

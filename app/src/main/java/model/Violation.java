@@ -20,10 +20,10 @@ public class Violation {
 
     //getting full description into 1 string
     public String getfullDescription(){
-        return critOrNot + description + repeat;
+        return critOrNot + ", " + description + ", " + repeat;
     }
     public String getBriefDescription(){
-        return violationNum + critOrNot;
+        return violationNum + ", " + critOrNot;
     }
 
 
@@ -53,7 +53,7 @@ public class Violation {
     }
 
     public boolean isCrit(){
-        return critOrNot == "Critical";
+        return critOrNot.equals("Critical");
     }
 
     //getters and setters
