@@ -1,5 +1,6 @@
 package hqnguyen.sfu.UIClasses;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -14,9 +16,10 @@ import java.util.List;
 import hqnguyen.sfu.UI.R;
 import model.AppData;
 import model.DataSingleton;
+import model.DateUtil;
 import model.Inspection;
-import model.RestaurantInspectionsPair;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private DataSingleton data;
     private List<Inspection> inspectionsList;
@@ -73,7 +76,9 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
 
     @Override
     public void onBindViewHolder(@NonNull InspectionViewHolder holder, int position) {
-
+        holder.textViewDateOfInspection.setText(
+                DateUtil.MONTH_DAY_YEAR.getDateString(inspectionsList.get(position).getDate())
+        );
         holder.textViewNumberOfCriticalIssues.setText(String.valueOf(inspectionsList.get(position).getNumCrit()));
         holder.textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspectionsList.get(position).getNumNonCrit()));
         holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);

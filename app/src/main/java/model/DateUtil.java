@@ -33,6 +33,7 @@ public enum DateUtil {
         }
     };
 
+    abstract public String getDateString(int dateInt);
     abstract public String getDateString(LocalDate date);
 
     public static long daysFromNow(int dateInt) {

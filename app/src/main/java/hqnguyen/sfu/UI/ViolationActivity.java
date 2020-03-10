@@ -2,11 +2,13 @@ package hqnguyen.sfu.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,8 +24,10 @@ import hqnguyen.sfu.UIClasses.InspectionAdapter;
 import hqnguyen.sfu.UIClasses.ViolationAdapter;
 import model.AppData;
 import model.DataSingleton;
+import model.DateUtil;
 import model.Inspection;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ViolationActivity extends AppCompatActivity {
     private static final String INSPECTION_POSITION = "inspection position";
     private static final String RESTAURANT_POSITION = "restaurant position";
@@ -70,16 +74,17 @@ public class ViolationActivity extends AppCompatActivity {
         inspection = data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
         Log.i("msg",String.valueOf(inspectionPosition));
 
-        textViewInspectionDate.setText(String.valueOf(inspection.getDate()));
+        textViewInspectionDate.setText(DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
         textViewInspectionType.setText(inspection.getInspType());
         textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
         textViewHarzardLevel.setText(String.valueOf(inspection.getHazardRating()));
+
         switch (inspection.getHazardRating()){
             case "Low" :
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_low);
                 break;
-            case "Medium" :
+            case "Moderate" :
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_medium);
                 break;
             case "High" :
