@@ -95,7 +95,7 @@ public class ViolationActivity extends AppCompatActivity {
         adapter = new ViolationAdapter(inspection);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new ViolationAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(getApplicationContext(),inspection.getViolations().get(position).getfullDescription(),Toast.LENGTH_LONG).show();
