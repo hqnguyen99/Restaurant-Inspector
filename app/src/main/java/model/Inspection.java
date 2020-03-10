@@ -52,8 +52,18 @@ public class Inspection implements Comparable<Inspection> {
         return numNonCrit;
     }
 
-    public String getHazardRating() {
-        return hazardRating;
+    public HazardRating getHazardRating() {
+        switch(hazardRating){
+            case "Low" :
+                return HazardRating.LOW;
+            case "Moderate" :
+                return HazardRating.MODERATE;
+            case "High" :
+                return HazardRating.HIGH;
+            default:
+                return null;
+        }
+
     }
 
     public List<Violation> getViolations() {
