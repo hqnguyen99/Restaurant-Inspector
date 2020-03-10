@@ -123,13 +123,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     private void setViewHazardLevelIcon(@NonNull RestaurantViewHolder holder, Inspection inspection) {
         switch (inspection.getHazardRating()) {
-            case "Low":
+            case LOW:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
                 break;
-            case "Moderate":
+            case MODERATE:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
                 break;
-            case "High":
+            case HIGH:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
                 break;
         }

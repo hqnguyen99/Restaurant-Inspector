@@ -81,13 +81,13 @@ public class ViolationActivity extends AppCompatActivity {
         textViewHarzardLevel.setText(String.valueOf(inspection.getHazardRating()));
 
         switch (inspection.getHazardRating()){
-            case "Low" :
+            case LOW:
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_low);
                 break;
-            case "Moderate" :
+            case MODERATE:
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_medium);
                 break;
-            case "High" :
+            case HIGH:
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_high);
                 break;
         }

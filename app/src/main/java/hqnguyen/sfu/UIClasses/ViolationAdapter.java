@@ -1,5 +1,6 @@
 package hqnguyen.sfu.UIClasses;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +66,36 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     @Override
     public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position) {
 
-        holder.briefDescription.setText(violationList.get(position).getfullDescription());
-        holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_critical);
-        holder.natureIcon.setImageResource(R.drawable.violation_nature_equipment);
+        Violation violation = violationList.get(position);
+        holder.briefDescription.setText(violation.getBriefDescription());
+        switch(violation.getType()){
+            case FOOD:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_food);
+                break;
+            case PEST:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_pest);
+                break;
+            case EMPLOYEE:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_emloyee);
+                break;
+            case LOCATION:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_location);
+                break;
+            case EQUIPMENT:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_equipment);
+                break;
+            case CERTIFICATION:
+                holder.natureIcon.setImageResource(R.drawable.violation_nature_certification);
+                break;
+        }
+
+        if(violation.isCrit()){
+            holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_critical);
+        }
+        else{
+            holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_noncritical);
+        }
+
     }
 
     @Override
