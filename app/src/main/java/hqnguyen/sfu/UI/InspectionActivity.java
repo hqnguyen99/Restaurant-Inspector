@@ -25,9 +25,7 @@ import model.Restaurant;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
-
     private DataSingleton data;
-
     private int restaurantPosition;
 
     @Override
