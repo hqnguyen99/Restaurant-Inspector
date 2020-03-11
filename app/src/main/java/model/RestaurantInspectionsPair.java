@@ -1,11 +1,5 @@
 package model;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,43 +36,6 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         inspections.add(inspection);
         sort(inspections, Collections.<Inspection>reverseOrder());
         numViolations += inspection.getNumCrit() + inspection.numNonCrit;
-    }
-
-    public String newestHazardRating() {
-        return inspections.isEmpty() ? "" : inspections.get(0).hazardRating;
-    }
-
-    /**
-     * @return null if list of inspections is empty
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public LocalDate newestInspectionDate() {
-        if (inspections.isEmpty()) {
-            return null;
-        }
-
-        int remainder = inspections.get(0).getDate();
-        int year = remainder / 10000;
-        remainder %= 10000;
-        int month = remainder / 100;
-        remainder %= 100;
-        int dayOfMonth = remainder;
-
-        return LocalDate.of(year, month, dayOfMonth);
-    }
-
-    /**
-     * @return -1 if no inspection date is found
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public long daysFromNewestInspection() {
-        LocalDate inspectionDate = newestInspectionDate();
-
-        if (inspectionDate == null) {
-            return -1;
-        }
-
-        return ChronoUnit.DAYS.between(inspectionDate, LocalDate.now());
     }
 
     @Override

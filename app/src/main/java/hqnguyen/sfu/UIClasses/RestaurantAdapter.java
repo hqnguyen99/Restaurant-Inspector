@@ -1,6 +1,5 @@
 package hqnguyen.sfu.UIClasses;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 import hqnguyen.sfu.UI.R;
 import model.AppData;
 import model.DataSingleton;
+import model.DateUtil;
+import model.Inspection;
 import model.RestaurantInspectionsPair;
 
+import static android.os.Build.VERSION_CODES.O;
+
+@RequiresApi(O)
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private DataSingleton data;
 
@@ -73,7 +75,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return restaurantViewHolder;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         RestaurantInspectionsPair current = data.getEntryAtIndex(position);
@@ -84,6 +85,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         // Random generate restaurant icon
         Random rand = new Random();
         int n = rand.nextInt(4);
+
         if (n == 0){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
         }else if (n == 1){
@@ -94,37 +96,42 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
         }
 
-        // Generate hazard level icon based on hazard level
-        switch (current.newestHazardRating()) {
-            case "Low":
-                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
-                break;
-            case "Moderate":
-                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
-                break;
-            case "High":
-                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
-                break;
-            default:
-                break;
-        }
-
-        // Get date with correct format
-        LocalDate inspectionDate = current.newestInspectionDate();
-        long daysFromNewestInspection  = current.daysFromNewestInspection();
-
-        if (daysFromNewestInspection == -1) {
+        if (!current.getInspections().isEmpty()) {
+            Inspection newestInspection = current.getInspections().get(0);
+            setViewHazardLevelIcon(holder, newestInspection);
+            setViewDateFromNow(holder, newestInspection);
+        } else {
             holder.textViewDateFromNow.setText("None");
-        } else if (daysFromNewestInspection <= 30) {
-            holder.textViewDateFromNow.setText((int)daysFromNewestInspection);
+        }
+    }
+
+    private void setViewDateFromNow(@NonNull RestaurantViewHolder holder, Inspection inspection) {
+        int daysFromNewestInspection = (int) DateUtil.daysFromNow(inspection.getDate());
+
+        if (daysFromNewestInspection <= 30) {
+            holder.textViewDateFromNow.setText(daysFromNewestInspection);
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
-                    inspectionDate.format(DateTimeFormatter.ofPattern("LLL dd"))
+                    DateUtil.MONTH_DAY.getDateString(inspection.getDate())
             );
         } else {
             holder.textViewDateFromNow.setText(
-                    inspectionDate.format((DateTimeFormatter.ofPattern("LLL dd yyyy")))
+                    DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
             );
+        }
+    }
+
+    private void setViewHazardLevelIcon(@NonNull RestaurantViewHolder holder, Inspection inspection) {
+        switch (inspection.getHazardRating()) {
+            case LOW:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
+                break;
+            case MODERATE:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_medium);
+                break;
+            case HIGH:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
+                break;
         }
     }
 
