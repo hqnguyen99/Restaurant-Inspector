@@ -21,6 +21,11 @@ import model.RestaurantInspectionsPair;
 
 import static android.os.Build.VERSION_CODES.O;
 
+
+/**
+ *  Adapter for restaurant recycler view
+ */
+
 @RequiresApi(O)
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private DataSingleton data;

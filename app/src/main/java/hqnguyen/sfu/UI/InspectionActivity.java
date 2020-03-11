@@ -25,6 +25,11 @@ import model.Inspection;
 import model.Restaurant;
 import model.Violation;
 
+
+/**
+ *  Show data of inspections for a single restaurant by recycler view
+ */
+
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
@@ -53,10 +58,12 @@ public class InspectionActivity extends AppCompatActivity {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_name);
         TextView textViewRestaurantAddress = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_address);
-        TextView textViewRestaurantCoords = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_coords);
+        TextView textViewRestaurantLatitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
+        TextView textViewRestaurantLongitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
         textViewRestaurantName.setText(restaurant.getName());
         textViewRestaurantAddress.setText(restaurant.getAddress());
-        textViewRestaurantCoords.setText(restaurant.getLatitude() + " " + restaurant.getLongitude());
+        textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
+        textViewRestaurantLongitude.setText("" + restaurant.getLongitude());
     }
 
     private void extractDataFromIntent() {

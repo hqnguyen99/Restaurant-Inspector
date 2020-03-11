@@ -19,6 +19,10 @@ import model.DataSingleton;
 import model.DateUtil;
 import model.Inspection;
 
+/**
+ *  Adapter for inspection recycler view
+ */
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private DataSingleton data;

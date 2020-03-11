@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/inspection_hazard_level_icon"
             android:id="@+id/imageView_inspection_activity_hazard_level_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -22,7 +23,7 @@
             android:id="@+id/textView_inspection_activity_critical_issue_found_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Critical issue found: "
+            android:text="@string/critical_issue_found"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_alignParentTop="true"
@@ -33,7 +34,6 @@
             android:id="@+id/textView_inspection_activity_critical_issue_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number"
             android:textSize="20sp"
             android:layout_toEndOf="@+id/textView_inspection_activity_critical_issue_found_title" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/textView_inspection_activity_noncritical_issue_found_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Non-Critical issue found: "
+            android:text="@string/non_critical_issue_found"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_below="@+id/textView_inspection_activity_critical_issue_found_title"
@@ -52,16 +52,15 @@
             android:id="@+id/textView_inspection_activity_noncritical_issue_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number"
             android:textSize="20sp"
             android:layout_below="@+id/textView_inspection_activity_critical_issue_found_title"
             android:layout_toEndOf="@+id/textView_inspection_activity_noncritical_issue_found_title" />
 
         <TextView
-            android:id="@+id/textView_inspection_activity_date_title"
+            android:id="@+id/textView_inspection_activity_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Last inspection: "
+            android:text="@string/last_inspection"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_below="@+id/textView_inspection_activity_noncritical_issue_found_title"
@@ -69,13 +68,12 @@
             android:layout_marginStart="8dp"/>
 
         <TextView
-            android:id="@+id/textView_inspection_activity_date"
+            android:id="@+id/textView_inspection_activity_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
             android:textSize="20sp"
             android:layout_below="@+id/textView_inspection_activity_noncritical_issue_found_title"
-            android:layout_toEndOf="@+id/textView_inspection_activity_date_title" />
+            android:layout_toEndOf="@+id/textView_inspection_activity_date" />
 
     </RelativeLayout>>
 

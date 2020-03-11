@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="10dp"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
@@ -11,30 +11,32 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/restaurant_icon"
             android:id="@+id/imageView_restaurant_activity_restaurant_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="2dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"/>
 
 
         <ImageView
+            android:contentDescription="@string/hazard_level_icon"
             android:id="@+id/imageView_restaurant_activity_warning_level"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:padding="2dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/textView_restaurant_activity_restaurant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restaurant Name"
+            android:text="@string/restaurant_name"
             android:textSize="20sp"
-            android:textStyle="bold"
+
             android:textColor="@android:color/black"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
@@ -44,7 +46,7 @@
             android:id="@+id/textView_restaurant_activity_issue_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="# Issue Found: "
+            android:text="@string/issue_found"
             android:textSize="15sp"
             android:layout_below="@+id/textView_restaurant_activity_restaurant_name"
             android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
@@ -54,7 +56,7 @@
             android:id="@+id/textView_restaurant_activity_issue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="# issue"
+            android:text="@string/issue"
             android:textSize="15sp"
             android:layout_below="@+id/textView_restaurant_activity_restaurant_name"
             android:layout_toEndOf="@+id/textView_restaurant_activity_issue_title" />
@@ -65,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView_restaurant_activity_issue_title"
             android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
-            android:text="Last Inspection: "
+            android:text="@string/last_inspection"
             android:layout_marginStart="8dp"/>
 
         <TextView
@@ -74,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView_restaurant_activity_issue_title"
             android:layout_toEndOf="@+id/textView_restaurant_activity_date_title"
-            android:text="How long ago" />
+            android:text="@string/how_long_ago" />
     </RelativeLayout>>
 
 </androidx.cardview.widget.CardView>
