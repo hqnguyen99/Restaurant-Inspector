@@ -14,7 +14,7 @@ public class Violation {
     }
 
     //getting full description into 1 string
-    public String getfullDescription(){
+    public String getFullDescription(){
         return critOrNot + ", " + description + ", " + repeat;
     }
     public String getBriefDescription(){

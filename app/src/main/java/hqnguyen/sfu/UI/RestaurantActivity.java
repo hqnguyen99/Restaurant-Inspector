@@ -24,7 +24,6 @@ import model.DataSingleton;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RestaurantActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

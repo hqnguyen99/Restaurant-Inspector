@@ -26,8 +26,8 @@ import model.Inspection;
 public class InspectionAdapter
         extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private List<Inspection> inspectionsList;
-
     private OnItemClickListener inspectionListener;
+    
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -38,7 +38,6 @@ public class InspectionAdapter
 
 
     public static class InspectionViewHolder extends RecyclerView.ViewHolder{
-
         public ImageView imageViewHazardLevelIcon;
         public TextView textViewDateOfInspection;
         public TextView textViewNumCriticalIssues;
@@ -68,6 +67,7 @@ public class InspectionAdapter
             });
         }
     }
+
     public InspectionAdapter(int restaurantPosition){
         DataSingleton data = AppData.INSTANCE;
         inspectionsList= data.getEntryAtIndex(restaurantPosition).getInspections();

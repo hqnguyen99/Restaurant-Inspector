@@ -24,13 +24,9 @@ public class InspectionManager {
         return inspectionList;
     }
 
-    public void add(Inspection inspection) {
+    private void add(Inspection inspection) {
         inspectionList.add(inspection);
         sort(inspectionList);
-    }
-
-    public void remove(Inspection inspection) {
-        inspectionList.remove(inspection);
     }
 
     private void setListFromFile(BufferedReader reader) {

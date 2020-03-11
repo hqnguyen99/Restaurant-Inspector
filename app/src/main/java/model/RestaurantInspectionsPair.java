@@ -35,7 +35,7 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
     void addInspection(Inspection inspection) {
         inspections.add(inspection);
         sort(inspections, Collections.<Inspection>reverseOrder());
-        numViolations += inspection.getNumCrit() + inspection.numNonCrit;
+        numViolations += inspection.numCrit + inspection.numNonCrit;
     }
 
     @Override

@@ -5,12 +5,12 @@ package model;
  */
 public class Restaurant implements Comparable<Restaurant> {
     String id;
-    String name;
-    String address;
-    String city;
-    String type;
-    double latitude;
-    double longitude;
+    private String name;
+    private String address;
+    private String city;
+    private String type;
+    private double latitude;
+    private double longitude;
 
     public Restaurant(String id, String name, String address, String city,
                       String type, double latitude, double longitude) {

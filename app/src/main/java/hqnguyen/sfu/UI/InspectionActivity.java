@@ -41,12 +41,12 @@ public class InspectionActivity extends AppCompatActivity {
         data = AppData.INSTANCE;
 
         extractDataFromIntent();
-        setupRestaurantInfor();
+        setupRestaurantInfo();
         buildRecyclerView();
 
     }
 
-    private void setupRestaurantInfor() {
+    private void setupRestaurantInfo() {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName =
             findViewById(R.id.textView_inspection_activity_restaurant_name);

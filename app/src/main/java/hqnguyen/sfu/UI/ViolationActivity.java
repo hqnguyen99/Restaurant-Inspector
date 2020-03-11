@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,12 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import hqnguyen.sfu.UIClasses.InspectionAdapter;
 import hqnguyen.sfu.UIClasses.ViolationAdapter;
 import model.AppData;
 import model.DataSingleton;
@@ -40,8 +35,6 @@ public class ViolationActivity extends AppCompatActivity {
     private int restaurantPosition;
     private int inspectionPosition;
     private Inspection inspection;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +109,7 @@ public class ViolationActivity extends AppCompatActivity {
             public void onItemClick(int position) {
             Toast.makeText(
                 getApplicationContext(),
-                inspection.getViolations().get(position).getfullDescription(),
+                inspection.getViolations().get(position).getFullDescription(),
                 Toast.LENGTH_LONG).show();
             }
         });

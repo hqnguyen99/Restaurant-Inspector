@@ -13,18 +13,18 @@ import static java.util.Collections.sort;
  * Contains the data of all restaurants.
  * Loads data into underlying its ArrayList if initialized with a csv filepath
  */
-public class RestaurantManager {
+ class RestaurantManager {
     private List<Restaurant> restaurantList = new ArrayList<>();
 
     RestaurantManager(BufferedReader reader) {
         setListFromFile(reader);
     }
 
-    public List<Restaurant> getRestaurantList() {
+    List<Restaurant> getRestaurantList() {
         return restaurantList;
     }
 
-    public void add(Restaurant restaurant) {
+    private void add(Restaurant restaurant) {
         restaurantList.add(restaurant);
         sort(restaurantList);
     }

@@ -7,22 +7,15 @@ import java.util.List;
  */
 public class Inspection implements Comparable<Inspection> {
     String id;
-    int date;
-    String inspType;
+    private int date;
+    private String inspType;
     int numCrit;
     int numNonCrit;
-    String hazardRating;
-    List<Violation> violations;
+    private String hazardRating;
+    private List<Violation> violations;
 
-    public Inspection(
-            String id,
-            int inspectionData,
-            String inspType,
-            int numCrit,
-            int numNonCrit,
-            String hazardRating,
-            List<Violation> violations
-    ) {
+    public Inspection(String id, int inspectionData, String inspType, int numCrit,
+                      int numNonCrit, String hazardRating, List<Violation> violations) {
         this.id = id;
         this.date = inspectionData;
         this.inspType = inspType;
