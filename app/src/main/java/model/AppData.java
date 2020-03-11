@@ -53,19 +53,24 @@ public enum AppData implements DataSingleton{
             }
 
             entries = new LinkedHashMap<>();
+            createNewPairs();
+            insertInspectionsToPairs();
+        }
+
+        private void createNewPairs() {
             List<Restaurant> restaurants = restaurantManager.getRestaurantList();
 
-            // Create new Pairs for each restaurant in restaurantManager's underlying ArrayList
             for (int i = 0; i < restaurants.size(); i++) {
                 Restaurant r = restaurants.get(i);
                 entries.put(r.id, new RestaurantInspectionsPair(
                     r, new ArrayList<Inspection>())
                 );
             }
+        }
 
+        private void insertInspectionsToPairs() {
             List<Inspection> inspections = inspectionManager.getInspectionList();
 
-            // Put inspections into the created Pairs using the restaurant's id as the key
             for (Inspection i : inspections) {
                 if (entries.containsKey(i.id)) {
                     Objects.requireNonNull(entries.get(i.id)).addInspection(i);
