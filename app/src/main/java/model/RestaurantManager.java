@@ -43,13 +43,13 @@ public class RestaurantManager {
                 }
 
                 add(new Restaurant(
-                        values[0],
-                        values[1],
-                        values[2],
-                        values[3],
-                        values[4],
-                        Double.parseDouble(values[5]),
-                        Double.parseDouble(values[6])
+                    values[0],
+                    values[1],
+                    values[2],
+                    values[3],
+                    values[4],
+                    Double.parseDouble(values[5]),
+                    Double.parseDouble(values[6])
                 ));
             }
         } catch (IOException e) {

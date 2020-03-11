@@ -63,7 +63,6 @@ public class Inspection implements Comparable<Inspection> {
             default:
                 return null;
         }
-
     }
 
     public List<Violation> getViolations() {
@@ -90,7 +89,6 @@ public class Inspection implements Comparable<Inspection> {
 
     private String getViolationNumsString() {
         StringBuilder result = new StringBuilder();
-
         final int NUM_VIOLATIONS = violations.size();
 
         for (int i = 0; i < NUM_VIOLATIONS; i++) {

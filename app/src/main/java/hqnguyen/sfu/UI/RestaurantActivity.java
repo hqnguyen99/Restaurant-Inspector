@@ -42,8 +42,8 @@ public class RestaurantActivity extends AppCompatActivity {
         InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
         data.init(
-                new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
-                new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
+            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
+            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
         );
     }
 
@@ -59,8 +59,9 @@ public class RestaurantActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = InspectionActivity.makeLaunchIntent(RestaurantActivity.this, position);
-                startActivity(intent);
+            Intent intent =
+                InspectionActivity.makeLaunchIntent(RestaurantActivity.this, position);
+            startActivity(intent);
             }
         });
     }

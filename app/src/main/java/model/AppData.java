@@ -59,8 +59,8 @@ public enum AppData implements DataSingleton{
             for (int i = 0; i < restaurants.size(); i++) {
                 Restaurant r = restaurants.get(i);
                 entries.put(r.id, new RestaurantInspectionsPair(
-                        r, new ArrayList<Inspection>()
-                ));
+                    r, new ArrayList<Inspection>())
+                );
             }
 
             List<Inspection> inspections = inspectionManager.getInspectionList();
@@ -71,7 +71,6 @@ public enum AppData implements DataSingleton{
                     Objects.requireNonNull(entries.get(i.id)).addInspection(i);
                 }
             }
-
         }
 
         private void generateKeyList() {
@@ -81,6 +80,5 @@ public enum AppData implements DataSingleton{
 
             keyList = new ArrayList<>(entries.keySet());
         }
-
     }
 }

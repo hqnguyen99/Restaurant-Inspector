@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,10 +48,15 @@ public class InspectionActivity extends AppCompatActivity {
 
     private void setupRestaurantInfor() {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
-        TextView textViewRestaurantName = findViewById(R.id.textView_inspection_activity_restaurant_name);
-        TextView textViewRestaurantAddress = findViewById(R.id.textView_inspection_activity_restaurant_address);
-        TextView textViewRestaurantLatitude = findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
-        TextView textViewRestaurantLongitude = findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
+        TextView textViewRestaurantName =
+            findViewById(R.id.textView_inspection_activity_restaurant_name);
+        TextView textViewRestaurantAddress =
+            findViewById(R.id.textView_inspection_activity_restaurant_address);
+        TextView textViewRestaurantLatitude =
+            findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
+        TextView textViewRestaurantLongitude =
+            findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
+
         textViewRestaurantName.setText(restaurant.getName());
         textViewRestaurantAddress.setText(restaurant.getAddress());
         textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
@@ -76,8 +78,10 @@ public class InspectionActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int inspectionPosition) {
-                Intent intent = ViolationActivity.makeLaunchIntent(InspectionActivity.this, restaurantPosition, inspectionPosition );
-                startActivity(intent);
+            Intent intent = ViolationActivity.makeLaunchIntent(
+                InspectionActivity.this, restaurantPosition, inspectionPosition
+            );
+            startActivity(intent);
             }
         });
     }

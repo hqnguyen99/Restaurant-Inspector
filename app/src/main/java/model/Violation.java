@@ -15,7 +15,6 @@ public class Violation {
         this.critOrNot = critOrNot;
         this.description = description;
         this.repeat = repeat;
-
     }
 
     //getting full description into 1 string
@@ -26,11 +25,12 @@ public class Violation {
         return violationNum + ", " + critOrNot;
     }
 
-
     public ViolationType getType(){
-        //food(200),pest(304,305),equipment(300),location(100), employee(400), certification(500)
+        // location(100), food(200), equipment(300),
+        // pest(304,305), employee(399), certification(500)
 
-        if(violationNum == 304 || violationNum == 305){//in the case of pests
+        // in the case of pests
+        if(violationNum == 304 || violationNum == 305){
             return ViolationType.PEST;
         }
 
@@ -49,7 +49,6 @@ public class Violation {
             default:
                 return null;
         }
-
     }
 
     public boolean isCrit(){

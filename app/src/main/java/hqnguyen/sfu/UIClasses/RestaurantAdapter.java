@@ -30,8 +30,8 @@ import static android.os.Build.VERSION_CODES.O;
 @RequiresApi(O)
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private DataSingleton data;
-
     private OnItemClickListener restaurantListener;
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -49,11 +49,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            textViewRestaurantName = itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
-            textViewNumberFound = itemView.findViewById(R.id.textView_restaurant_activity_issue);
-            textViewDateFromNow = itemView.findViewById(R.id.textView_restaurant_activity_date);
-            imageViewRestaurantIcon = itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
-            imageViewHazardLevelIcon = itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
+            textViewRestaurantName =
+                    itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
+            textViewNumberFound =
+                    itemView.findViewById(R.id.textView_restaurant_activity_issue);
+            textViewDateFromNow =
+                    itemView.findViewById(R.id.textView_restaurant_activity_date);
+            imageViewRestaurantIcon =
+                    itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
+            imageViewHazardLevelIcon =
+                    itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,7 +81,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
+        View view = LayoutInflater.from(
+            parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
         return new RestaurantViewHolder(view, restaurantListener);
     }
 
@@ -93,11 +99,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         if (n == 0){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
-        }else if (n == 1){
+        } else if (n == 1){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
-        }else if (n == 2){
+        } else if (n == 2){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
-        }else if(n == 3){
+        } else if(n == 3){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
         }
 
@@ -115,15 +121,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(
-                    String.format(Locale.ENGLISH,"%d days ago", daysFromNewestInspection)
+                String.format(Locale.ENGLISH,"%d days ago", daysFromNewestInspection)
             );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
-                    DateUtil.MONTH_DAY.getDateString(inspection.getDate())
+                DateUtil.MONTH_DAY.getDateString(inspection.getDate())
             );
         } else {
             holder.textViewDateFromNow.setText(
-                    DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
+                DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
             );
         }
     }

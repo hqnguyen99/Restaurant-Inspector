@@ -23,7 +23,8 @@ import model.Inspection;
  *  Adapter for inspection recycler view
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
+public class InspectionAdapter
+        extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private List<Inspection> inspectionsList;
 
     private OnItemClickListener inspectionListener;
@@ -40,15 +41,19 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
 
         public ImageView imageViewHazardLevelIcon;
         public TextView textViewDateOfInspection;
-        public TextView textViewNumberOfCriticalIssues;
-        public TextView textViewNumberOfNonCriticalIssues;
+        public TextView textViewNumCriticalIssues;
+        public TextView textViewNumNonCriticalIssues;
 
         public InspectionViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            imageViewHazardLevelIcon = itemView.findViewById(R.id.imageView_inspection_activity_hazard_level_icon);
-            textViewDateOfInspection = itemView.findViewById(R.id.textView_inspection_activity_date_title);
-            textViewNumberOfCriticalIssues = itemView.findViewById(R.id.textView_inspection_activity_critical_issue_found);
-            textViewNumberOfNonCriticalIssues = itemView.findViewById(R.id.textView_inspection_activity_noncritical_issue_found);
+            imageViewHazardLevelIcon =
+                itemView.findViewById(R.id.imageView_inspection_activity_hazard_level_icon);
+            textViewDateOfInspection =
+                itemView.findViewById(R.id.textView_inspection_activity_date_title);
+            textViewNumCriticalIssues =
+                itemView.findViewById(R.id.textView_inspection_activity_critical_issue_found);
+            textViewNumNonCriticalIssues =
+                itemView.findViewById(R.id.textView_inspection_activity_noncritical_issue_found);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +76,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     @NonNull
     @Override
     public InspectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inspection_item,parent, false);
+        View view = LayoutInflater.from(
+            parent.getContext()).inflate(R.layout.inspection_item,parent, false);
         return new InspectionViewHolder(view, inspectionListener);
     }
 
@@ -80,10 +86,12 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         Inspection inspection = inspectionsList.get(position);
 
         holder.textViewDateOfInspection.setText(
-                DateUtil.MONTH_DAY_YEAR.getDateString(inspectionsList.get(position).getDate())
+            DateUtil.MONTH_DAY_YEAR.getDateString(inspectionsList.get(position).getDate())
         );
-        holder.textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
-        holder.textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
+        holder.textViewNumCriticalIssues.setText(
+            String.valueOf(inspection.getNumCrit()));
+        holder.textViewNumNonCriticalIssues.setText(
+            String.valueOf(inspection.getNumNonCrit()));
 
         switch (inspection.getHazardRating()){
             case LOW:

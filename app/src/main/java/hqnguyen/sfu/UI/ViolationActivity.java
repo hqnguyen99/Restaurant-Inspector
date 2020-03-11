@@ -65,21 +65,29 @@ public class ViolationActivity extends AppCompatActivity {
     }
 
     private void setupInspectionDetail() {
-        TextView textViewInspectionDate = findViewById(R.id.textView_violation_activity_full_date);
-        TextView textViewInspectionType = findViewById(R.id.textView_violation_activity_inspection_type);
-        TextView textViewNumberOfCriticalIssues = findViewById(R.id.textView_violation_activity_critical_issues_found);
-        TextView textViewNumberOfNonCriticalIssues = findViewById(R.id.textView_violation_activity_noncritical_issues_found);
-        TextView textViewHarzardLevel = findViewById(R.id.textView_violation_activity_hazard_level_words);
-        ImageView imageViewHazardLevel = findViewById(R.id.imageView_violation_activity_hazard_level_icon);
+        TextView textViewInspectionDate =
+            findViewById(R.id.textView_violation_activity_full_date);
+        TextView textViewInspectionType =
+            findViewById(R.id.textView_violation_activity_inspection_type);
+        TextView textViewNumberOfCriticalIssues =
+            findViewById(R.id.textView_violation_activity_critical_issues_found);
+        TextView textViewNumberOfNonCriticalIssues =
+            findViewById(R.id.textView_violation_activity_noncritical_issues_found);
+        TextView textViewHazardLevel =
+            findViewById(R.id.textView_violation_activity_hazard_level_words);
+        ImageView imageViewHazardLevel =
+            findViewById(R.id.imageView_violation_activity_hazard_level_icon);
 
-        inspection = data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
+        inspection =
+            data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
         Log.i("msg",String.valueOf(inspectionPosition));
 
-        textViewInspectionDate.setText(DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
+        textViewInspectionDate.setText(
+            DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
         textViewInspectionType.setText(inspection.getInspType());
         textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
-        textViewHarzardLevel.setText(String.valueOf(inspection.getHazardRating()));
+        textViewHazardLevel.setText(String.valueOf(inspection.getHazardRating()));
 
         switch (inspection.getHazardRating()){
             case LOW:
@@ -106,13 +114,17 @@ public class ViolationActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new ViolationAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getApplicationContext(),inspection.getViolations().get(position).getfullDescription(),Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                getApplicationContext(),
+                inspection.getViolations().get(position).getfullDescription(),
+                Toast.LENGTH_LONG).show();
             }
         });
     }
 
 
-    public static Intent makeLaunchIntent(Context c, int restaurantPosition, int inspectionPosition){
+    public static Intent makeLaunchIntent(Context c, int restaurantPosition,
+                                          int inspectionPosition) {
         Intent intent = new Intent(c, ViolationActivity.class);
         intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         intent.putExtra(INSPECTION_POSITION, inspectionPosition);

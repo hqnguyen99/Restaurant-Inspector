@@ -10,9 +10,9 @@ import android.os.Handler;
  *  Splash screen to welcome user
  */
 public class MainActivity extends AppCompatActivity {
-
     Runnable runnable;
     private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
-                startActivity(intent);
-                finish();
+            Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
+            startActivity(intent);
+            finish();
             }
         };
         handler.postDelayed(runnable, 3000);

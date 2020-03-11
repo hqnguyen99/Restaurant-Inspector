@@ -18,12 +18,10 @@ import model.Violation;
 /**
  *  Adapter for violation recycler view
  */
-
 public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
-
     private List<Violation> violationList;
-
     private OnItemClickListener violationListener;
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -31,6 +29,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     public void setOnItemClickListener(OnItemClickListener listener){
         violationListener = listener;
     }
+
     public static class ViolationViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView natureIcon;
@@ -38,9 +37,12 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         public TextView briefDescription;
         public ViolationViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            natureIcon = (ImageView) itemView.findViewById(R.id.imageView_violation_activity_violation_nature_icon);
-            severityLevelIcon = (ImageView) itemView.findViewById(R.id.imageView_violation_activity_violation_severity_icon);
-            briefDescription = (TextView) itemView.findViewById(R.id.textView_violation_activity_brief_description);
+            natureIcon =
+                itemView.findViewById(R.id.imageView_violation_activity_violation_nature_icon);
+            severityLevelIcon =
+                itemView.findViewById(R.id.imageView_violation_activity_violation_severity_icon);
+            briefDescription =
+                itemView.findViewById(R.id.textView_violation_activity_brief_description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -55,6 +57,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
             });
         }
     }
+
     public ViolationAdapter(Inspection inspection){
         violationList = inspection.getViolations();
     }
@@ -62,9 +65,9 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     @NonNull
     @Override
     public ViolationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.violation_item,parent,false);
-        ViolationViewHolder violationViewHolder = new ViolationViewHolder(view, violationListener);
-        return violationViewHolder;
+        View view = LayoutInflater.from(
+            parent.getContext()).inflate(R.layout.violation_item,parent,false);
+        return new ViolationViewHolder(view, violationListener);
     }
 
     @Override
@@ -95,11 +98,9 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
 
         if(violation.isCrit()){
             holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_critical);
-        }
-        else{
+        } else {
             holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_noncritical);
         }
-
     }
 
     @Override
