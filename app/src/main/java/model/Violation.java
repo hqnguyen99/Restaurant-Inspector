@@ -6,11 +6,7 @@ public class Violation {
     private String description;
     private String repeat;
 
-    Violation(int violationNum,
-              String critOrNot,
-              String description,
-              String repeat
-    ) {
+    Violation(int violationNum, String critOrNot, String description, String repeat) {
         this.violationNum = violationNum;
         this.critOrNot = critOrNot;
         this.description = description;

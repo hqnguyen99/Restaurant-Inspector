@@ -12,15 +12,8 @@ public class Restaurant implements Comparable<Restaurant> {
     double latitude;
     double longitude;
 
-    public Restaurant(
-            String id,
-            String name,
-            String address,
-            String city,
-            String type,
-            double latitude,
-            double longitude
-    ) {
+    public Restaurant(String id, String name, String address, String city,
+                      String type, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.address = address;
