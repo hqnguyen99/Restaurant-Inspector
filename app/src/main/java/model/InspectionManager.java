@@ -16,9 +16,6 @@ import static java.util.Collections.sort;
 public class InspectionManager {
     private List<Inspection> inspectionList = new ArrayList<>();
 
-    InspectionManager () {
-    }
-
     InspectionManager(BufferedReader reader) {
         setListFromFile(reader);
     }
