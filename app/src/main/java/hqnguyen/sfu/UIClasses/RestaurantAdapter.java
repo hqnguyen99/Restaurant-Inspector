@@ -1,5 +1,6 @@
 package hqnguyen.sfu.UIClasses;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Locale;
 import java.util.Random;
 
 import hqnguyen.sfu.UI.R;
@@ -105,11 +107,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    private void setViewDateFromNow(@NonNull RestaurantViewHolder holder, Inspection inspection) {
-        int daysFromNewestInspection = (int) DateUtil.daysFromNow(inspection.getDate());
+    private void setViewDateFromNow(RestaurantViewHolder holder, Inspection inspection) {
+        long daysFromNewestInspection = DateUtil.daysFromNow(inspection.getDate());
 
         if (daysFromNewestInspection <= 30) {
-            holder.textViewDateFromNow.setText(daysFromNewestInspection);
+            holder.textViewDateFromNow.setText(
+                    String.format(Locale.ENGLISH,"%d days ago", daysFromNewestInspection)
+            );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
                     DateUtil.MONTH_DAY.getDateString(inspection.getDate())
@@ -121,7 +125,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    private void setViewHazardLevelIcon(@NonNull RestaurantViewHolder holder, Inspection inspection) {
+    private void setViewHazardLevelIcon(RestaurantViewHolder holder, Inspection inspection) {
         switch (inspection.getHazardRating()) {
             case LOW:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);
