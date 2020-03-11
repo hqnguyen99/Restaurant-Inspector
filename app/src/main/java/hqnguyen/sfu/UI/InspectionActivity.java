@@ -40,6 +40,8 @@ public class InspectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inspection);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         data = AppData.INSTANCE;
 
         extractDataFromIntent();
