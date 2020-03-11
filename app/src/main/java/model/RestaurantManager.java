@@ -16,9 +16,6 @@ import static java.util.Collections.sort;
 public class RestaurantManager {
     private List<Restaurant> restaurantList = new ArrayList<>();
 
-    RestaurantManager() {
-    }
-
     RestaurantManager(BufferedReader reader) {
         setListFromFile(reader);
     }
@@ -32,11 +29,7 @@ public class RestaurantManager {
         sort(restaurantList);
     }
 
-    public void remove(Restaurant restaurant) {
-        restaurantList.remove(restaurant);
-    }
-
-    private void setListFromFile(BufferedReader reader) {
+     private void setListFromFile(BufferedReader reader) {
         String line = "";
 
         try {
