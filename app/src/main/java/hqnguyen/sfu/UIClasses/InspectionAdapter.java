@@ -19,6 +19,10 @@ import model.DataSingleton;
 import model.DateUtil;
 import model.Inspection;
 
+/**
+ *  Adapter for inspection recycler view
+ */
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private DataSingleton data;
@@ -70,8 +74,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     @Override
     public InspectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inspection_item,parent, false);
-        InspectionViewHolder inspectionViewHolder = new InspectionViewHolder(view, inspectionListener);
-        return inspectionViewHolder;
+        return new InspectionViewHolder(view, inspectionListener);
     }
 
     @Override

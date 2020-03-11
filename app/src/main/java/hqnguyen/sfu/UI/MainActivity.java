@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ *  Splash screen to welcome user
+ */
 public class MainActivity extends AppCompatActivity {
 
     Runnable runnable;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
                 startActivity(intent);
+                finish();
             }
         };
         handler.postDelayed(runnable, 3000);

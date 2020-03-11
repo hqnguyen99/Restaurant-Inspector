@@ -15,6 +15,10 @@ import hqnguyen.sfu.UI.R;
 import model.Inspection;
 import model.Violation;
 
+/**
+ *  Adapter for violation recycler view
+ */
+
 public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
 
     private List<Violation> violationList;

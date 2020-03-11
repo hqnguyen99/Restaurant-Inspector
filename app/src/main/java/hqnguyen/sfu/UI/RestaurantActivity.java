@@ -1,8 +1,10 @@
 package hqnguyen.sfu.UI;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,10 @@ import hqnguyen.sfu.UIClasses.RestaurantAdapter;
 import model.AppData;
 import model.DataSingleton;
 
+/**
+ *  Show data of restaurants by recycler view
+ */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RestaurantActivity extends AppCompatActivity {
     private DataSingleton data;
 

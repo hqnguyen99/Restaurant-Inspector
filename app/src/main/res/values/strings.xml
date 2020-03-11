@@ -1,6 +1,28 @@
 <resources>
-    <string name="app_name">Restaurant Inspector</string>
-    <string name="title_activity_restaurant">RestaurantActivity</string>
-    <string name="title_activity_inspection">InspectionActivity</string>
-    <string name="title_activity_violation">ViolationActivity</string>
+    <string name="app_name">Welcome</string>
+    <string name="title_activity_restaurant">Restaurants</string>
+    <string name="title_activity_inspection">Inspections</string>
+    <string name="title_activity_violation">Violations</string>
+    <string name="welcome">Welcome!</string>
+    <string name="restaurant_icon">Restaurant Icon</string>
+    <string name="hazard_level_icon">Hazard Level Icon</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="issue_found"># Issue Found: \t</string>
+    <string name="issue"># issue</string>
+    <string name="last_inspection">Last Inspection: \t</string>
+    <string name="how_long_ago">How long ago</string>
+    <string name="name">Name</string>
+    <string name="address">Address: \t</string>
+    <string name="latitude">Latitude: \t</string>
+    <string name="longitude">Longitude: \t</string>
+    <string name="violation_severity_icon">Violation Severity_Icon</string>
+    <string name="violation_nature_icon">Violation Nature Icon</string>
+    <string name="inspection_type">Inspection type: \t</string>
+    <string name="critical_issues_found">Critical issues found: \t</string>
+    <string name="non_critical_issues_found">Non-critical issues found: \t</string>
+    <string name="violation_hazard_level_icon">Violation Hazard Level Icon</string>
+    <string name="hazard_level">Hazard level: \t</string>
+    <string name="inspection_hazard_level_icon">Inspection Hazard Level Icon</string>
+    <string name="critical_issue_found">Critical issue found: \t</string>
+    <string name="non_critical_issue_found">Non-Critical issue found: \t</string>
 </resources>

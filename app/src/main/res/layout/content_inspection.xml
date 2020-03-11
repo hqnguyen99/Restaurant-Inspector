@@ -3,30 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@drawable/gradient_background_1">
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/name"
         android:textSize="35sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_inspection_activity_restaurant_address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_inspection_activity_restaurant_name"
+        android:text="@string/address"
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_name"
-        android:text="Address"
+        android:layout_toEndOf="@+id/textView_inspection_activity_restaurant_address_title"
         android:textSize="30sp"/>
 
     <TextView
-        android:id="@+id/textView_inspection_activity_restaurant_GPS_coords"
+        android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_address"
-        android:text="GPS coords"
+        android:text="@string/latitude"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_latitude"
+        android:text="@string/longitude"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_inspection_activity_restaurant_address"
+        android:layout_toEndOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_latitude"
+        android:layout_toEndOf="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
         android:textSize="25sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,5 +68,5 @@
         android:layout_height="match_parent"
         android:padding="4dp"
         android:scrollbars="vertical"
-        android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_coords"/>
+        android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_longitude"/>
 </RelativeLayout>

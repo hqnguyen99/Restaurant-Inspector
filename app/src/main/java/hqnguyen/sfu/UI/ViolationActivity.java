@@ -27,6 +27,9 @@ import model.DataSingleton;
 import model.DateUtil;
 import model.Inspection;
 
+/**
+ *  Show data of violations for a single inspection by recycler view
+ */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ViolationActivity extends AppCompatActivity {
     private static final String INSPECTION_POSITION = "inspection position";
@@ -49,6 +52,7 @@ public class ViolationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_violation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         data = AppData.INSTANCE;
         extractDataFromIntent();

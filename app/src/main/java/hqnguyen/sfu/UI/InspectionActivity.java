@@ -2,11 +2,13 @@ package hqnguyen.sfu.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,11 @@ import model.AppData;
 import model.DataSingleton;
 import model.Restaurant;
 
+
+/**
+ *  Show data of inspections for a single restaurant by recycler view
+ */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
@@ -35,6 +42,8 @@ public class InspectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inspection);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         data = AppData.INSTANCE;
 
         extractDataFromIntent();
@@ -47,10 +56,12 @@ public class InspectionActivity extends AppCompatActivity {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_name);
         TextView textViewRestaurantAddress = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_address);
-        TextView textViewRestaurantCoords = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_coords);
+        TextView textViewRestaurantLatitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
+        TextView textViewRestaurantLongitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
         textViewRestaurantName.setText(restaurant.getName());
         textViewRestaurantAddress.setText(restaurant.getAddress());
-        textViewRestaurantCoords.setText(restaurant.getLatitude() + " " + restaurant.getLongitude());
+        textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
+        textViewRestaurantLongitude.setText("" + restaurant.getLongitude());
     }
 
     private void extractDataFromIntent() {

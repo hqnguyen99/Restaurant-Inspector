@@ -1,6 +1,5 @@
 package hqnguyen.sfu.UIClasses;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,11 @@ import model.Inspection;
 import model.RestaurantInspectionsPair;
 
 import static android.os.Build.VERSION_CODES.O;
+
+
+/**
+ *  Adapter for restaurant recycler view
+ */
 
 @RequiresApi(O)
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
