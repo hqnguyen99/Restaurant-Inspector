@@ -24,11 +24,6 @@ import model.DataSingleton;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RestaurantActivity extends AppCompatActivity {
-    private DataSingleton data;
-
-    private RecyclerView recyclerView;
-    private RestaurantAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,7 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void createRestaurantList() {
-        data = AppData.INSTANCE;
+        DataSingleton data = AppData.INSTANCE;
         InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
         data.init(
@@ -53,11 +48,11 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        recyclerView = findViewById(R.id.restaurant_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.restaurant_recyclerView);
+        RestaurantAdapter adapter = new RestaurantAdapter();
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new RestaurantAdapter();
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

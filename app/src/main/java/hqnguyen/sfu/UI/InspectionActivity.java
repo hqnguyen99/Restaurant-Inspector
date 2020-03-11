@@ -30,9 +30,6 @@ public class InspectionActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
     private DataSingleton data;
-    private RecyclerView recyclerView;
-    private InspectionAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     private int restaurantPosition;
 
@@ -54,10 +51,10 @@ public class InspectionActivity extends AppCompatActivity {
 
     private void setupRestaurantInfor() {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
-        TextView textViewRestaurantName = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_name);
-        TextView textViewRestaurantAddress = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_address);
-        TextView textViewRestaurantLatitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
-        TextView textViewRestaurantLongitude = (TextView) findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
+        TextView textViewRestaurantName = findViewById(R.id.textView_inspection_activity_restaurant_name);
+        TextView textViewRestaurantAddress = findViewById(R.id.textView_inspection_activity_restaurant_address);
+        TextView textViewRestaurantLatitude = findViewById(R.id.textView_inspection_activity_restaurant_GPS_latitude);
+        TextView textViewRestaurantLongitude = findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
         textViewRestaurantName.setText(restaurant.getName());
         textViewRestaurantAddress.setText(restaurant.getAddress());
         textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
@@ -70,11 +67,10 @@ public class InspectionActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        recyclerView = findViewById(R.id.inspection_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.inspection_recyclerView);
+        InspectionAdapter adapter = new InspectionAdapter(restaurantPosition);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new InspectionAdapter(restaurantPosition);
-        //Toast.makeText(getApplicationContext(), adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener() {

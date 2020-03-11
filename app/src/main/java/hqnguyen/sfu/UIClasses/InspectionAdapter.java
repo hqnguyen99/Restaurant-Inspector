@@ -22,10 +22,8 @@ import model.Inspection;
 /**
  *  Adapter for inspection recycler view
  */
-
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
-    private DataSingleton data;
     private List<Inspection> inspectionsList;
 
     private OnItemClickListener inspectionListener;
@@ -66,7 +64,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         }
     }
     public InspectionAdapter(int restaurantPosition){
-        data= AppData.INSTANCE;
+        DataSingleton data = AppData.INSTANCE;
         inspectionsList= data.getEntryAtIndex(restaurantPosition).getInspections();
     }
 

@@ -36,9 +36,6 @@ public class ViolationActivity extends AppCompatActivity {
     private static final String RESTAURANT_POSITION = "restaurant position";
 
     private DataSingleton data;
-    private RecyclerView recyclerView;
-    private ViolationAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     private int restaurantPosition;
     private int inspectionPosition;
@@ -68,12 +65,12 @@ public class ViolationActivity extends AppCompatActivity {
     }
 
     private void setupInspectionDetail() {
-        TextView textViewInspectionDate = (TextView) findViewById(R.id.textView_violation_activity_full_date);
-        TextView textViewInspectionType = (TextView) findViewById(R.id.textView_violation_activity_inspection_type);
-        TextView textViewNumberOfCriticalIssues = (TextView) findViewById(R.id.textView_violation_activity_critical_issues_found);
-        TextView textViewNumberOfNonCriticalIssues = (TextView) findViewById(R.id.textView_violation_activity_noncritical_issues_found);
-        TextView textViewHarzardLevel = (TextView) findViewById(R.id.textView_violation_activity_hazard_level_words);
-        ImageView imageViewHazardLevel = (ImageView) findViewById(R.id.imageView_violation_activity_hazard_level_icon);
+        TextView textViewInspectionDate = findViewById(R.id.textView_violation_activity_full_date);
+        TextView textViewInspectionType = findViewById(R.id.textView_violation_activity_inspection_type);
+        TextView textViewNumberOfCriticalIssues = findViewById(R.id.textView_violation_activity_critical_issues_found);
+        TextView textViewNumberOfNonCriticalIssues = findViewById(R.id.textView_violation_activity_noncritical_issues_found);
+        TextView textViewHarzardLevel = findViewById(R.id.textView_violation_activity_hazard_level_words);
+        ImageView imageViewHazardLevel = findViewById(R.id.imageView_violation_activity_hazard_level_icon);
 
         inspection = data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
         Log.i("msg",String.valueOf(inspectionPosition));
@@ -98,12 +95,14 @@ public class ViolationActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-        recyclerView = findViewById(R.id.violation_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.violation_recyclerView);
+        ViolationAdapter adapter = new ViolationAdapter(inspection);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new ViolationAdapter(inspection);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
         adapter.setOnItemClickListener(new ViolationAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position) {
