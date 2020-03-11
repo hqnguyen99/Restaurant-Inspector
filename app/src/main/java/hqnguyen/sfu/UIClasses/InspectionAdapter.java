@@ -27,7 +27,7 @@ public class InspectionAdapter
         extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private List<Inspection> inspectionsList;
     private OnItemClickListener inspectionListener;
-    
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -37,13 +37,13 @@ public class InspectionAdapter
     }
 
 
-    public static class InspectionViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageViewHazardLevelIcon;
-        public TextView textViewDateOfInspection;
-        public TextView textViewNumCriticalIssues;
-        public TextView textViewNumNonCriticalIssues;
+    static class InspectionViewHolder extends RecyclerView.ViewHolder{
+        ImageView imageViewHazardLevelIcon;
+        TextView textViewDateOfInspection;
+        TextView textViewNumCriticalIssues;
+        TextView textViewNumNonCriticalIssues;
 
-        public InspectionViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        InspectionViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             imageViewHazardLevelIcon =
                 itemView.findViewById(R.id.imageView_inspection_activity_hazard_level_icon);

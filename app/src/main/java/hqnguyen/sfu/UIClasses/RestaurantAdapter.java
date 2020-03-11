@@ -40,14 +40,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         restaurantListener = listener;
     }
 
-    public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
-        public TextView textViewRestaurantName;
-        public TextView textViewNumberFound;
-        public TextView textViewDateFromNow;
-        public ImageView imageViewRestaurantIcon;
-        public ImageView imageViewHazardLevelIcon;
+    static class RestaurantViewHolder extends RecyclerView.ViewHolder{
+        TextView textViewRestaurantName;
+        TextView textViewNumberFound;
+        TextView textViewDateFromNow;
+        ImageView imageViewRestaurantIcon;
+        ImageView imageViewHazardLevelIcon;
 
-        public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textViewRestaurantName =
                     itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);

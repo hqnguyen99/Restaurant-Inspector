@@ -30,12 +30,11 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         violationListener = listener;
     }
 
-    public static class ViolationViewHolder extends RecyclerView.ViewHolder{
-
-        public ImageView natureIcon;
-        public ImageView severityLevelIcon;
-        public TextView briefDescription;
-        public ViolationViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+    static class ViolationViewHolder extends RecyclerView.ViewHolder{
+        ImageView natureIcon;
+        ImageView severityLevelIcon;
+        TextView briefDescription;
+        ViolationViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             natureIcon =
                 itemView.findViewById(R.id.imageView_violation_activity_violation_nature_icon);

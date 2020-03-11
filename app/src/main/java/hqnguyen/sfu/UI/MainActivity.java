@@ -11,14 +11,13 @@ import android.os.Handler;
  */
 public class MainActivity extends AppCompatActivity {
     Runnable runnable;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        handler = new Handler();
+        Handler handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
