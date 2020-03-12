@@ -29,7 +29,7 @@ public class Violation
         }
 
         int type = violationNum / 100;
-        switch (type){
+        switch (type) {
             case 1:
                 return ViolationType.LOCATION;
             case 2:
