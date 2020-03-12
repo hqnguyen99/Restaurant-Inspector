@@ -76,5 +76,4 @@
             android:layout_toEndOf="@+id/textView_inspection_activity_date" />
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>
