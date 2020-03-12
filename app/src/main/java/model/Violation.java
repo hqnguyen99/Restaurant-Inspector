@@ -1,6 +1,7 @@
 package model;
 
-public class Violation {
+public class Violation
+{
     int violationNum;
     private String critOrNot;
     private String description;
@@ -13,7 +14,6 @@ public class Violation {
         this.repeat = repeat;
     }
 
-    //getting full description into 1 string
     public String getFullDescription(){
         return critOrNot + ", " + description + ", " + repeat;
     }
@@ -25,8 +25,7 @@ public class Violation {
         // location(100), food(200), equipment(300),
         // pest(304,305), employee(399), certification(500)
 
-        // in the case of pests
-        if(violationNum == 304 || violationNum == 305){
+        if (violationNum == 304 || violationNum == 305) {
             return ViolationType.PEST;
         }
 
@@ -51,20 +50,7 @@ public class Violation {
         return critOrNot.equals("Critical");
     }
 
-    //getters and setters
     public int getViolationNum() {
         return violationNum;
-    }
-
-    public String getCritOrNot() {
-        return critOrNot;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getRepeat() {
-        return repeat;
     }
 }

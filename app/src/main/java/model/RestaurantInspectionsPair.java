@@ -9,10 +9,10 @@ import static java.util.Collections.sort;
  * Stores a restaurant and all of its inspections.
  * Sorted by restaurant name in lexicographical order.
  */
-public class RestaurantInspectionsPair implements Comparable<RestaurantInspectionsPair> {
+public class RestaurantInspectionsPair implements Comparable<RestaurantInspectionsPair>
+{
     private Restaurant restaurant;
     private List<Inspection> inspections;
-
     private int numViolations;
 
     RestaurantInspectionsPair(Restaurant restaurant, List<Inspection> inspections) {
@@ -32,7 +32,8 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         return numViolations;
     }
 
-    void addInspection(Inspection inspection) {
+    void addInspection(Inspection inspection)
+    {
         inspections.add(inspection);
         sort(inspections, Collections.<Inspection>reverseOrder());
         numViolations += inspection.numCrit + inspection.numNonCrit;
@@ -44,7 +45,8 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder result = new StringBuilder();
         result.append(restaurant.toString()).append("\n");
 

@@ -23,20 +23,20 @@ import model.DataSingleton;
  *  Show data of restaurants by recycler view
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class RestaurantActivity extends AppCompatActivity {
+public class RestaurantActivity extends AppCompatActivity
+{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         createRestaurantList();
         buildRecyclerView();
     }
 
-    private void createRestaurantList() {
+    private void createRestaurantList()
+    {
         DataSingleton data = AppData.INSTANCE;
         InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
@@ -46,7 +46,8 @@ public class RestaurantActivity extends AppCompatActivity {
         );
     }
 
-    private void buildRecyclerView() {
+    private void buildRecyclerView()
+    {
         RecyclerView recyclerView = findViewById(R.id.restaurant_recyclerView);
         RestaurantAdapter adapter = new RestaurantAdapter();
         recyclerView.setHasFixedSize(true);

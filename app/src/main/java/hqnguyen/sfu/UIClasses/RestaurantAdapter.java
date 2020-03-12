@@ -28,19 +28,22 @@ import static android.os.Build.VERSION_CODES.O;
  */
 
 @RequiresApi(O)
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
+public class RestaurantAdapter
+    extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>
+{
     private DataSingleton data;
     private OnItemClickListener restaurantListener;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         restaurantListener = listener;
     }
 
-    static class RestaurantViewHolder extends RecyclerView.ViewHolder{
+    static class RestaurantViewHolder extends RecyclerView.ViewHolder
+    {
         TextView textViewRestaurantName;
         TextView textViewNumberFound;
         TextView textViewDateFromNow;
@@ -74,22 +77,23 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    public RestaurantAdapter(){
+    public RestaurantAdapter() {
         data = AppData.INSTANCE;
     }
 
     @NonNull
     @Override
-    public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(
             parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
         return new RestaurantViewHolder(view, restaurantListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position)
+    {
         RestaurantInspectionsPair current = data.getEntryAtIndex(position);
-
         holder.textViewRestaurantName.setText(current.getRestaurant().getName());
         holder.textViewNumberFound.setText(String.valueOf(current.getNumViolations()));
 
@@ -116,7 +120,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    private void setViewDateFromNow(RestaurantViewHolder holder, Inspection inspection) {
+    private void setViewDateFromNow(RestaurantViewHolder holder, Inspection inspection)
+    {
         long daysFromNewestInspection = DateUtil.daysFromNow(inspection.getDate());
 
         if (daysFromNewestInspection <= 30) {
@@ -134,7 +139,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    private void setViewHazardLevelIcon(RestaurantViewHolder holder, Inspection inspection) {
+    private void setViewHazardLevelIcon(RestaurantViewHolder holder, Inspection inspection)
+    {
         switch (inspection.getHazardRating()) {
             case LOW:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);

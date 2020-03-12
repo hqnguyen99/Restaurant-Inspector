@@ -26,18 +26,18 @@ import model.Inspection;
  *  Show data of violations for a single inspection by recycler view
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class ViolationActivity extends AppCompatActivity {
+public class ViolationActivity extends AppCompatActivity
+{
     private static final String INSPECTION_POSITION = "inspection position";
     private static final String RESTAURANT_POSITION = "restaurant position";
-
     private DataSingleton data;
-
     private int restaurantPosition;
     private int inspectionPosition;
     private Inspection inspection;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,16 +48,17 @@ public class ViolationActivity extends AppCompatActivity {
         extractDataFromIntent();
         setupInspectionDetail();
         buildRecyclerView();
-
     }
 
-    private void extractDataFromIntent() {
+    private void extractDataFromIntent()
+    {
         Intent intent = getIntent();
         restaurantPosition = intent.getIntExtra(RESTAURANT_POSITION, 0);
         inspectionPosition = intent.getIntExtra(INSPECTION_POSITION,0);
     }
 
-    private void setupInspectionDetail() {
+    private void setupInspectionDetail()
+    {
         TextView textViewInspectionDate =
             findViewById(R.id.textView_violation_activity_full_date);
         TextView textViewInspectionType =
@@ -82,7 +83,7 @@ public class ViolationActivity extends AppCompatActivity {
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
         textViewHazardLevel.setText(String.valueOf(inspection.getHazardRating()));
 
-        switch (inspection.getHazardRating()){
+        switch (inspection.getHazardRating()) {
             case LOW:
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_low);
                 break;
@@ -95,7 +96,8 @@ public class ViolationActivity extends AppCompatActivity {
         }
     }
 
-    private void buildRecyclerView() {
+    private void buildRecyclerView()
+    {
         RecyclerView recyclerView = findViewById(R.id.violation_recyclerView);
         ViolationAdapter adapter = new ViolationAdapter(inspection);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -117,10 +119,12 @@ public class ViolationActivity extends AppCompatActivity {
 
 
     public static Intent makeLaunchIntent(Context c, int restaurantPosition,
-                                          int inspectionPosition) {
+                                          int inspectionPosition)
+    {
         Intent intent = new Intent(c, ViolationActivity.class);
         intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         intent.putExtra(INSPECTION_POSITION, inspectionPosition);
+
         return intent;
     }
 }

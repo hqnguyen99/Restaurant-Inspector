@@ -3,7 +3,8 @@ package model;
 /**
  * Stores information about a restaurant
  */
-public class Restaurant implements Comparable<Restaurant> {
+public class Restaurant implements Comparable<Restaurant>
+{
     String id;
     private String name;
     private String address;
@@ -13,7 +14,8 @@ public class Restaurant implements Comparable<Restaurant> {
     private double longitude;
 
     public Restaurant(String id, String name, String address, String city,
-                      String type, double latitude, double longitude) {
+                      String type, double latitude, double longitude)
+    {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -52,7 +54,8 @@ public class Restaurant implements Comparable<Restaurant> {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return  "\nId: " + id +
                 "\nName: " + name +
                 "\nAddress: " + address +

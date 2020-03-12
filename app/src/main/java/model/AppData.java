@@ -12,14 +12,16 @@ import java.util.Objects;
  * using the restaurant id as the key
  */
 public enum AppData implements DataSingleton{
-    INSTANCE {
+    INSTANCE
+    {
         private RestaurantManager restaurantManager;
         private InspectionManager inspectionManager;
         private Map<String, RestaurantInspectionsPair> entries;
         private List<String> keyList;
 
         @Override
-        public void init(BufferedReader restaurantReader, BufferedReader inspectionReader) {
+        public void init(BufferedReader restaurantReader, BufferedReader inspectionReader)
+        {
             if (restaurantManager == null) {
                 restaurantManager = new RestaurantManager(restaurantReader);
             }
@@ -47,7 +49,8 @@ public enum AppData implements DataSingleton{
             return keyList.size();
         }
 
-        private void makePairs() {
+        private void makePairs()
+        {
             if (entries != null) {
                 return;
             }
@@ -57,7 +60,8 @@ public enum AppData implements DataSingleton{
             insertInspectionsToPairs();
         }
 
-        private void createNewPairs() {
+        private void createNewPairs()
+        {
             List<Restaurant> restaurants = restaurantManager.getRestaurantList();
 
             for (int i = 0; i < restaurants.size(); i++) {
@@ -68,7 +72,8 @@ public enum AppData implements DataSingleton{
             }
         }
 
-        private void insertInspectionsToPairs() {
+        private void insertInspectionsToPairs()
+        {
             List<Inspection> inspections = inspectionManager.getInspectionList();
 
             for (Inspection i : inspections) {
@@ -78,7 +83,8 @@ public enum AppData implements DataSingleton{
             }
         }
 
-        private void generateKeyList() {
+        private void generateKeyList()
+        {
             if (keyList != null) {
                 return;
             }

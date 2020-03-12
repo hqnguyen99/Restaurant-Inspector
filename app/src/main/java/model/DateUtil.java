@@ -13,8 +13,10 @@ import java.time.temporal.ChronoUnit;
  * Date utility class that converts date in integer to LocalDate object.
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public enum DateUtil {
-    MONTH_DAY {
+public enum DateUtil
+{
+    MONTH_DAY
+    {
         public String getDateString(int DateInt) {
             return MONTH_DAY.getDateString(intToDate(DateInt));
         }
@@ -23,7 +25,8 @@ public enum DateUtil {
             return date.format(DateTimeFormatter.ofPattern("LLL dd"));
         }
     },
-    MONTH_DAY_YEAR {
+    MONTH_DAY_YEAR
+    {
         public String getDateString(int DateInt) {
             return MONTH_DAY_YEAR.getDateString(intToDate(DateInt));
         }
@@ -44,7 +47,8 @@ public enum DateUtil {
         return ChronoUnit.DAYS.between(date, LocalDate.now());
     }
 
-    public static LocalDate intToDate(int dateInt) {
+    public static LocalDate intToDate(int dateInt)
+    {
         int remainder = dateInt;
         int year = remainder / 10000;
         remainder %= 10000;

@@ -24,20 +24,22 @@ import model.Inspection;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class InspectionAdapter
-        extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
+        extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder>
+{
     private List<Inspection> inspectionsList;
     private OnItemClickListener inspectionListener;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         inspectionListener = listener;
     }
 
 
-    static class InspectionViewHolder extends RecyclerView.ViewHolder{
+    static class InspectionViewHolder extends RecyclerView.ViewHolder
+    {
         ImageView imageViewHazardLevelIcon;
         TextView textViewDateOfInspection;
         TextView textViewNumCriticalIssues;
@@ -68,21 +70,25 @@ public class InspectionAdapter
         }
     }
 
-    public InspectionAdapter(int restaurantPosition){
+    public InspectionAdapter(int restaurantPosition)
+    {
         DataSingleton data = AppData.INSTANCE;
         inspectionsList= data.getEntryAtIndex(restaurantPosition).getInspections();
     }
 
     @NonNull
     @Override
-    public InspectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InspectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(
             parent.getContext()).inflate(R.layout.inspection_item,parent, false);
+
         return new InspectionViewHolder(view, inspectionListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InspectionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InspectionViewHolder holder, int position)
+    {
         Inspection inspection = inspectionsList.get(position);
 
         holder.textViewDateOfInspection.setText(

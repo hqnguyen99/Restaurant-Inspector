@@ -18,22 +18,26 @@ import model.Violation;
 /**
  *  Adapter for violation recycler view
  */
-public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
+public class ViolationAdapter
+    extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder>
+{
     private List<Violation> violationList;
     private OnItemClickListener violationListener;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         violationListener = listener;
     }
 
-    static class ViolationViewHolder extends RecyclerView.ViewHolder{
+    static class ViolationViewHolder extends RecyclerView.ViewHolder
+    {
         ImageView natureIcon;
         ImageView severityLevelIcon;
         TextView briefDescription;
+
         ViolationViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             natureIcon =
@@ -57,24 +61,27 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         }
     }
 
-    public ViolationAdapter(Inspection inspection){
+    public ViolationAdapter(Inspection inspection) {
         violationList = inspection.getViolations();
     }
 
     @NonNull
     @Override
-    public ViolationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViolationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(
             parent.getContext()).inflate(R.layout.violation_item,parent,false);
+
         return new ViolationViewHolder(view, violationListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position)
+    {
         Violation violation = violationList.get(position);
         holder.briefDescription.setText(violation.getBriefDescription());
-        switch(violation.getType()){
+
+        switch(violation.getType()) {
             case FOOD:
                 holder.natureIcon.setImageResource(R.drawable.violation_nature_food);
                 break;
@@ -95,7 +102,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 break;
         }
 
-        if(violation.isCrit()){
+        if(violation.isCrit()) {
             holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_critical);
         } else {
             holder.severityLevelIcon.setImageResource(R.drawable.violation_severity_noncritical);

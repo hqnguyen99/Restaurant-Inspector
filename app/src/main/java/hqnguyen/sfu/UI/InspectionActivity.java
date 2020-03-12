@@ -23,7 +23,8 @@ import model.Restaurant;
  *  Show data of inspections for a single restaurant by recycler view
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class InspectionActivity extends AppCompatActivity {
+public class InspectionActivity extends AppCompatActivity
+{
     private static final String RESTAURANT_POSITION = "restaurant position";
     private DataSingleton data;
     private int restaurantPosition;
@@ -41,10 +42,10 @@ public class InspectionActivity extends AppCompatActivity {
         extractDataFromIntent();
         setupRestaurantInfo();
         buildRecyclerView();
-
     }
 
-    private void setupRestaurantInfo() {
+    private void setupRestaurantInfo()
+    {
         Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName =
             findViewById(R.id.textView_inspection_activity_restaurant_name);
@@ -61,18 +62,21 @@ public class InspectionActivity extends AppCompatActivity {
         textViewRestaurantLongitude.setText("" + restaurant.getLongitude());
     }
 
-    private void extractDataFromIntent() {
+    private void extractDataFromIntent()
+    {
         Intent intent = getIntent();
         restaurantPosition = intent.getIntExtra(RESTAURANT_POSITION, 0);
     }
 
-    private void buildRecyclerView() {
+    private void buildRecyclerView()
+    {
         RecyclerView recyclerView = findViewById(R.id.inspection_recyclerView);
         InspectionAdapter adapter = new InspectionAdapter(restaurantPosition);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
         adapter.setOnItemClickListener(new InspectionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int inspectionPosition) {
@@ -84,7 +88,8 @@ public class InspectionActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent makeLaunchIntent(Context c, int restaurantPosition){
+    public static Intent makeLaunchIntent(Context c, int restaurantPosition)
+    {
         Intent intent = new Intent(c, InspectionActivity.class);
         intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         return intent;

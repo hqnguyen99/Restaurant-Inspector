@@ -9,15 +9,17 @@ import android.os.Handler;
 /**
  *  Splash screen to welcome user
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     Runnable runnable;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Handler handler = new Handler();
+
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
             }
         };
+
         handler.postDelayed(runnable, 3000);
     }
 }

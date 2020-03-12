@@ -1,6 +1,7 @@
 package model;
 
-public enum ViolationType {
+public enum ViolationType
+{
     LOCATION,
     FOOD,
     EQUIPMENT,

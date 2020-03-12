@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * Stores information about a single inspection
  */
-public class Inspection implements Comparable<Inspection> {
+public class Inspection implements Comparable<Inspection>
+{
     String id;
     private int date;
     private String inspType;
@@ -15,7 +16,8 @@ public class Inspection implements Comparable<Inspection> {
     private List<Violation> violations;
 
     public Inspection(String id, int inspectionData, String inspType, int numCrit,
-                      int numNonCrit, String hazardRating, List<Violation> violations) {
+                      int numNonCrit, String hazardRating, List<Violation> violations)
+    {
         this.id = id;
         this.date = inspectionData;
         this.inspType = inspType;
@@ -45,8 +47,9 @@ public class Inspection implements Comparable<Inspection> {
         return numNonCrit;
     }
 
-    public HazardRating getHazardRating() {
-        switch(hazardRating){
+    public HazardRating getHazardRating()
+    {
+        switch(hazardRating) {
             case "Low" :
                 return HazardRating.LOW;
             case "Moderate" :
@@ -63,7 +66,8 @@ public class Inspection implements Comparable<Inspection> {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return  "\n\tId: " + id +
                 "\n\tInspection Date: " + date +
                 "\n\tType: " + inspType +
@@ -80,7 +84,8 @@ public class Inspection implements Comparable<Inspection> {
         return (this.getDate() - other.getDate());
     }
 
-    private String getViolationNumsString() {
+    private String getViolationNumsString()
+    {
         StringBuilder result = new StringBuilder();
         final int NUM_VIOLATIONS = violations.size();
 
