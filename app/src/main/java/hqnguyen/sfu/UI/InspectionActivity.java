@@ -57,7 +57,9 @@ public class InspectionActivity extends AppCompatActivity
             findViewById(R.id.textView_inspection_activity_restaurant_GPS_longitude);
 
         textViewRestaurantName.setText(restaurant.getName());
-        textViewRestaurantAddress.setText(restaurant.getAddress());
+        textViewRestaurantAddress.setText(
+                String.format("%s, %s", restaurant.getAddress(), restaurant.getCity())
+        );
         textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
         textViewRestaurantLongitude.setText("" + restaurant.getLongitude());
     }

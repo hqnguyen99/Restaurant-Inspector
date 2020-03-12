@@ -11,24 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/name"
+        android:textColor="@color/colorTextDark"
         android:textSize="35sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView_inspection_activity_restaurant_address_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_inspection_activity_restaurant_name"
-        android:text="@string/address"
-        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_name"
-        android:layout_toEndOf="@+id/textView_inspection_activity_restaurant_address_title"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:textColor="@color/colorTextDark"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
@@ -36,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_address"
         android:text="@string/latitude"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:textStyle= "bold"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
@@ -44,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_latitude"
         android:text="@string/longitude"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:textStyle= "bold"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude"

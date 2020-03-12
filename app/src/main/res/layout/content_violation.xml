@@ -11,23 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView_violation_activity_inspection_type_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_violation_activity_full_date"
-        android:text="@string/inspection_type"
-        android:textSize="30sp"/>
+        android:textStyle="bold"
+        android:textColor="@color/colorTextDark"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_inspection_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_violation_activity_full_date"
-        android:layout_toEndOf="@+id/textView_violation_activity_inspection_type_title"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:textColor="@color/colorTextDark"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_critical_issues_found_title"
@@ -70,7 +63,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
         android:layout_below="@+id/textView_violation_activity_noncritical_issues_found_title" />
-
 
     <TextView
         android:id="@+id/textView_violation_activity_hazard_level_words_title"
