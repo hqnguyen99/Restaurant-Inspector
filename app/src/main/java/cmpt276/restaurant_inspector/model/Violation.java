@@ -1,5 +1,8 @@
 package cmpt276.restaurant_inspector.model;
 
+/**
+ * Stores information about a single health inspection violation
+ */
 public class Violation
 {
     int violationNum;
