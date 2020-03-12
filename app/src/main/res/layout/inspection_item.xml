@@ -75,6 +75,6 @@
             android:layout_below="@+id/textView_inspection_activity_noncritical_issue_found_title"
             android:layout_toEndOf="@+id/textView_inspection_activity_date" />
 
-    </RelativeLayout>>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

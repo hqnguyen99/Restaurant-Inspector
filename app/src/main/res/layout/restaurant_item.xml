@@ -77,6 +77,6 @@
             android:layout_below="@+id/textView_restaurant_activity_issue_title"
             android:layout_toEndOf="@+id/textView_restaurant_activity_date_title"
             android:text="@string/how_long_ago" />
-    </RelativeLayout>>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
