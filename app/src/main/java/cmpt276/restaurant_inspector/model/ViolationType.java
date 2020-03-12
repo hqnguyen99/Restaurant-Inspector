@@ -1,4 +1,4 @@
-package model;
+package cmpt276.restaurant_inspector.model;
 
 public enum ViolationType
 {

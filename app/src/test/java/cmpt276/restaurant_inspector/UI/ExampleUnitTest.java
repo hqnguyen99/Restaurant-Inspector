@@ -1,4 +1,4 @@
-package hqnguyen.sfu.UI;
+package cmpt276.restaurant_inspector.UI;
 
 import org.junit.Test;
 

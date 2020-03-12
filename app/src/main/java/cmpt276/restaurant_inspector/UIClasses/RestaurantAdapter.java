@@ -1,4 +1,4 @@
-package hqnguyen.sfu.UIClasses;
+package cmpt276.restaurant_inspector.UIClasses;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Locale;
 import java.util.Random;
 
-import hqnguyen.sfu.UI.R;
-import model.AppData;
-import model.DataSingleton;
-import model.DateUtil;
-import model.Inspection;
-import model.RestaurantInspectionsPair;
+import cmpt276.restaurant_inspector.UI.R;
+import cmpt276.restaurant_inspector.model.AppData;
+import cmpt276.restaurant_inspector.model.DataSingleton;
+import cmpt276.restaurant_inspector.model.DateUtil;
+import cmpt276.restaurant_inspector.model.Inspection;
+import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
 import static android.os.Build.VERSION_CODES.O;
 

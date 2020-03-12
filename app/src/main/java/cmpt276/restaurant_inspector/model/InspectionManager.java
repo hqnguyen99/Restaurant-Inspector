@@ -1,4 +1,4 @@
-package model;
+package cmpt276.restaurant_inspector.model;
 
 import android.util.Log;
 
