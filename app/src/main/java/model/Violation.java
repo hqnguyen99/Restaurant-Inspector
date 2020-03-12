@@ -24,7 +24,6 @@ public class Violation
     public ViolationType getType(){
         // location(100), food(200), equipment(300),
         // pest(304,305), employee(399), certification(500)
-
         if (violationNum == 304 || violationNum == 305) {
             return ViolationType.PEST;
         }
