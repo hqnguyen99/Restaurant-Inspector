@@ -25,4 +25,5 @@
     <string name="inspection_hazard_level_icon">Inspection Hazard Level Icon</string>
     <string name="critical_issue_found">Critical issue found: \t</string>
     <string name="non_critical_issue_found">Non-Critical issue found: \t</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
