@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -147,8 +148,10 @@ public class MapsActivity extends AppCompatActivity
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.option_get_place) {
-            showCurrentPlace();
+        if (item.getItemId() == R.id.switch_to_restaurant_list) {
+            Intent intent = new Intent(MapsActivity.this, RestaurantActivity.class);
+            startActivity(intent);
+            finish();
         }
         return true;
     }
