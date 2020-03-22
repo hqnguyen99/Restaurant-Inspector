@@ -12,6 +12,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+import cmpt276.restaurant_inspector.model.AppData;
+import cmpt276.restaurant_inspector.model.DataSingleton;
+import cmpt276.restaurant_inspector.model.Restaurant;
+
 /**
  *  Splash screen to welcome user
  */
@@ -28,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Handler handler = new Handler();
 
+        createRestaurantList();
         if(isServiceOK()) {
             runnable = new Runnable() {
                 @Override
@@ -41,6 +51,18 @@ public class MainActivity extends AppCompatActivity
             handler.postDelayed(runnable, 3000);
         }
     }
+
+    private void createRestaurantList()
+    {
+        DataSingleton data = AppData.INSTANCE;
+        InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        data.init(
+                new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
+                new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
+        );
+    }
+
     public boolean isServiceOK(){
         Log.d(TAG,"isServiceOK: checking google service version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);

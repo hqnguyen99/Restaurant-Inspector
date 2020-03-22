@@ -1,8 +1,11 @@
 package cmpt276.restaurant_inspector.UI;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -36,14 +42,21 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import cmpt276.restaurant_inspector.model.AppData;
+import cmpt276.restaurant_inspector.model.DataSingleton;
+import cmpt276.restaurant_inspector.model.Inspection;
+import cmpt276.restaurant_inspector.model.InspectionManager;
+import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
 /**
  * An activity that displays a map showing the place at the device's current location.
  */
 public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -147,6 +160,7 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        setupRestaurantMarker();
 
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
@@ -182,6 +196,54 @@ public class MapsActivity extends AppCompatActivity
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+    }
+
+    private void setupRestaurantMarker() {
+        List<Marker> markerList = new ArrayList<>();
+        Inspection inspection = null;
+        DataSingleton data = AppData.INSTANCE;
+        for(int position = 0; position < data.size(); position++){
+            RestaurantInspectionsPair current = data.getEntryAtIndex(position);
+            double latitude = current.getRestaurant().getLatitude();
+            double longitude = current.getRestaurant().getLongitude();
+            String name = current.getRestaurant().getName();
+            String address = current.getRestaurant().getAddress();
+            String title = name + "\n" + address + "\n";
+            List<Inspection> inspections = current.getInspections();
+            Log.i("msg", String.valueOf(inspections.size()));
+            if(inspections.size()>0){
+                inspection = inspections.get(0);
+            }
+
+            BitmapDescriptor icon;
+            switch (inspection.getHazardRating()) {
+                case LOW:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
+                    title += "Hazard level: Low";
+                    break;
+                case MODERATE:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
+                    title += "Hazard level: Moderate";
+                    break;
+                case HIGH:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
+                    title += "Hazard level: Moderate";
+                    break;
+                default:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
+                    title += "Hazard level: Moderate";
+                    break;
+            }
+
+            markerList.add(mMap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(latitude, longitude))
+                                             .title(title)
+                                             .icon(icon)));
+            markerList.get(position).setTag(position);
+        }
+        // Marker cluster
+
+        mMap.setOnMarkerClickListener(this);
     }
 
     /**
@@ -398,5 +460,16 @@ public class MapsActivity extends AppCompatActivity
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        final int position = (int) marker.getTag();
+        Intent intent =
+                InspectionActivity.makeLaunchIntent(MapsActivity.this, position);
+        startActivity(intent);
+        return false;
+
     }
 }

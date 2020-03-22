@@ -31,20 +31,10 @@ public class RestaurantActivity extends AppCompatActivity
         setContentView(R.layout.activity_restaurant);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        createRestaurantList();
         buildRecyclerView();
     }
 
-    private void createRestaurantList()
-    {
-        DataSingleton data = AppData.INSTANCE;
-        InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
-        data.init(
-            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
-            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
-        );
-    }
+
 
     private void buildRecyclerView()
     {
