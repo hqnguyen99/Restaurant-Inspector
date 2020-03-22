@@ -41,11 +41,13 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cmpt276.restaurant_inspector.MapsClass.MyItem;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.Inspection;
@@ -61,6 +63,7 @@ public class MapsActivity extends AppCompatActivity
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
+    private ClusterManager<MyItem> mClusterManager;
 
     // The entry point to the Places API.
     private PlacesClient mPlacesClient;
@@ -244,6 +247,63 @@ public class MapsActivity extends AppCompatActivity
         // Marker cluster
 
         mMap.setOnMarkerClickListener(this);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        final int position = (int) marker.getTag();
+        Intent intent =
+                InspectionActivity.makeLaunchIntent(MapsActivity.this, position);
+        startActivity(intent);
+        return false;
+
+    }
+    public void setupRestaurantCluster(){
+          mClusterManager = new ClusterManager<MyItem>(this, mMap);
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        mMap.setOnCameraIdleListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+
+        // Add cluster items (markers) to the cluster manager.
+        addItems();
+    }
+    private void addItems() {
+        Inspection inspection = null;
+        DataSingleton data = AppData.INSTANCE;
+        for (int position = 0; position < data.size(); position++) {
+            RestaurantInspectionsPair current = data.getEntryAtIndex(position);
+            double latitude = current.getRestaurant().getLatitude();
+            double longitude = current.getRestaurant().getLongitude();
+            String name = current.getRestaurant().getName();
+            String address = current.getRestaurant().getAddress();
+            String title = name + "\n" + address + "\n";
+            List<Inspection> inspections = current.getInspections();
+            Log.i("msg", String.valueOf(inspections.size()));
+            if (inspections.size() > 0) {
+                inspection = inspections.get(0);
+            }
+
+            BitmapDescriptor icon;
+            switch (inspection.getHazardRating()) {
+                case LOW:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
+                    title += "Hazard level: Low";
+                    break;
+                case MODERATE:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
+                    title += "Hazard level: Moderate";
+                    break;
+                case HIGH:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
+                    title += "Hazard level: Moderate";
+                    break;
+                default:
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
+                    title += "Hazard level: Moderate";
+                    break;
+            }
+        }
     }
 
     /**
@@ -462,14 +522,5 @@ public class MapsActivity extends AppCompatActivity
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        final int position = (int) marker.getTag();
-        Intent intent =
-                InspectionActivity.makeLaunchIntent(MapsActivity.this, position);
-        startActivity(intent);
-        return false;
 
-    }
 }
