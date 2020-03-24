@@ -265,7 +265,6 @@ public class MapsActivity extends AppCompatActivity
 
     }
     public void setupRestaurantCluster(){
-        final MyItem[] clickedClusterItem = new MyItem[1];
         if(mMap != null){
             if (mClusterManager == null){
                 mClusterManager = new ClusterManager<MyItem>(this, mMap);
@@ -282,8 +281,6 @@ public class MapsActivity extends AppCompatActivity
                         @Override public boolean onClusterItemClick(MyItem clusterItem) {
 
                             Toast.makeText(MapsActivity.this, "Cluster item click", Toast.LENGTH_SHORT).show();
-                            clickedClusterItem[0] = clusterItem;
-
                             // if true, click handling stops here and do not show info view, do not move camera
                             // you can avoid this by calling:
                             // renderer.getMarker(clusterItem).showInfoWindow();
@@ -294,10 +291,12 @@ public class MapsActivity extends AppCompatActivity
 
             mClusterManager.setOnClusterItemInfoWindowClickListener(
                     new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onClusterItemInfoWindowClick(MyItem item) {
-                            Toast.makeText(MapsActivity.this, "Clicked info window: " + item.getTitle(),
-                                    Toast.LENGTH_SHORT).show();
+                            Intent intent =
+                                    InspectionActivity.makeLaunchIntent(MapsActivity.this, item.getPositionInRestaurantList());
+                            startActivity(intent);
                         }
                     });
             mMap.setOnMarkerClickListener(mClusterManager);
@@ -350,7 +349,7 @@ public class MapsActivity extends AppCompatActivity
                     break;
             }
             //MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon);
-            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon);
+            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position);
             mClusterManager.addItem(clusterItem);
         }
 
