@@ -3,16 +3,17 @@ package cmpt276.restaurant_inspector.UI;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Icon;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -47,11 +48,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cmpt276.restaurant_inspector.MapsClass.CustomClusterRenderer;
+import cmpt276.restaurant_inspector.MapsClass.CustomInfoWindowAdapter;
 import cmpt276.restaurant_inspector.MapsClass.MyItem;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.Inspection;
-import cmpt276.restaurant_inspector.model.InspectionManager;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
 /**
@@ -64,6 +66,7 @@ public class MapsActivity extends AppCompatActivity
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
     private ClusterManager<MyItem> mClusterManager;
+    private CustomClusterRenderer mCustomClusterRenderer;
 
     // The entry point to the Places API.
     private PlacesClient mPlacesClient;
@@ -163,8 +166,8 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        setupRestaurantMarker();
-
+        //setupRestaurantMarker();
+        setupRestaurantCluster();
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -259,28 +262,68 @@ public class MapsActivity extends AppCompatActivity
 
     }
     public void setupRestaurantCluster(){
-          mClusterManager = new ClusterManager<MyItem>(this, mMap);
+        final MyItem[] clickedClusterItem = new MyItem[1];
+        if(mMap != null){
+            if (mClusterManager == null){
+                mClusterManager = new ClusterManager<MyItem>(this, mMap);
+            }
+            if(mCustomClusterRenderer == null){
+                mCustomClusterRenderer = new CustomClusterRenderer(getApplicationContext(), mMap, mClusterManager);
+            }
+            mMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
+            mCustomClusterRenderer.setMinClusterSize(1);
+            mClusterManager.setRenderer(mCustomClusterRenderer);
+
+            mClusterManager.setOnClusterItemClickListener(
+                    new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                        @Override public boolean onClusterItemClick(MyItem clusterItem) {
+
+                            Toast.makeText(MapsActivity.this, "Cluster item click", Toast.LENGTH_SHORT).show();
+                            clickedClusterItem[0] = clusterItem;
+
+                            // if true, click handling stops here and do not show info view, do not move camera
+                            // you can avoid this by calling:
+                            // renderer.getMarker(clusterItem).showInfoWindow();
+
+                            return false;
+                        }
+                    });
+
+            mClusterManager.setOnClusterItemInfoWindowClickListener(
+                    new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
+                        @Override
+                        public void onClusterItemInfoWindowClick(MyItem item) {
+                            Toast.makeText(MapsActivity.this, "Clicked info window: " + item.getTitle(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            mMap.setOnMarkerClickListener(mClusterManager);
+        }
+
+
+
+
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
-
         // Add cluster items (markers) to the cluster manager.
         addItems();
     }
     private void addItems() {
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
-        for (int position = 0; position < data.size(); position++) {
+        for(int position = 0; position < data.size(); position++){
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
             double latitude = current.getRestaurant().getLatitude();
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
             String address = current.getRestaurant().getAddress();
-            String title = name + "\n" + address + "\n";
+            String title = name + "\n"  ;
+            String snippet = address + "\n";
             List<Inspection> inspections = current.getInspections();
             Log.i("msg", String.valueOf(inspections.size()));
-            if (inspections.size() > 0) {
+            if(inspections.size()>0){
                 inspection = inspections.get(0);
             }
 
@@ -288,22 +331,28 @@ public class MapsActivity extends AppCompatActivity
             switch (inspection.getHazardRating()) {
                 case LOW:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    title += "Hazard level: Low";
+                    snippet += "Hazard level: Low";
                     break;
                 case MODERATE:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
-                    title += "Hazard level: Moderate";
+                    snippet += "Hazard level: Moderate";
                     break;
                 case HIGH:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
-                    title += "Hazard level: Moderate";
+                    snippet += "Hazard level: Moderate";
                     break;
                 default:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    title += "Hazard level: Moderate";
+                    snippet += "Hazard level: Moderate";
                     break;
             }
+            //MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon);
+            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon);
+            mClusterManager.addItem(clusterItem);
         }
+
+        //
+
     }
 
     /**

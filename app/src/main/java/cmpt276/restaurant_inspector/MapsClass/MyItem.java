@@ -8,16 +8,20 @@ import com.google.maps.android.clustering.ClusterItem;
 
 public class MyItem implements ClusterItem {
     private final LatLng mPosition;
-    private final String mTitle;
-    private final BitmapDescriptor mIcon;
-    private final String mSnippet;
+    private String mTitle = "";
+    private String mSnippet = "";
+    private final BitmapDescriptor icon;
 
+    public MyItem(double lat, double lng, BitmapDescriptor icon) {
+        this.mPosition = new LatLng(lat, lng);
+        this.icon = icon;
+    }
 
-    public MyItem(double lat, double lng, String title, String snippet, BitmapDescriptor icon) {
-        mPosition = new LatLng(lat, lng);
-        mTitle = title;
-        mSnippet = snippet;
-        mIcon = icon;
+    public MyItem(double lat, double lng, String mTitle, String mSnippet, BitmapDescriptor icon) {
+        this.mPosition = new LatLng(lat, lng);
+        this.mTitle = mTitle;
+        this.mSnippet = mSnippet;
+        this.icon = icon;
     }
 
     @Override
@@ -29,12 +33,12 @@ public class MyItem implements ClusterItem {
     public String getTitle() {
         return mTitle;
     }
-
-    public BitmapDescriptor getIcon() {
-        return mIcon;
-    }
-
+    @Override
     public String getSnippet() {
         return mSnippet;
+    }
+
+    public BitmapDescriptor getIcon() {
+        return icon;
     }
 }
