@@ -38,21 +38,20 @@ class InspectionManager
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split("[,|]");
+                List<String> values = csvParserUtil.parseLine(line);
 
                 for (int i = 0; i < values.length; i++) {
-                    values[i] = values[i].replaceAll("^\"|\"$", "");
+                    values.get(i) = values.get(i).replaceAll("^\"|\"$", "");
                 }
 
                 List<Violation> violations = getViolations(values);
-
                 add(new Inspection(
-                    values[0],
-                    Integer.parseInt(values[1]),
-                    values[2],
-                    Integer.parseInt(values[3]),
-                    Integer.parseInt(values[4]),
-                    values[5],
+                    values.get(0),
+                    Integer.parseInt(values.get(1)),
+                    values.get(2),
+                    Integer.parseInt(values.get(3)),
+                    Integer.parseInt(values.get(4)),
+                    values.get(5),
                     violations
                 ));
             }
