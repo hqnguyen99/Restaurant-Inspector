@@ -38,7 +38,7 @@ import static java.util.Collections.sort;
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                List<String> values = parseLine(line);
+                List<String> values = csvParserUtil.parseLine(line);
                 add(new Restaurant(
                     values.get(0),
                     values.get(1),
@@ -53,34 +53,5 @@ import static java.util.Collections.sort;
             Log.wtf("RestaurantManager", "Error reading file on line " + line, e);
             e.printStackTrace();
         }
-    }
-
-    private List<String> parseLine(String line) {
-        List<String> result = new ArrayList<>();
-        char[] chars = line.toCharArray();
-        StringBuffer section = new StringBuffer();
-        boolean inQuotes = false;
-
-        for (char c : chars) {
-            if (inQuotes) {
-                if (c == '\"') {
-                    inQuotes = false;
-                } else {
-                    section.append(c);
-                }
-            } else {
-                if (c == '\"') {
-                    inQuotes = true;
-                } else if (c == ',') {
-                    result.add(section.toString());
-                    section = new StringBuffer();
-                } else {
-                    section.append(c);
-                }
-            }
-        }
-
-        result.add(section.toString());
-        return result;
     }
  }
