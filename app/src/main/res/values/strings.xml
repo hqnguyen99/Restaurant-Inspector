@@ -32,4 +32,5 @@
     <string name="pick_place">Choose a place</string>
     <string name="restaurant_list">Restaurant List</string>
     <string name="map">MAP</string>
+    <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">Do you want to go to the restaurant\'s inspection page?</string>
 </resources>

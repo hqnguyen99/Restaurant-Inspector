@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:contentDescription="@string/hazard_level"
+            android:id="@+id/info_dialog_hazard_level_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/info_dialog_rest_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/info_dialog_rest_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/address"/>
+
+        <TextView
+            android:id="@+id/info_dialog_hazard_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hazard_level"/>
+
+        <TextView
+            android:id="@+id/info_dialog_confirm_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/do_you_want_to_go_to_the_restaurant_s_inspection_page"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
