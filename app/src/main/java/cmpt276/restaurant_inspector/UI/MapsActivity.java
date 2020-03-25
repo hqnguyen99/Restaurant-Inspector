@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -244,15 +245,24 @@ public class MapsActivity extends AppCompatActivity
                             return false;
                         }
                     });
+            addItems();
 
             mClusterManager.setOnClusterItemInfoWindowClickListener(
                     new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onClusterItemInfoWindowClick(MyItem item) {
+                            ImageView harzardLevelIcon = (ImageView) findViewById(R.id.info_dialog_hazard_level_icon);
+                            TextView name = (TextView) findViewById(R.id.info_dialog_rest_name);
+                            TextView address = (TextView) findViewById(R.id.info_dialog_rest_address);
+                            TextView harzardLevel = (TextView) findViewById(R.id.info_dialog_hazard_level);
 
+                            // Set text
+                            name.setText(item.getTitle());
+                            address.setText(item.getSnippet());
+                            harzardLevel.setText(item.getHarzardLevel());
                             FragmentManager fragmentManager = getSupportFragmentManager();
-                            InfoFragment dialog = new InfoFragment();
+                            InfoFragment dialog = new InfoFragment(item.getPositionInRestaurantList());
                             dialog.show(fragmentManager, "InfoDialog");
                         }
                     });
@@ -263,7 +273,7 @@ public class MapsActivity extends AppCompatActivity
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         // Add cluster items (markers) to the cluster manager.
-        addItems();
+
     }
 
     private void addItems() {
@@ -275,6 +285,7 @@ public class MapsActivity extends AppCompatActivity
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
             String address = current.getRestaurant().getAddress();
+            String harzardLevel;
             String title = name + "\n"  ;
             String snippet = address + "\n";
             List<Inspection> inspections = current.getInspections();
@@ -287,23 +298,23 @@ public class MapsActivity extends AppCompatActivity
             switch (inspection.getHazardRating()) {
                 case LOW:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    snippet += "Hazard level: Low";
+                    harzardLevel = "Low";
                     break;
                 case MODERATE:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
-                    snippet += "Hazard level: Moderate";
+                    harzardLevel = "Moderate";
                     break;
                 case HIGH:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
-                    snippet += "Hazard level: Moderate";
+                    harzardLevel = "High";
                     break;
                 default:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    snippet += "Hazard level: Moderate";
+                    harzardLevel = "Low";
                     break;
             }
             //MyItem clusterItem = new MyItem(latitude,longitude, icon, position);
-            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position);
+            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,harzardLevel);
             mClusterManager.addItem(clusterItem);
         }
 
@@ -526,6 +537,8 @@ public class MapsActivity extends AppCompatActivity
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+
 
 
 }

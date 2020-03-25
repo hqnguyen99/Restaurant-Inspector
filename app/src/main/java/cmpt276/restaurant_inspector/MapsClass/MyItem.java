@@ -12,19 +12,15 @@ public class MyItem implements ClusterItem {
     private String mSnippet = "";
     private final BitmapDescriptor icon;
     private final int positionInRestaurantList;
+    private final String harzardLevel;
 
-    public MyItem(double lat, double lng, BitmapDescriptor icon, int positionInRestaurantList) {
-        this.mPosition = new LatLng(lat, lng);
-        this.icon = icon;
-        this.positionInRestaurantList = positionInRestaurantList;
-    }
-
-    public MyItem(double lat, double lng, String mTitle, String mSnippet, BitmapDescriptor icon, int positionInRestaurantList) {
+    public MyItem(double lat, double lng, String mTitle, String mSnippet, BitmapDescriptor icon, int positionInRestaurantList, String harzardLevel) {
         this.mPosition = new LatLng(lat, lng);
         this.mTitle = mTitle;
         this.mSnippet = mSnippet;
         this.icon = icon;
         this.positionInRestaurantList = positionInRestaurantList;
+        this.harzardLevel = harzardLevel;
     }
 
     @Override
@@ -47,5 +43,9 @@ public class MyItem implements ClusterItem {
 
     public int getPositionInRestaurantList() {
         return positionInRestaurantList;
+    }
+
+    public String getHarzardLevel() {
+        return harzardLevel;
     }
 }
