@@ -15,11 +15,11 @@ public class Inspection implements Comparable<Inspection>
     private String hazardRating;
     private List<Violation> violations;
 
-    public Inspection(String id, int inspectionData, String inspType, int numCrit,
+    public Inspection(String id, int date, String inspType, int numCrit,
                       int numNonCrit, String hazardRating, List<Violation> violations)
     {
         this.id = id;
-        this.date = inspectionData;
+        this.date = date;
         this.inspType = inspType;
         this.numCrit = numCrit;
         this.numNonCrit = numNonCrit;
