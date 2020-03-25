@@ -252,15 +252,6 @@ public class MapsActivity extends AppCompatActivity
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onClusterItemInfoWindowClick(MyItem item) {
-                            /*ImageView harzardLevelIcon = (ImageView) findViewById(R.id.info_dialog_hazard_level_icon);
-                            TextView name = (TextView) findViewById(R.id.info_dialog_rest_name);
-                            TextView address = (TextView) findViewById(R.id.info_dialog_rest_address);
-                            TextView harzardLevel = (TextView) findViewById(R.id.info_dialog_hazard_level);
-
-                            // Set text
-                           // name.setText("item.getTitle()");
-                            *//*address.setText(item.getSnippet());
-                            harzardLevel.setText(item.getHarzardLevel());*/
                             Toast.makeText(MapsActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                             FragmentManager fragmentManager = getSupportFragmentManager();
                             InfoFragment dialog = new InfoFragment(item);

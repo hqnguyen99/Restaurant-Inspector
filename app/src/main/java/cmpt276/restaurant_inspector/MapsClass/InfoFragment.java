@@ -23,10 +23,6 @@ import cmpt276.restaurant_inspector.UI.R;
 
 public class InfoFragment extends AppCompatDialogFragment {
     private final MyItem marker;
-    /*ImageView harzardLevelIcon;
-    TextView name;
-    TextView address;
-    TextView harzardLevel;*/
     public InfoFragment(MyItem marker) {
         this.marker = marker;
     }
@@ -34,9 +30,14 @@ public class InfoFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
         // Create the View to show
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.info_dialog, null);
+        TextView name = (TextView) view.findViewById(R.id.info_dialog_rest_name);
+        TextView address =  (TextView) view.findViewById(R.id.info_dialog_rest_address);
+        TextView hazardLevel =  (TextView) view.findViewById(R.id.info_dialog_hazard_level);
+        name.setText(marker.getTitle());
+        address.setText(marker.getSnippet());
+        hazardLevel.setText("Hazard Level: " + marker.getHarzardLevel());
         // Create button Listener
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -63,20 +64,4 @@ public class InfoFragment extends AppCompatDialogFragment {
                 .setNegativeButton(android.R.string.cancel, listener)
                 .create();
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.info_dialog, container, false);
-        ImageView harzardLevelIcon = layout.findViewById(R.id.info_dialog_hazard_level_icon);
-         TextView name = layout.findViewById(R.id.info_dialog_rest_name);
-         TextView address =  layout.findViewById(R.id.info_dialog_rest_address);
-         TextView harzardLevel =  layout.findViewById(R.id.info_dialog_hazard_level);
-
-        name.setText("marker.getTitle");
-        address.setText(marker.getSnippet());
-        harzardLevel.setText(marker.getHarzardLevel());
-        return layout;
-    }
-
 }
