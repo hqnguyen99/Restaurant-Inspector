@@ -38,20 +38,15 @@ import static java.util.Collections.sort;
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-
-                for (int i = 0; i < values.length; i++) {
-                    values[i] = values[i].replaceAll("^\"|\"$", "");
-                }
-
+                List<String> values = parseLine(line);
                 add(new Restaurant(
-                    values[0],
-                    values[1],
-                    values[2],
-                    values[3],
-                    values[4],
-                    Double.parseDouble(values[5]),
-                    Double.parseDouble(values[6])
+                    values.get(0),
+                    values.get(1),
+                    values.get(2),
+                    values.get(3),
+                    values.get(4),
+                    Double.parseDouble(values.get(5)),
+                    Double.parseDouble(values.get(6))
                 ));
             }
         } catch (IOException e) {
@@ -60,4 +55,32 @@ import static java.util.Collections.sort;
         }
     }
 
-}
+    private List<String> parseLine(String line) {
+        List<String> result = new ArrayList<>();
+        char[] chars = line.toCharArray();
+        StringBuffer section = new StringBuffer();
+        boolean inQuotes = false;
+
+        for (char c : chars) {
+            if (inQuotes) {
+                if (c == '\"') {
+                    inQuotes = false;
+                } else {
+                    section.append(c);
+                }
+            } else {
+                if (c == '\"') {
+                    inQuotes = true;
+                } else if (c == ',') {
+                    result.add(section.toString());
+                    section = new StringBuffer();
+                } else {
+                    section.append(c);
+                }
+            }
+        }
+
+        result.add(section.toString());
+        return result;
+    }
+ }
