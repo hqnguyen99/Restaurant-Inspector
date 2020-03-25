@@ -18,8 +18,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import cmpt276.restaurant_inspector.UI.InspectionActivity;
-import cmpt276.restaurant_inspector.UI.MapsActivity;
 import cmpt276.restaurant_inspector.UI.R;
+
+// This class generate infor window when tap to the restaurant icon
 
 public class InfoFragment extends AppCompatDialogFragment {
     private final MyItem marker;

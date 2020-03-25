@@ -5,13 +5,11 @@ import android.widget.ImageView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
-import com.google.maps.android.ui.IconGenerator;
 
-import cmpt276.restaurant_inspector.UI.MapsActivity;
 
+// This class handle the UI of  restaurant markers
 public class CustomClusterRenderer extends DefaultClusterRenderer<MyItem> {
     private final Context mContext;
 

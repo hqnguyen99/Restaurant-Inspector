@@ -7,15 +7,9 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -35,7 +29,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,12 +40,10 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.maps.android.clustering.ClusterManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import cmpt276.restaurant_inspector.MapsClass.CustomClusterRenderer;
-import cmpt276.restaurant_inspector.MapsClass.CustomInfoWindowAdapter;
 import cmpt276.restaurant_inspector.MapsClass.InfoFragment;
 import cmpt276.restaurant_inspector.MapsClass.MyItem;
 import cmpt276.restaurant_inspector.model.AppData;
@@ -61,10 +52,10 @@ import cmpt276.restaurant_inspector.model.Inspection;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
 /**
- * An activity that displays a map showing the place at the device's current location.
+ * An activity that displays a map showing the available restaurants with inspection reports.
  */
 public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+        implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -176,29 +167,6 @@ public class MapsActivity extends AppCompatActivity
         setupRestaurantCluster();
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            @Override
-            // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map), false);
-
-                TextView title = infoWindow.findViewById(R.id.title);
-                title.setText(marker.getTitle());
-
-                TextView snippet = infoWindow.findViewById(R.id.snippet);
-                snippet.setText(marker.getSnippet());
-
-                return infoWindow;
-            }
-        });
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -210,16 +178,6 @@ public class MapsActivity extends AppCompatActivity
         getDeviceLocation();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        final int position = (int) marker.getTag();
-        Intent intent =
-                InspectionActivity.makeLaunchIntent(MapsActivity.this, position);
-        startActivity(intent);
-        return false;
-
-    }
 
     public void setupRestaurantCluster(){
         if(mMap != null){
@@ -233,18 +191,6 @@ public class MapsActivity extends AppCompatActivity
             mMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
             mCustomClusterRenderer.setMinClusterSize(1);
             mClusterManager.setRenderer(mCustomClusterRenderer);
-
-            mClusterManager.setOnClusterItemClickListener(
-                    new ClusterManager.OnClusterItemClickListener<MyItem>() {
-                        @Override public boolean onClusterItemClick(MyItem clusterItem) {
-
-                            Toast.makeText(MapsActivity.this, "Cluster item click", Toast.LENGTH_SHORT).show();
-                            // if true, click handling stops here and do not show info view, do not move camera
-                            // you can avoid this by calling:
-                            //renderer.getMarker(clusterItem).showInfoWindow();
-                            return false;
-                        }
-                    });
             addItems();
 
             mClusterManager.setOnClusterItemInfoWindowClickListener(
@@ -252,7 +198,6 @@ public class MapsActivity extends AppCompatActivity
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onClusterItemInfoWindowClick(MyItem item) {
-                            Toast.makeText(MapsActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                             FragmentManager fragmentManager = getSupportFragmentManager();
                             InfoFragment dialog = new InfoFragment(item);
                             dialog.show(fragmentManager, "InfoDialog");
@@ -529,8 +474,5 @@ public class MapsActivity extends AppCompatActivity
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
-
-
 
 }

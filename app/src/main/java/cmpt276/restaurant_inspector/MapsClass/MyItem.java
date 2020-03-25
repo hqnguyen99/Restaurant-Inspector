@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
+// This class handle each restaurant marker in Google Map
+
 public class MyItem implements ClusterItem {
     private final LatLng mPosition;
     private String mTitle = "";
