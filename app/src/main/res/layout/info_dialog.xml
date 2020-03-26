@@ -15,19 +15,25 @@
             android:id="@+id/info_dialog_rest_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/info_dialog_rest_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/info_dialog_hazard_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"/>
 
 
         <TextView
@@ -36,8 +42,9 @@
             android:layout_height="wrap_content"
             android:text="@string/do_you_want_to_go_to_the_restaurant_s_inspection_page"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"/>
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textSize="17sp"/>
 
     </LinearLayout>
 

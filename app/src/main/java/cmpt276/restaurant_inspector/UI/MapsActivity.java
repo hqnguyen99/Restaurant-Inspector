@@ -231,7 +231,7 @@ public class MapsActivity extends AppCompatActivity
         if( restaurantLocation.latitude != 0 && restaurantLocation.longitude !=0 ){
             for (MyItem item : myItemList){
                 if(item.getPosition() == restaurantLocation){
-                    Toast.makeText(MapsActivity.this, " meee", Toast.LENGTH_LONG);
+                    Toast.makeText(MapsActivity.this, " meee", Toast.LENGTH_LONG).show();
                     Marker marker = mCustomClusterRenderer.getMarker(item);
                     marker.showInfoWindow();
                 }
