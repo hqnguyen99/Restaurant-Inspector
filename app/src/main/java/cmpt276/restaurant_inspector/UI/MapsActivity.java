@@ -62,9 +62,10 @@ public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
-    private static final String RESTAURANT_LATITUDE = "123" ;
+    private static final String RESTAURANT_POSITION = "123" ;
     private static final String RESTAURANT_LONGTITUDE = "789" ;
-    private LatLng restaurantLocation;
+    //private LatLng restaurantLocation;
+    private int restaurantPositionInList;
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
     private ClusterManager<MyItem> mClusterManager;
@@ -185,7 +186,7 @@ public class MapsActivity extends AppCompatActivity
 
         // Get the current location of the device and set the position of the map.
 
-        if( restaurantLocation.latitude == 0 && restaurantLocation.longitude ==0 ) {
+        if( restaurantPositionInList == -1 ) {
             getDeviceLocation();
         }
         setupRestaurantCluster();
@@ -229,16 +230,19 @@ public class MapsActivity extends AppCompatActivity
     }
 
     private void getAndPointCameraToChosenRestaurant() {
-        if( restaurantLocation.latitude != 0 && restaurantLocation.longitude !=0 ){
+        if( restaurantPositionInList != -1){
             for (MyItem item : myItemList){
-                if(item.getPosition() == restaurantLocation){
-                    Toast.makeText(MapsActivity.this, " meee", Toast.LENGTH_LONG).show();
-                    Marker marker = mCustomClusterRenderer.getMarker(item);
-                    marker.showInfoWindow();
+                //Log.i("location", String.valueOf(item.getPositionInRestaurantList()));
+                if(item.getPositionInRestaurantList() == restaurantPositionInList){
+                   /* Marker marker = mCustomClusterRenderer.getMarker;
+                    if(marker == null){
+                        Log.i("location", "lolll");
+                    }*/
+                    //Toast.makeText(MapsActivity.this, item.getTitle(), Toast.LENGTH_LONG);
                 }
             }
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation,RESTAURANT_ZOOM));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation,RESTAURANT_ZOOM));
         }
     }
 
@@ -255,7 +259,6 @@ public class MapsActivity extends AppCompatActivity
             String title = name;
             String snippet = address;
             List<Inspection> inspections = current.getInspections();
-            Log.i("msg", String.valueOf(inspections.size()));
             if(inspections.size()>0){
                 inspection = inspections.get(0);
             }
@@ -504,20 +507,20 @@ public class MapsActivity extends AppCompatActivity
         }
     }
 
-    public static Intent makeLaunchIntent(Context c, double latitude, double longtitude)
+    public static Intent makeLaunchIntent(Context c, int restaurantPosition)
     {
         Intent intent = new Intent(c, MapsActivity.class);
-        intent.putExtra(RESTAURANT_LATITUDE, latitude);
-        intent.putExtra(RESTAURANT_LONGTITUDE, longtitude);
+        intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         return intent;
     }
     private void extractDataFromIntent()
     {
         Intent intent = getIntent();
-        double latitude = intent.getDoubleExtra(RESTAURANT_LATITUDE,0);
-        double longtitude = intent.getDoubleExtra(RESTAURANT_LONGTITUDE,0);
+        /*double latitude = intent.getDoubleExtra(RESTAURANT_LATITUDE,0);
+        double longtitude = intent.getDoubleExtra(RESTAURANT_LONGTITUDE,0);*/
+        restaurantPositionInList = intent.getIntExtra(RESTAURANT_POSITION, -1);
 
-        restaurantLocation = new LatLng(latitude,longtitude);
+        //restaurantLocation = new LatLng(latitude,longtitude);
     }
 
 }

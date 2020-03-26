@@ -112,7 +112,7 @@ public class InspectionActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.textView_inspection_activity_restaurant_GPS_latitude:
             case R.id.textView_inspection_activity_restaurant_GPS_longitude:
-                Intent intent = MapsActivity.makeLaunchIntent(InspectionActivity.this,restaurant.getLatitude(), restaurant.getLongitude());
+                Intent intent = MapsActivity.makeLaunchIntent(InspectionActivity.this,restaurantPosition);
                 startActivity(intent);
                 finish();
                 break;
