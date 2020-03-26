@@ -232,17 +232,13 @@ public class MapsActivity extends AppCompatActivity
     private void getAndPointCameraToChosenRestaurant() {
         if( restaurantPositionInList != -1){
             for (MyItem item : myItemList){
-                //Log.i("location", String.valueOf(item.getPositionInRestaurantList()));
                 if(item.getPositionInRestaurantList() == restaurantPositionInList){
-                   /* Marker marker = mCustomClusterRenderer.getMarker;
-                    if(marker == null){
-                        Log.i("location", "lolll");
-                    }*/
-                    //Toast.makeText(MapsActivity.this, item.getTitle(), Toast.LENGTH_LONG);
+                    Toast.makeText(MapsActivity.this, item.getTitle(),Toast.LENGTH_LONG).show();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(item.getPosition(),RESTAURANT_ZOOM));
                 }
             }
 
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation,RESTAURANT_ZOOM));
+
         }
     }
 
@@ -516,11 +512,7 @@ public class MapsActivity extends AppCompatActivity
     private void extractDataFromIntent()
     {
         Intent intent = getIntent();
-        /*double latitude = intent.getDoubleExtra(RESTAURANT_LATITUDE,0);
-        double longtitude = intent.getDoubleExtra(RESTAURANT_LONGTITUDE,0);*/
         restaurantPositionInList = intent.getIntExtra(RESTAURANT_POSITION, -1);
-
-        //restaurantLocation = new LatLng(latitude,longtitude);
     }
 
 }
