@@ -81,6 +81,7 @@ public class MapsActivity extends AppCompatActivity
     // not granted.
     private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
+    private static final int RESTAURANT_ZOOM = 19;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
@@ -237,7 +238,7 @@ public class MapsActivity extends AppCompatActivity
                 }
             }
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation,DEFAULT_ZOOM));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation,RESTAURANT_ZOOM));
         }
     }
 
@@ -278,7 +279,6 @@ public class MapsActivity extends AppCompatActivity
                     harzardLevel = "Low";
                     break;
             }
-            //MyItem clusterItem = new MyItem(latitude,longitude, icon, position);
             MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,harzardLevel);
             mClusterManager.addItem(clusterItem);
             myItemList.add(clusterItem);
