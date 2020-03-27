@@ -101,16 +101,6 @@ public class RestaurantAdapter
         Random rand = new Random();
         int n = rand.nextInt(4);
 
-        /*if (n == 0){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
-        } else if (n == 1){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
-        } else if (n == 2){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
-        } else if(n == 3){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
-        }*/
-
         if(current.getRestaurant().getName().contains("McDonald")){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.mcdonald_logo);
         }
@@ -155,9 +145,6 @@ public class RestaurantAdapter
                 holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
             }
         }
-
-
-
 
         if (!current.getInspections().isEmpty()) {
             Inspection newestInspection = current.getInspections().get(0);
