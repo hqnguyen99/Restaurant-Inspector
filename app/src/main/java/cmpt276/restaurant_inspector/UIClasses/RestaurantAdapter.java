@@ -101,7 +101,7 @@ public class RestaurantAdapter
         Random rand = new Random();
         int n = rand.nextInt(4);
 
-        if (n == 0){
+        /*if (n == 0){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
         } else if (n == 1){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
@@ -109,9 +109,9 @@ public class RestaurantAdapter
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
         } else if(n == 3){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
-        }
+        }*/
 
-        else if(current.getRestaurant().getName().contains("McDonald")){
+        if(current.getRestaurant().getName().contains("McDonald")){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.mcdonald_logo);
         }
         else if (current.getRestaurant().getName().contains("7-Eleven")){
@@ -126,7 +126,7 @@ public class RestaurantAdapter
         else if (current.getRestaurant().getName().contains("Save On Foods")){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.saveonfoods_logo);
         }
-        else if (current.getRestaurant().getName().contains("A&W")){
+        else if (current.getRestaurant().getName().contains("A&W") || current.getRestaurant().getName().contains("A & W")){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.a_w_logo);
         }
         else if (current.getRestaurant().getName().contains("Starbucks")){
@@ -143,6 +143,17 @@ public class RestaurantAdapter
         }
         else if (current.getRestaurant().getName().contains("Quizno")){
             holder.imageViewRestaurantIcon.setImageResource(R.drawable.quiznos_logo);
+        }
+        else {
+            if (n == 0){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
+            } else if (n == 1){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
+            } else if (n == 2){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
+            } else if(n == 3) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
+            }
         }
 
 
