@@ -39,12 +39,15 @@ public class MainActivity extends AppCompatActivity
 
         createRestaurantList();
         if(isServiceOK()) {
+
             runnable = new Runnable() {
                 @Override
                 public void run() {
+
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
             };
 

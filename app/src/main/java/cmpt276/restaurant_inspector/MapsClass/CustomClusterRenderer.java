@@ -11,12 +11,9 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 // This class handle the UI of  restaurant markers
 public class CustomClusterRenderer extends DefaultClusterRenderer<MyItem> {
-    private final Context mContext;
-
 
     public CustomClusterRenderer(Context context, GoogleMap map, ClusterManager<MyItem> clusterManager) {
         super(context, map, clusterManager);
-        this.mContext = context;
     }
 
     @Override

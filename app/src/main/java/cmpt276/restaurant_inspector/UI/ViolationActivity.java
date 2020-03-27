@@ -74,7 +74,6 @@ public class ViolationActivity extends AppCompatActivity
 
         inspection =
             data.getEntryAtIndex(restaurantPosition).getInspections().get(inspectionPosition);
-        Log.i("msg",String.valueOf(inspectionPosition));
 
         textViewInspectionDate.setText(
             DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
