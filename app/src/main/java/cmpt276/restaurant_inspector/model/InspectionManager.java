@@ -40,18 +40,19 @@ class InspectionManager
             while ((line = reader.readLine()) != null) {
                 List<String> values = csvParserUtil.parseLine(line);
 
-                for (int i = 0; i < values.length; i++) {
-                    values.get(i) = values.get(i).replaceAll("^\"|\"$", "");
+                if (values.contains("")) {
+                    continue;
                 }
 
-                List<Violation> violations = getViolations(values);
+                List<Violation> violations = getViolations(values.get(5));
+
                 add(new Inspection(
                     values.get(0),
                     Integer.parseInt(values.get(1)),
                     values.get(2),
                     Integer.parseInt(values.get(3)),
                     Integer.parseInt(values.get(4)),
-                    values.get(5),
+                    values.get(6),
                     violations
                 ));
             }
@@ -61,27 +62,25 @@ class InspectionManager
         }
     }
 
-    private List<Violation> getViolations(String[] values) {
+    private List<Violation> getViolations(String violationsText) {
         List<Violation> result = new ArrayList<>();
-        final int START = 6;
-        final int SEGMENTS_PER_VIOLATION = 4;
 
-        for (int i = START; i < values.length; i += SEGMENTS_PER_VIOLATION) {
-            int violationNum = -1;
+        if (violationsText.isEmpty()) {
+            return result;
+        }
 
-            try {
-                violationNum = Integer.parseInt(values[i]);
-            } catch (Exception e) {
-                Log.wtf("InspectionManager",
-                    "Error when converting string " + values[i] + " to int");
-                e.getStackTrace();
-            }
+        String[] fullDescriptions = violationsText.split("\\|");
+
+        for (String desc : fullDescriptions) {
+            int first = desc.indexOf(',');
+            int second = desc.indexOf(',', first + 1);
+            int last = desc. lastIndexOf(',');
 
             result.add(new Violation(
-                violationNum,
-                values[i + 1],
-                values[i + 2],
-                values[i + 3]
+                Integer.parseInt(desc.substring(0, first)),
+                desc.substring(first + 1, second),
+                desc.substring(second + 1, last),
+                desc.substring(last + 1)
             ));
         }
 
