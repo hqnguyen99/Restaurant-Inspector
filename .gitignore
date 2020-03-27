@@ -4,7 +4,6 @@ build/
 .navigation
 /gradle/*
 /.idea/
-.gradle
 *.iml
 .externalNativeBuild
 
