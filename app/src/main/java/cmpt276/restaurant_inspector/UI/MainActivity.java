@@ -40,17 +40,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //grant access to download to disk
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
+        /*if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST);
-        }
+        }*/
         //download on startup, check feature not implemented yet
         //downloadRestaurants();
-        Handler handler = new Handler();
 
+
+        Handler handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -59,14 +60,13 @@ public class MainActivity extends AppCompatActivity
             finish();
             }
         };
-
         handler.postDelayed(runnable, 3000);
     }
 
     private void downloadRestaurants() {
         //create Retrofit instance
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://data.surrey.ca/api/3/action/package_show?id=restaurants/");
+                .baseUrl("http://data.surrey.ca/");
 
         Retrofit retrofit = builder.build();
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                boolean writtenToDisk = writeResponseBodyToDisk(response.body());
+                //boolean writtenToDisk = writeResponseBodyToDisk(response.body());
             }
 
             @Override
