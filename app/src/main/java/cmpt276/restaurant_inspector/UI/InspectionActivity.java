@@ -11,7 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import cmpt276.restaurant_inspector.UIClasses.InspectionAdapter;
 import cmpt276.restaurant_inspector.model.AppData;
@@ -23,10 +28,11 @@ import cmpt276.restaurant_inspector.model.Restaurant;
  *  Show data of inspections for a single restaurant by recycler view
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class InspectionActivity extends AppCompatActivity
+public class InspectionActivity extends AppCompatActivity implements View.OnClickListener
 {
     private static final String RESTAURANT_POSITION = "restaurant position";
     private DataSingleton data;
+    private Restaurant restaurant;
     private int restaurantPosition;
 
     @Override
@@ -46,7 +52,7 @@ public class InspectionActivity extends AppCompatActivity
 
     private void setupRestaurantInfo()
     {
-        Restaurant restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
+        restaurant = data.getEntryAtIndex(restaurantPosition).getRestaurant();
         TextView textViewRestaurantName =
             findViewById(R.id.textView_inspection_activity_restaurant_name);
         TextView textViewRestaurantAddress =
@@ -62,6 +68,10 @@ public class InspectionActivity extends AppCompatActivity
         );
         textViewRestaurantLatitude.setText("" + restaurant.getLatitude());
         textViewRestaurantLongitude.setText("" + restaurant.getLongitude());
+
+        textViewRestaurantLatitude.setOnClickListener(this);
+        textViewRestaurantLongitude.setOnClickListener(this);
+
     }
 
     private void extractDataFromIntent()
@@ -95,5 +105,17 @@ public class InspectionActivity extends AppCompatActivity
         Intent intent = new Intent(c, InspectionActivity.class);
         intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
         return intent;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.textView_inspection_activity_restaurant_GPS_latitude:
+            case R.id.textView_inspection_activity_restaurant_GPS_longitude:
+                Intent intent = MapsActivity.makeLaunchIntent(InspectionActivity.this,restaurantPosition);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 }

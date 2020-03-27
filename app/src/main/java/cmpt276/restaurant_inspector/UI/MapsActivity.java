@@ -1,5 +1,6 @@
 package cmpt276.restaurant_inspector.UI;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -40,6 +42,7 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,27 +61,33 @@ public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
-    private GoogleMap mMap;
-    private CameraPosition mCameraPosition;
-    private ClusterManager<MyItem> mClusterManager;
-    private CustomClusterRenderer mCustomClusterRenderer;
+    private static final String RESTAURANT_POSITION = "123" ;
+    private static final String RESTAURANT_LONGTITUDE = "789" ;
+    //private LatLng restaurantLocation;
+    private int restaurantPositionInList;
+    private GoogleMap map;
+    private CameraPosition cameraPosition;
+    private ClusterManager<MyItem> clusterManager;
+    private CustomClusterRenderer customClusterRenderer;
+    private List<MyItem> myItemList = new ArrayList<>();
 
     // The entry point to the Places API.
-    private PlacesClient mPlacesClient;
+    private PlacesClient placesClient;
 
     // The entry point to the Fused Location Provider.
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
-    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
+    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
+    private static final int RESTAURANT_ZOOM = 19;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean mLocationPermissionGranted;
+    private boolean locationPermissionGranted;
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private Location mLastKnownLocation;
+    private Location lastKnownLocation;
 
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -86,10 +95,10 @@ public class MapsActivity extends AppCompatActivity
 
     // Used for selecting the current place.
     private static final int M_MAX_ENTRIES = 5;
-    private String[] mLikelyPlaceNames;
-    private String[] mLikelyPlaceAddresses;
-    private List[] mLikelyPlaceAttributions;
-    private LatLng[] mLikelyPlaceLatLngs;
+    private String[] likelyPlaceNames;
+    private String[] likelyPlaceAddresses;
+    private List[] likelyPlaceAttributions;
+    private LatLng[] likelyPlaceLatLngs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +106,8 @@ public class MapsActivity extends AppCompatActivity
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
-            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
         // Retrieve the content view that renders the map.
@@ -106,10 +115,10 @@ public class MapsActivity extends AppCompatActivity
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
-        mPlacesClient = Places.createClient(this);
+        placesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -123,9 +132,9 @@ public class MapsActivity extends AppCompatActivity
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (mMap != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
-            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+        if (map != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
             super.onSaveInstanceState(outState);
         }
     }
@@ -162,9 +171,9 @@ public class MapsActivity extends AppCompatActivity
      */
     @Override
     public void onMapReady(GoogleMap map) {
-        mMap = map;
-        //setupRestaurantMarker();
-        setupRestaurantCluster();
+        this.map = map;
+        extractDataFromIntent();
+
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
 
@@ -175,25 +184,30 @@ public class MapsActivity extends AppCompatActivity
         updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
+
+        if( restaurantPositionInList == -1 ) {
+            getDeviceLocation();
+        }
+        setupRestaurantCluster();
+
+
     }
 
 
     public void setupRestaurantCluster(){
-        if(mMap != null){
-            if (mClusterManager == null){
-                mClusterManager = new ClusterManager<MyItem>(this, mMap);
+        if(map != null){
+            if (clusterManager == null){
+                clusterManager = new ClusterManager<MyItem>(this, map);
             }
-            if(mCustomClusterRenderer == null){
-                mCustomClusterRenderer = new CustomClusterRenderer(getApplicationContext(), mMap, mClusterManager);
+            if(customClusterRenderer == null){
+                customClusterRenderer = new CustomClusterRenderer(getApplicationContext(), map, clusterManager);
             }
 
-            mMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
-            mCustomClusterRenderer.setMinClusterSize(1);
-            mClusterManager.setRenderer(mCustomClusterRenderer);
-            addItems();
+            customClusterRenderer.setMinClusterSize(1);
+            clusterManager.setRenderer(customClusterRenderer);
 
-            mClusterManager.setOnClusterItemInfoWindowClickListener(
+
+            clusterManager.setOnClusterItemInfoWindowClickListener(
                     new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
@@ -203,14 +217,28 @@ public class MapsActivity extends AppCompatActivity
                             dialog.show(fragmentManager, "InfoDialog");
                         }
                     });
-            mMap.setOnMarkerClickListener(mClusterManager);
+            map.setOnMarkerClickListener(clusterManager);
         }
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
-        mMap.setOnCameraIdleListener(mClusterManager);
-        mMap.setOnMarkerClickListener(mClusterManager);
+        map.setOnCameraIdleListener(clusterManager);
+        map.setOnMarkerClickListener(clusterManager);
         // Add cluster items (markers) to the cluster manager.
+        addItems();
+        getAndPointCameraToChosenRestaurant();
+    }
 
+    private void getAndPointCameraToChosenRestaurant() {
+        if( restaurantPositionInList != -1){
+            for (MyItem item : myItemList){
+                if(item.getPositionInRestaurantList() == restaurantPositionInList){
+                    Toast.makeText(MapsActivity.this, item.getTitle(),Toast.LENGTH_LONG).show();
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(item.getPosition(),RESTAURANT_ZOOM));
+                }
+            }
+
+
+        }
     }
 
     private void addItems() {
@@ -223,10 +251,9 @@ public class MapsActivity extends AppCompatActivity
             String name = current.getRestaurant().getName();
             String address = current.getRestaurant().getAddress();
             String harzardLevel;
-            String title = name + "\n"  ;
-            String snippet = address + "\n";
+            String title = name;
+            String snippet = address;
             List<Inspection> inspections = current.getInspections();
-            Log.i("msg", String.valueOf(inspections.size()));
             if(inspections.size()>0){
                 inspection = inspections.get(0);
             }
@@ -250,9 +277,9 @@ public class MapsActivity extends AppCompatActivity
                     harzardLevel = "Low";
                     break;
             }
-            //MyItem clusterItem = new MyItem(latitude,longitude, icon, position);
             MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,harzardLevel);
-            mClusterManager.addItem(clusterItem);
+            clusterManager.addItem(clusterItem);
+            myItemList.add(clusterItem);
         }
 
         //
@@ -268,25 +295,25 @@ public class MapsActivity extends AppCompatActivity
          * cases when a location is not available.
          */
         try {
-            if (mLocationPermissionGranted) {
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+            if (locationPermissionGranted) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            lastKnownLocation = task.getResult();
+                            if (lastKnownLocation != null) {
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(lastKnownLocation.getLatitude(),
+                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                            map.moveCamera(CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                            map.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
                 });
@@ -309,7 +336,7 @@ public class MapsActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionGranted = true;
+            locationPermissionGranted = true;
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -324,13 +351,13 @@ public class MapsActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        mLocationPermissionGranted = false;
+        locationPermissionGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
+                    locationPermissionGranted = true;
                 }
             }
         }
@@ -342,11 +369,11 @@ public class MapsActivity extends AppCompatActivity
      * current place on the map - provided the user has granted location permission.
      */
     private void showCurrentPlace() {
-        if (mMap == null) {
+        if (map == null) {
             return;
         }
 
-        if (mLocationPermissionGranted) {
+        if (locationPermissionGranted) {
             // Use fields to define the data types to return.
             List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
                     Place.Field.LAT_LNG);
@@ -359,7 +386,7 @@ public class MapsActivity extends AppCompatActivity
             // are the best match for the device's current location.
             @SuppressWarnings("MissingPermission") final
             Task<FindCurrentPlaceResponse> placeResult =
-                    mPlacesClient.findCurrentPlace(request);
+                    placesClient.findCurrentPlace(request);
             placeResult.addOnCompleteListener (new OnCompleteListener<FindCurrentPlaceResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
@@ -375,18 +402,18 @@ public class MapsActivity extends AppCompatActivity
                         }
 
                         int i = 0;
-                        mLikelyPlaceNames = new String[count];
-                        mLikelyPlaceAddresses = new String[count];
-                        mLikelyPlaceAttributions = new List[count];
-                        mLikelyPlaceLatLngs = new LatLng[count];
+                        likelyPlaceNames = new String[count];
+                        likelyPlaceAddresses = new String[count];
+                        likelyPlaceAttributions = new List[count];
+                        likelyPlaceLatLngs = new LatLng[count];
 
                         for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
                             // Build a list of likely places to show the user.
-                            mLikelyPlaceNames[i] = placeLikelihood.getPlace().getName();
-                            mLikelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
-                            mLikelyPlaceAttributions[i] = placeLikelihood.getPlace()
+                            likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
+                            likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
+                            likelyPlaceAttributions[i] = placeLikelihood.getPlace()
                                     .getAttributions();
-                            mLikelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
+                            likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
                             i++;
                             if (i > (count - 1)) {
@@ -408,9 +435,9 @@ public class MapsActivity extends AppCompatActivity
             Log.i(TAG, "The user did not grant location permission.");
 
             // Add a default marker, because the user hasn't selected a place.
-            mMap.addMarker(new MarkerOptions()
+            map.addMarker(new MarkerOptions()
                     .title(getString(R.string.default_info_title))
-                    .position(mDefaultLocation)
+                    .position(defaultLocation)
                     .snippet(getString(R.string.default_info_snippet)));
 
             // Prompt the user for permission.
@@ -427,21 +454,21 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // The "which" argument contains the position of the selected item.
-                LatLng markerLatLng = mLikelyPlaceLatLngs[which];
-                String markerSnippet = mLikelyPlaceAddresses[which];
-                if (mLikelyPlaceAttributions[which] != null) {
-                    markerSnippet = markerSnippet + "\n" + mLikelyPlaceAttributions[which];
+                LatLng markerLatLng = likelyPlaceLatLngs[which];
+                String markerSnippet = likelyPlaceAddresses[which];
+                if (likelyPlaceAttributions[which] != null) {
+                    markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
                 }
 
                 // Add a marker for the selected place, with an info window
                 // showing information about that place.
-                mMap.addMarker(new MarkerOptions()
-                        .title(mLikelyPlaceNames[which])
+                map.addMarker(new MarkerOptions()
+                        .title(likelyPlaceNames[which])
                         .position(markerLatLng)
                         .snippet(markerSnippet));
 
                 // Position the map's camera at the location of the marker.
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                         DEFAULT_ZOOM));
             }
         };
@@ -449,7 +476,7 @@ public class MapsActivity extends AppCompatActivity
         // Display the dialog.
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.pick_place)
-                .setItems(mLikelyPlaceNames, listener)
+                .setItems(likelyPlaceNames, listener)
                 .show();
     }
 
@@ -457,22 +484,34 @@ public class MapsActivity extends AppCompatActivity
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
     private void updateLocationUI() {
-        if (mMap == null) {
+        if (map == null) {
             return;
         }
         try {
-            if (mLocationPermissionGranted) {
-                mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            if (locationPermissionGranted) {
+                map.setMyLocationEnabled(true);
+                map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-                mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mLastKnownLocation = null;
+                map.setMyLocationEnabled(false);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
                 getLocationPermission();
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    public static Intent makeLaunchIntent(Context c, int restaurantPosition)
+    {
+        Intent intent = new Intent(c, MapsActivity.class);
+        intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
+        return intent;
+    }
+    private void extractDataFromIntent()
+    {
+        Intent intent = getIntent();
+        restaurantPositionInList = intent.getIntExtra(RESTAURANT_POSITION, -1);
     }
 
 }
