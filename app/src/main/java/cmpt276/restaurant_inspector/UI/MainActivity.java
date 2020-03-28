@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  *  Splash screen to welcome user
@@ -39,14 +40,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //grant access to download to disk
-        /*if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST);
-        }*/
+//        //grant access to download to disk
+//        if (ContextCompat.checkSelfPermission(MainActivity.this,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(MainActivity.this,
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                    MY_PERMISSIONS_REQUEST);
+//        }
+
+        Log.d("Start", " yes!");
+        downloadCsv();
         //download on startup, check feature not implemented yet
         downloadRestaurants();
 
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     private void downloadRestaurants() {
         //create Retrofit instance
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://data.surrey.ca/");
+                .baseUrl("http://data.surrey.ca");
 
         Retrofit retrofit = builder.build();
 
@@ -135,6 +139,37 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             return false;
         }
+    }
+
+    private void downloadCsv() {
+        Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://data.surrey.ca/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build();
+        Log.e("retrofit: ", "created");
+        FileDownloadClient client = retrofit.create(FileDownloadClient.class);
+        Call<String> stringCall = client.getFileTypeResponse("CSV");
+
+        stringCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String responseString = response.body();
+                Log.d("downloadUrl", getFileUrl(responseString));
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("Failure", "something wrong has occurred.");
+            }
+        });
+    }
+
+    private String getFileUrl(String jsonInput) {
+        final String URL = "\"url\": \"";
+        int start = jsonInput.indexOf(URL) + URL.length();
+        int end = jsonInput.indexOf('"', start);
+
+        return jsonInput.substring(start, end);
     }
 
 }
