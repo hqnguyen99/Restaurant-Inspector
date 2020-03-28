@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
                     MY_PERMISSIONS_REQUEST);
         }*/
         //download on startup, check feature not implemented yet
-        //downloadRestaurants();
+        downloadRestaurants();
 
 
         Handler handler = new Handler();
