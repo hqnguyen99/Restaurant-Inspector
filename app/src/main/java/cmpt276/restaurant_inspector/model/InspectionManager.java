@@ -38,23 +38,21 @@ class InspectionManager
             reader.readLine();
 
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split("[,|]");
+                List<String> values = csvParserUtil.parseLine(line);
 
-                for (int i = 0; i < values.length; i++) {
-                    values[i] = values[i].replaceAll("^\"|\"$", "");
+                if (!values.contains("") ) {
+                    List<Violation> violations = getViolations(values.get(5));
+
+                    add(new Inspection(
+                        values.get(0),
+                        Integer.parseInt(values.get(1)),
+                        values.get(2),
+                        Integer.parseInt(values.get(3)),
+                        Integer.parseInt(values.get(4)),
+                        values.get(6),
+                        violations
+                    ));
                 }
-
-                List<Violation> violations = getViolations(values);
-
-                add(new Inspection(
-                    values[0],
-                    Integer.parseInt(values[1]),
-                    values[2],
-                    Integer.parseInt(values[3]),
-                    Integer.parseInt(values[4]),
-                    values[5],
-                    violations
-                ));
             }
         } catch (IOException e) {
             Log.wtf("InspectionManager", "Error reading file on line " + line, e);
@@ -62,27 +60,25 @@ class InspectionManager
         }
     }
 
-    private List<Violation> getViolations(String[] values) {
+    private List<Violation> getViolations(String violationsText) {
         List<Violation> result = new ArrayList<>();
-        final int START = 6;
-        final int SEGMENTS_PER_VIOLATION = 4;
 
-        for (int i = START; i < values.length; i += SEGMENTS_PER_VIOLATION) {
-            int violationNum = -1;
+        if (violationsText.isEmpty()) {
+            return result;
+        }
 
-            try {
-                violationNum = Integer.parseInt(values[i]);
-            } catch (Exception e) {
-                Log.wtf("InspectionManager",
-                    "Error when converting string " + values[i] + " to int");
-                e.getStackTrace();
-            }
+        String[] fullDescriptions = violationsText.split("\\|");
+
+        for (String desc : fullDescriptions) {
+            int first = desc.indexOf(',');
+            int second = desc.indexOf(',', first + 1);
+            int last = desc. lastIndexOf(',');
 
             result.add(new Violation(
-                violationNum,
-                values[i + 1],
-                values[i + 2],
-                values[i + 3]
+                Integer.parseInt(desc.substring(0, first)),
+                desc.substring(first + 1, second),
+                desc.substring(second + 1, last),
+                desc.substring(last + 1)
             ));
         }
 

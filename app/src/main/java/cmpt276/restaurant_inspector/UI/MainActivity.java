@@ -58,11 +58,13 @@ public class MainActivity extends AppCompatActivity
     private void createRestaurantList()
     {
         DataSingleton data = AppData.INSTANCE;
-        InputStream restaurantIs = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionIs = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        InputStream restaurantIs =
+            getResources().openRawResource(R.raw.restaurants);
+        InputStream inspectionIs =
+            getResources().openRawResource(R.raw.fraserhealthrestaurantinspectionreports);
         data.init(
-                new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
-                new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.UTF_8))
+            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
+            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.ISO_8859_1))
         );
     }
 
