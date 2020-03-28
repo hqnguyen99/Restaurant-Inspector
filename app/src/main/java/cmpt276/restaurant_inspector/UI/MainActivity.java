@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("Start", " yes!");
         downloadCsv();
         //download on startup, check feature not implemented yet
-        //downloadRestaurants();
+        downloadRestaurants();
 
 
         Handler handler = new Handler();
