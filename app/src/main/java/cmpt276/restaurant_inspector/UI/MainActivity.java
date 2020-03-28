@@ -152,16 +152,20 @@ public class MainActivity extends AppCompatActivity
         stringCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                String responseString = response.body();
-                String resourceStrings[] = getResourceStrings(responseString);
-                int i;
+                try {
+                    String responseString = response.body();
+                    String resourceStrings[] = getResourceStrings(responseString);
+                    int i;
 
-                for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
+                    for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
+                    }
+
+                    String csvString = resourceStrings[i];
+                    Log.d("downloadUrl", getFileUrl(csvString, "url"));
+                    Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                String csvString = resourceStrings[i];
-                Log.d("downloadUrl", getFileUrl(csvString, "url"));
-                Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
             }
 
             @Override
