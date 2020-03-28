@@ -15,9 +15,8 @@ public interface FileDownloadClient {
 
     // https://stackoverflow.com/questions/40973633/retrofit-2-get-json-from-response-body
     // https://square.github.io/retrofit/2.x/converter-scalars/retrofit2/converter/scalars/ScalarsConverterFactory.html
-    @FormUrlEncoded
-    @GET("/api/3/action/package_show?id=restaurants")
-    Call<String> getFileTypeResponse(@Field("format") String fileType);
+    @GET
+    Call<String> getFileTypeResponse(@Url String url);
 
     @GET
     Call<ResponseBody> downloadFileFromUrl(@Url String fileUrl);

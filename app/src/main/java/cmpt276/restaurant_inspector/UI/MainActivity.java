@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity
 //                    MY_PERMISSIONS_REQUEST);
 //        }
 
-        Log.d("Start", " yes!");
-        downloadCsv();
-        //download on startup, check feature not implemented yet
         downloadRestaurants();
+        Log.d("Start", " yes!");
+        downloadCsv("api/3/action/package_show?id=restaurants");
+        //download on startup, check feature not implemented yet
 
 
         Handler handler = new Handler();
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     private void downloadRestaurants() {
         //create Retrofit instance
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://data.surrey.ca");
+                .baseUrl("http://data.surrey.ca/");
 
         Retrofit retrofit = builder.build();
 
@@ -141,35 +141,49 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void downloadCsv() {
+    private void downloadCsv(String url) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://data.surrey.ca/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
-        Log.e("retrofit: ", "created");
         FileDownloadClient client = retrofit.create(FileDownloadClient.class);
-        Call<String> stringCall = client.getFileTypeResponse("CSV");
+        Call<String> stringCall = client.getFileTypeResponse(url);
 
         stringCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String responseString = response.body();
-                Log.d("downloadUrl", getFileUrl(responseString));
+                String resourceStrings[] = getResourceStrings(responseString);
+                int i;
+
+                for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
+                }
+
+                String csvString = resourceStrings[i];
+                Log.d("downloadUrl", getFileUrl(csvString, "url"));
+                Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("Failure", "something wrong has occurred.");
+                Log.e("DataDownload: ", "failed");
             }
         });
     }
 
-    private String getFileUrl(String jsonInput) {
-        final String URL = "\"url\": \"";
-        int start = jsonInput.indexOf(URL) + URL.length();
+    private String getFileUrl(String jsonInput, String attribute) {
+        final String ATTRIBUTE = '"' + attribute + "\": ";
+        int start = jsonInput.indexOf(ATTRIBUTE) + ATTRIBUTE.length();
         int end = jsonInput.indexOf('"', start);
 
         return jsonInput.substring(start, end);
     }
 
+    private String[] getResourceStrings(String jsonInput) {
+        final String RESOURCES = "\"resources\": [";
+        int start = jsonInput.indexOf(RESOURCES) + RESOURCES.length();
+        int end = jsonInput.indexOf(']', start);
+
+        return jsonInput.substring(start, end).split(",");
+    }
 }
