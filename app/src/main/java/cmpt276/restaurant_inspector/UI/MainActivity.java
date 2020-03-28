@@ -25,6 +25,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 /**
  *  Splash screen to welcome user
@@ -49,9 +51,9 @@ public class MainActivity extends AppCompatActivity
 //                    MY_PERMISSIONS_REQUEST);
 //        }
 
-        downloadRestaurants();
-        Log.d("Start", " yes!");
-        downloadCsv("api/3/action/package_show?id=restaurants");
+//        download();
+//        Log.d("Start", " yes!");
+//        downloadCsv("http://data.surrey.ca/api/3/action/package_show?id=restaurants");
         //download on startup, check feature not implemented yet
 
 
@@ -89,6 +91,30 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public interface DownloadService {
+        @GET
+        Call<String> getJsonResponse(@Url String url);
+        @GET
+        Call<ResponseBody> download(@Url String fileUrl);
+    }
+
+    private void download() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.surrey.ca/").build();
+        DownloadService service = retrofit.create(DownloadService.class);
+        service.download("http://data.surrey.ca/dataset/4c8cb648-0e80-4659-9078-ef4917b90ffb/resource/0e5d04a2-be9b-40fe-8de2-e88362ea916b/download/restaurants.csv")
+             .enqueue(new Callback<ResponseBody>() {
+                 @Override
+                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                     Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                 }
+
+                 @Override
+                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                     Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                 }
+             });
     }
 
     private boolean writeResponseBodyToDisk(ResponseBody body) {
@@ -146,26 +172,22 @@ public class MainActivity extends AppCompatActivity
             .baseUrl("http://data.surrey.ca/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
-        FileDownloadClient client = retrofit.create(FileDownloadClient.class);
-        Call<String> stringCall = client.getFileTypeResponse(url);
+        DownloadService service = retrofit.create(DownloadService.class);
 
-        stringCall.enqueue(new Callback<String>() {
+        service.getJsonResponse(url).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    String responseString = response.body();
-                    String resourceStrings[] = getResourceStrings(responseString);
-                    int i;
+                Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT);
+                String responseString = response.body();
+                String resourceStrings[] = getResourceStrings(responseString);
+                int i;
 
-                    for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
-                    }
-
-                    String csvString = resourceStrings[i];
-                    Log.d("downloadUrl", getFileUrl(csvString, "url"));
-                    Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
                 }
+
+                String csvString = resourceStrings[i];
+                Log.d("downloadUrl", getFileUrl(csvString, "url"));
+                Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
             }
 
             @Override
