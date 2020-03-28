@@ -40,21 +40,19 @@ class InspectionManager
             while ((line = reader.readLine()) != null) {
                 List<String> values = csvParserUtil.parseLine(line);
 
-                if (values.contains("")) {
-                    continue;
+                if (!values.contains("") ) {
+                    List<Violation> violations = getViolations(values.get(5));
+
+                    add(new Inspection(
+                        values.get(0),
+                        Integer.parseInt(values.get(1)),
+                        values.get(2),
+                        Integer.parseInt(values.get(3)),
+                        Integer.parseInt(values.get(4)),
+                        values.get(6),
+                        violations
+                    ));
                 }
-
-                List<Violation> violations = getViolations(values.get(5));
-
-                add(new Inspection(
-                    values.get(0),
-                    Integer.parseInt(values.get(1)),
-                    values.get(2),
-                    Integer.parseInt(values.get(3)),
-                    Integer.parseInt(values.get(4)),
-                    values.get(6),
-                    violations
-                ));
             }
         } catch (IOException e) {
             Log.wtf("InspectionManager", "Error reading file on line " + line, e);
