@@ -37,7 +37,7 @@ public class InfoFragment extends AppCompatDialogFragment {
         TextView address =  (TextView) view.findViewById(R.id.info_dialog_rest_address);
         TextView hazardLevel =  (TextView) view.findViewById(R.id.info_dialog_hazard_level);
         name.setText(marker.getTitle());
-        address.setText(marker.getSnippet());
+        address.setText("Address: " + marker.getSnippet());
         hazardLevel.setText("Hazard Level: " + marker.getHarzardLevel());
         // Create button Listener
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -54,7 +54,6 @@ public class InfoFragment extends AppCompatDialogFragment {
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                 }
-
             }
         };
         // Build the dialog
