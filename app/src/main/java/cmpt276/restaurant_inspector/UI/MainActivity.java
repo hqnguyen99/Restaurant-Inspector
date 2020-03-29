@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("DataDownload: ", "failed");
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
