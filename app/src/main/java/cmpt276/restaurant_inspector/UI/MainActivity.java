@@ -1,24 +1,19 @@
 package cmpt276.restaurant_inspector.UI;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,8 +30,6 @@ import java.util.regex.Pattern;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.DateTimeUtil;
-import cmpt276.restaurant_inspector.model.Inspection;
-import cmpt276.restaurant_inspector.model.Restaurant;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +37,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
@@ -56,8 +48,11 @@ public class MainActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST = 100;
     private static final String BASE_URL = "http://data.surrey.ca/";
     private final String INTERNAL_STORAGE_PATH = "/data/data/hqnguyen.sfu.restaurantinspector/files/";
-    private final String RESTAURANT_FILENAME = "restaurants.csv";
-    private final String INSPECTION_FILENAME = "fraserhealthrestaurantinspectionreports.csv";
+    private final String RESTAURANT_FILENAME = "restaurants";
+    private final String INSPECTION_FILENAME = "inspection";
+    private final String CSV = ".csv";
+    private boolean updateRequested = false;
+    private boolean updateConfirmed = false;
     Runnable runnable;
 
     @Override
@@ -89,11 +84,11 @@ public class MainActivity extends AppCompatActivity
 
 //        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
 //        checkForUpdateAndDownload(RESTAURANT_METADATA_URL,
-//            getFilesDir() + File.separator + RESTAURANT_FILENAME);
+//            getFilesDir() + File.separator + RESTAURANT_FILENAME + CSV);
 //
 //        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
 //        checkForUpdateAndDownload(INSPECTION_METADATA_URL,
-//            getFilesDir() + File.separator + INSPECTION_FILENAME);
+//            getFilesDir() + File.separator + INSPECTION_FILENAME + CSV);
 
         try {
             createRestaurantList();
@@ -116,8 +111,8 @@ public class MainActivity extends AppCompatActivity
     private void createRestaurantList() throws IOException {
         DataSingleton data = AppData.INSTANCE;
 
-        if (!new File(getFilesDir() + File.separator + RESTAURANT_FILENAME).exists() ||
-            !new File(getFilesDir() + File.separator + INSPECTION_FILENAME).exists()) {
+        if (!new File(getFilesDir() + File.separator + RESTAURANT_FILENAME + CSV).exists() ||
+            !new File(getFilesDir() + File.separator + INSPECTION_FILENAME + CSV).exists()) {
             InputStream restaurantIs =
                 getResources().openRawResource(R.raw.restaurants_itr1);
             InputStream inspectionIs =
@@ -201,10 +196,16 @@ public class MainActivity extends AppCompatActivity
 
                 String csvUrl = getFileUrl(csvString, "url");
 
-                download(csvUrl, filename);
-                FragmentManager manager = getSupportFragmentManager();
-                LoadingFragment loadScreen = new LoadingFragment();
-                loadScreen.show(manager, "Loading");
+
+                if (!updateRequested) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    AskForDownloadFragment downloadPrompt = new AskForDownloadFragment();
+                    downloadPrompt.show(manager,
+                        "New data is available, would you like to download?");
+                }
+                if (updateConfirmed) {
+                    download(csvUrl, filename);
+                }
             }
 
             @Override

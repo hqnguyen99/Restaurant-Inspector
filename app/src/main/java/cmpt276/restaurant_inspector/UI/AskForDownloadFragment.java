@@ -46,7 +46,7 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
             }
         };
         return new AlertDialog.Builder(getActivity())
-                .setTitle("Loading")
+                .setTitle("New data is available, would you like to download?")
                 .setView(v)
                 .setPositiveButton(android.R.string.no, listener)
                 .setNegativeButton(android.R.string.yes, listener)
