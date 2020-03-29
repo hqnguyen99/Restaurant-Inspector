@@ -16,7 +16,7 @@ import java.net.URL;
 
 //based on https://abhishekprogramming.blogspot.com/2017/07/android-json-data-fetching-and-parsing.html
 public class parseForURL extends AsyncTask<Void,Void,Void> {
-    String restaurantData ="";
+    String restaurantData =""
     String restaurantCSV ="";
     @Override
     protected Void doInBackground(Void... voids) {
