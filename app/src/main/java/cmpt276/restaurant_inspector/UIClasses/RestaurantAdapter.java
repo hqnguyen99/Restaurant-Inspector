@@ -16,7 +16,7 @@ import java.util.Random;
 import cmpt276.restaurant_inspector.UI.R;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
-import cmpt276.restaurant_inspector.model.DateUtil;
+import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import cmpt276.restaurant_inspector.model.Inspection;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
@@ -101,14 +101,49 @@ public class RestaurantAdapter
         Random rand = new Random();
         int n = rand.nextInt(4);
 
-        if (n == 0){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
-        } else if (n == 1){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
-        } else if (n == 2){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
-        } else if(n == 3){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
+        if(current.getRestaurant().getName().contains("McDonald")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.mcdonald_logo);
+        }
+        else if (current.getRestaurant().getName().contains("7-Eleven")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.seveneleven_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Panago")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.panago_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Pizza Hut")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.pizzahut_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Save On Foods")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.saveonfoods_logo);
+        }
+        else if (current.getRestaurant().getName().contains("A&W") || current.getRestaurant().getName().contains("A & W")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.a_w_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Starbucks")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.starbucks_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Subway")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.subway_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Tim Hortons")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.timhortons_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Wendy's")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.wendys_logo);
+        }
+        else if (current.getRestaurant().getName().contains("Quizno")){
+            holder.imageViewRestaurantIcon.setImageResource(R.drawable.quiznos_logo);
+        }
+        else {
+            if (n == 0){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
+            } else if (n == 1){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
+            } else if (n == 2){
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
+            } else if(n == 3) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
+            }
         }
 
         if (!current.getInspections().isEmpty()) {
@@ -122,7 +157,7 @@ public class RestaurantAdapter
 
     private void setViewDateFromNow(RestaurantViewHolder holder, Inspection inspection)
     {
-        long daysFromNewestInspection = DateUtil.daysFromNow(inspection.getDate());
+        long daysFromNewestInspection = DateTimeUtil.daysFromNow(inspection.getDate());
 
         if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(
@@ -130,11 +165,11 @@ public class RestaurantAdapter
             );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
-                DateUtil.MONTH_DAY.getDateString(inspection.getDate())
+                DateTimeUtil.MONTH_DAY.getDateString(inspection.getDate())
             );
         } else {
             holder.textViewDateFromNow.setText(
-                DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
+                DateTimeUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
             );
         }
     }

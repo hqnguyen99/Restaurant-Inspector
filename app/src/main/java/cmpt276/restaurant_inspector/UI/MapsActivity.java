@@ -244,7 +244,8 @@ public class MapsActivity extends AppCompatActivity
     private void addItems() {
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
-        for(int position = 0; position < data.size(); position++){
+
+        for (int position = 0; position < data.size(); position++) {
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
             double latitude = current.getRestaurant().getLatitude();
             double longitude = current.getRestaurant().getLongitude();
@@ -254,11 +255,13 @@ public class MapsActivity extends AppCompatActivity
             String title = name;
             String snippet = address;
             List<Inspection> inspections = current.getInspections();
-            if(inspections.size()>0){
+
+            if (inspections.size() > 0) {
                 inspection = inspections.get(0);
             }
 
             BitmapDescriptor icon;
+
             switch (inspection.getHazardRating()) {
                 case LOW:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);

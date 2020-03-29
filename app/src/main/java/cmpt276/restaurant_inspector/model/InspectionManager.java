@@ -40,7 +40,7 @@ class InspectionManager
             while ((line = reader.readLine()) != null) {
                 List<String> values = csvParserUtil.parseLine(line);
 
-                if (!values.contains("") ) {
+                if (!values.get(0).equals("")) {
                     List<Violation> violations = getViolations(values.get(5));
 
                     add(new Inspection(

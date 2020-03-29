@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
@@ -13,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  * Date utility class that converts date in integer to LocalDate object.
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public enum DateUtil
+public enum DateTimeUtil
 {
     MONTH_DAY
     {
@@ -45,6 +46,10 @@ public enum DateUtil
 
     public static long daysFromNow(@NonNull LocalDate date) {
         return ChronoUnit.DAYS.between(date, LocalDate.now());
+    }
+
+    public static long hoursFromNow(LocalDateTime dateTime) {
+        return ChronoUnit.HOURS.between(dateTime, LocalDateTime.now());
     }
 
     public static LocalDate intToDate(int dateInt)

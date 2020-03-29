@@ -1,6 +1,5 @@
 package cmpt276.restaurant_inspector.UI;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,14 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
 import cmpt276.restaurant_inspector.UIClasses.RestaurantAdapter;
-import cmpt276.restaurant_inspector.model.AppData;
-import cmpt276.restaurant_inspector.model.DataSingleton;
 
 /**
  *  Show data of restaurants by recycler view
@@ -38,8 +30,6 @@ public class RestaurantActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         buildRecyclerView();
     }
-
-
 
     private void buildRecyclerView()
     {
