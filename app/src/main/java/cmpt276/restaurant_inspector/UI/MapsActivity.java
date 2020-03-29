@@ -124,7 +124,6 @@ public class MapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     /**
@@ -188,9 +187,8 @@ public class MapsActivity extends AppCompatActivity
         if( restaurantPositionInList == -1 ) {
             getDeviceLocation();
         }
+
         setupRestaurantCluster();
-
-
     }
 
 
@@ -199,13 +197,13 @@ public class MapsActivity extends AppCompatActivity
             if (clusterManager == null){
                 clusterManager = new ClusterManager<MyItem>(this, map);
             }
+
             if(customClusterRenderer == null){
                 customClusterRenderer = new CustomClusterRenderer(getApplicationContext(), map, clusterManager);
             }
 
             customClusterRenderer.setMinClusterSize(1);
             clusterManager.setRenderer(customClusterRenderer);
-
 
             clusterManager.setOnClusterItemInfoWindowClickListener(
                     new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
@@ -217,8 +215,10 @@ public class MapsActivity extends AppCompatActivity
                             dialog.show(fragmentManager, "InfoDialog");
                         }
                     });
+
             map.setOnMarkerClickListener(clusterManager);
         }
+
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
         map.setOnCameraIdleListener(clusterManager);
@@ -236,8 +236,6 @@ public class MapsActivity extends AppCompatActivity
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(item.getPosition(),RESTAURANT_ZOOM));
                 }
             }
-
-
         }
     }
 
@@ -251,7 +249,7 @@ public class MapsActivity extends AppCompatActivity
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
             String address = current.getRestaurant().getAddress();
-            String harzardLevel;
+            String hazardLevel;
             String title = name;
             String snippet = address;
             List<Inspection> inspections = current.getInspections();
@@ -265,22 +263,23 @@ public class MapsActivity extends AppCompatActivity
             switch (inspection.getHazardRating()) {
                 case LOW:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    harzardLevel = "Low";
+                    hazardLevel = "Low";
                     break;
                 case MODERATE:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
-                    harzardLevel = "Moderate";
+                    hazardLevel = "Moderate";
                     break;
                 case HIGH:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
-                    harzardLevel = "High";
+                    hazardLevel = "High";
                     break;
                 default:
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    harzardLevel = "Low";
+                    hazardLevel = "Low";
                     break;
             }
-            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,harzardLevel);
+
+            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,hazardLevel);
             clusterManager.addItem(clusterItem);
             myItemList.add(clusterItem);
         }
@@ -395,9 +394,9 @@ public class MapsActivity extends AppCompatActivity
                 public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
                     if (task.isSuccessful() && task.getResult() != null) {
                         FindCurrentPlaceResponse likelyPlaces = task.getResult();
-
                         // Set the count, handling cases where less than 5 entries are returned.
                         int count;
+
                         if (likelyPlaces.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
                             count = likelyPlaces.getPlaceLikelihoods().size();
                         } else {
@@ -419,6 +418,7 @@ public class MapsActivity extends AppCompatActivity
                             likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
                             i++;
+
                             if (i > (count - 1)) {
                                 break;
                             }
@@ -427,8 +427,7 @@ public class MapsActivity extends AppCompatActivity
                         // Show a dialog offering the user the list of likely places, and add a
                         // marker at the selected place.
                         MapsActivity.this.openPlacesDialog();
-                    }
-                    else {
+                    } else {
                         Log.e(TAG, "Exception: %s", task.getException());
                     }
                 }
@@ -459,6 +458,7 @@ public class MapsActivity extends AppCompatActivity
                 // The "which" argument contains the position of the selected item.
                 LatLng markerLatLng = likelyPlaceLatLngs[which];
                 String markerSnippet = likelyPlaceAddresses[which];
+
                 if (likelyPlaceAttributions[which] != null) {
                     markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
                 }
@@ -490,6 +490,7 @@ public class MapsActivity extends AppCompatActivity
         if (map == null) {
             return;
         }
+
         try {
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
@@ -509,12 +510,13 @@ public class MapsActivity extends AppCompatActivity
     {
         Intent intent = new Intent(c, MapsActivity.class);
         intent.putExtra(RESTAURANT_POSITION, restaurantPosition);
+
         return intent;
     }
+
     private void extractDataFromIntent()
     {
         Intent intent = getIntent();
         restaurantPositionInList = intent.getIntExtra(RESTAURANT_POSITION, -1);
     }
-
 }
