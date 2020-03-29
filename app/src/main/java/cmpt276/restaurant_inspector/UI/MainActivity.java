@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PatternMatcher;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +18,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cmpt276.restaurant_inspector.service.FileDownloadClient;
 import okhttp3.ResponseBody;
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
 //        download();
 //        Log.d("Start", " yes!");
-//        downloadCsv("http://data.surrey.ca/api/3/action/package_show?id=restaurants");
+        downloadCsv("api/3/action/package_show?id=restaurants");
         //download on startup, check feature not implemented yet
 
 
@@ -179,37 +185,53 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<String> call, Response<String> response) {
                 Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT);
                 String responseString = response.body();
-                String resourceStrings[] = getResourceStrings(responseString);
+                List<String> resourceStrings = getResourceStrings(responseString);
                 int i;
 
-                for (i = 0; !resourceStrings[i].contains("CSV"); i++) {
+                for (i = 0; !resourceStrings.get(i).contains("csv"); i++) {
+                    Log.d("ResourcesString ", resourceStrings.get(i));
                 }
 
-                String csvString = resourceStrings[i];
+                String csvString = resourceStrings.get(i);
                 Log.d("downloadUrl", getFileUrl(csvString, "url"));
-                Log.d("downloadDate", getFileUrl(csvString, "last_modified"));
+                LocalDateTime dateTime = LocalDateTime.parse(getFileUrl(csvString, "last_modified"));
+                Log.d("downloadDate", dateTime.toString());
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e("DataDownload: ", "failed");
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private String getFileUrl(String jsonInput, String attribute) {
-        final String ATTRIBUTE = '"' + attribute + "\": ";
-        int start = jsonInput.indexOf(ATTRIBUTE) + ATTRIBUTE.length();
-        int end = jsonInput.indexOf('"', start);
+        final String REGEX = '"' + attribute + "\": " + "\"(.+?)\"";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(jsonInput);
 
-        return jsonInput.substring(start, end);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return null;
     }
 
-    private String[] getResourceStrings(String jsonInput) {
+    private List<String> getResourceStrings(String jsonInput) {
         final String RESOURCES = "\"resources\": [";
         int start = jsonInput.indexOf(RESOURCES) + RESOURCES.length();
         int end = jsonInput.indexOf(']', start);
+        String entireResourceString = jsonInput.substring(start, end);
 
-        return jsonInput.substring(start, end).split(",");
+        List<String> result = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\{(.+?)\\}");
+        Matcher matcher =  pattern.matcher(entireResourceString);
+
+        while(matcher.find()) {
+            result.add(matcher.group());
+        }
+
+        return result;
     }
 }
