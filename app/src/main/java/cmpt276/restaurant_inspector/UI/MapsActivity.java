@@ -202,7 +202,7 @@ public class MapsActivity extends AppCompatActivity
                 customClusterRenderer = new CustomClusterRenderer(getApplicationContext(), map, clusterManager);
             }
 
-            customClusterRenderer.setMinClusterSize(1);
+            customClusterRenderer.setMinClusterSize(3);
             clusterManager.setRenderer(customClusterRenderer);
 
             clusterManager.setOnClusterItemInfoWindowClickListener(
