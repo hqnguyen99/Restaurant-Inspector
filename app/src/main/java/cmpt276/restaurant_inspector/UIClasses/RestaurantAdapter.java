@@ -16,7 +16,7 @@ import java.util.Random;
 import cmpt276.restaurant_inspector.UI.R;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
-import cmpt276.restaurant_inspector.model.DateUtil;
+import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import cmpt276.restaurant_inspector.model.Inspection;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
@@ -157,7 +157,7 @@ public class RestaurantAdapter
 
     private void setViewDateFromNow(RestaurantViewHolder holder, Inspection inspection)
     {
-        long daysFromNewestInspection = DateUtil.daysFromNow(inspection.getDate());
+        long daysFromNewestInspection = DateTimeUtil.daysFromNow(inspection.getDate());
 
         if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(
@@ -165,11 +165,11 @@ public class RestaurantAdapter
             );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(
-                DateUtil.MONTH_DAY.getDateString(inspection.getDate())
+                DateTimeUtil.MONTH_DAY.getDateString(inspection.getDate())
             );
         } else {
             holder.textViewDateFromNow.setText(
-                DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
+                DateTimeUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate())
             );
         }
     }

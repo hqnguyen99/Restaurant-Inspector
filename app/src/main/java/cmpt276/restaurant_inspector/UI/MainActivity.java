@@ -15,13 +15,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cmpt276.restaurant_inspector.service.FileDownloadClient;
+import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,11 +34,14 @@ import retrofit2.http.GET;
 import retrofit2.http.Url;
 
 /**
- *  Splash screen to welcome user
+ *  Splash screen to welcome user,
+ *  also downloads new data from the Surrey data service if found.
  */
 public class MainActivity extends AppCompatActivity
 {
     private static final int MY_PERMISSIONS_REQUEST = 100;
+    private final String RESTAURANT_FILENAME = "restaurants.csv";
+    private final String INSPECTION_FILENAME = "fraserhealthrestaurantinspectionreports.csv";
     Runnable runnable;
 
     @Override
@@ -65,8 +70,8 @@ public class MainActivity extends AppCompatActivity
 //        loadScreen.show(manager, "Loading");
 
         //once loading is cone
-        downloadCsv("api/3/action/package_show?id=restaurants");
-
+        checkForCsvDownload("api/3/action/package_show?id=restaurants",
+            new File(getFilesDir() + RESTAURANT_FILENAME));
         //download on startup, check feature not implemented yet
 
 
@@ -89,7 +94,18 @@ public class MainActivity extends AppCompatActivity
         Call<ResponseBody> download(@Url String fileUrl);
     }
 
-    private void downloadCsv(String url) {
+    private void checkForCsvDownload(String url, File file) {
+        LocalDateTime lastModifiedTime = null;
+
+        if (file.exists()) {
+            lastModifiedTime = Instant.ofEpochMilli(file.lastModified())
+                .atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+            if (DateTimeUtil.hoursFromNow(lastModifiedTime) < 20) {
+                return;
+            }
+        }
+
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://data.surrey.ca/")
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -109,8 +125,14 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 String csvString = resourceStrings.get(i);
-                LocalDateTime dateTime = LocalDateTime.parse(getFileUrl(csvString, "last_modified"));
+
+                LocalDateTime timeOfUpload =
+                    LocalDateTime.parse(getFileUrl(csvString, "last_modified"));
+                long hoursFromLastUpdate = DateTimeUtil.hoursFromNow(timeOfUpload);
+                Log.d("TimeFromNow", String.valueOf(hoursFromLastUpdate));
+
                 String csvUrl = getFileUrl(csvString, "url");
+                Log.d("csvUrl", csvUrl);
 
                 FragmentManager manager = getSupportFragmentManager();
                 LoadingFragment loadScreen = new LoadingFragment();
@@ -122,6 +144,76 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void download(String url, String filename) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.surrey.ca/").build();
+        MainActivity.DownloadService service = retrofit.create(MainActivity.DownloadService.class);
+
+        service.download(url).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        boolean written = writeResponseBodyToDisk(response.body(), filename);
+
+                        return null;
+                    }
+                }.execute();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private boolean writeResponseBodyToDisk(ResponseBody body, String fileName) {
+        try {
+            //change pathname to proper file directory
+            File csvFile = new File(getFilesDir() + File.separator + fileName);
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(csvFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+                    fileSizeDownloaded += read;
+                    Log.d("Restaurant file", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                }
+
+                outputStream.flush();
+
+                return true;
+            } catch (IOException e) {
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     private String getFileUrl(String jsonInput, String attribute) {

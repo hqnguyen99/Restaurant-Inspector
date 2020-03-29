@@ -16,7 +16,7 @@ import java.util.List;
 import cmpt276.restaurant_inspector.UI.R;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
-import cmpt276.restaurant_inspector.model.DateUtil;
+import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import cmpt276.restaurant_inspector.model.Inspection;
 
 /**
@@ -92,7 +92,7 @@ public class InspectionAdapter
         Inspection inspection = inspectionsList.get(position);
 
         holder.textViewDateOfInspection.setText(
-            DateUtil.MONTH_DAY_YEAR.getDateString(inspectionsList.get(position).getDate())
+            DateTimeUtil.MONTH_DAY_YEAR.getDateString(inspectionsList.get(position).getDate())
         );
         holder.textViewNumCriticalIssues.setText(
             String.valueOf(inspection.getNumCrit()));

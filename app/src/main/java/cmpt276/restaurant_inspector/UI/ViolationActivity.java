@@ -19,7 +19,7 @@ import android.widget.Toast;
 import cmpt276.restaurant_inspector.UIClasses.ViolationAdapter;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
-import cmpt276.restaurant_inspector.model.DateUtil;
+import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import cmpt276.restaurant_inspector.model.Inspection;
 
 /**
@@ -77,7 +77,7 @@ public class ViolationActivity extends AppCompatActivity
         Log.i("msg",String.valueOf(inspectionPosition));
 
         textViewInspectionDate.setText(
-            DateUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
+            DateTimeUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
         textViewInspectionType.setText(inspection.getInspType());
         textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
