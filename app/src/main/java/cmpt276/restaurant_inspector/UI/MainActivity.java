@@ -1,17 +1,13 @@
 package cmpt276.restaurant_inspector.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PatternMatcher;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,10 +52,20 @@ public class MainActivity extends AppCompatActivity
 //                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
 //                    MY_PERMISSIONS_REQUEST);
 //        }
-
 //        download();
 //        Log.d("Start", " yes!");
-        downloadCsv("api/3/action/package_show?id=restaurants");
+
+
+
+
+        //these 3 lines when you hit start download
+        FragmentManager manager = getSupportFragmentManager();
+        LoadingFragment loadScreen = new LoadingFragment();
+        loadScreen.show(manager, "Loading");
+
+        //once loading is cone
+        //downloadCsv("api/3/action/package_show?id=restaurants");
+
         //download on startup, check feature not implemented yet
 
 
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
