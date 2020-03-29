@@ -70,10 +70,8 @@ public class MainActivity extends AppCompatActivity
 //        loadScreen.show(manager, "Loading");
 
         //once loading is cone
-        checkForCsvDownload("api/3/action/package_show?id=restaurants",
+        checkForUpdateAndDownload("api/3/action/package_show?id=restaurants",
             new File(getFilesDir() + RESTAURANT_FILENAME));
-        //download on startup, check feature not implemented yet
-
 
         Handler handler = new Handler();
         runnable = new Runnable() {
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         Call<ResponseBody> download(@Url String fileUrl);
     }
 
-    private void checkForCsvDownload(String url, File file) {
+    private void checkForUpdateAndDownload(String url, File file) {
         LocalDateTime lastModifiedTime = null;
 
         if (file.exists()) {
@@ -106,6 +104,10 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        downloadCSV(url, lastModifiedTime);
+    }
+
+    private void downloadCSV(String url, LocalDateTime timeOfLastUpdate) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://data.surrey.ca/")
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -128,11 +130,14 @@ public class MainActivity extends AppCompatActivity
 
                 LocalDateTime timeOfUpload =
                     LocalDateTime.parse(getFileUrl(csvString, "last_modified"));
-                long hoursFromLastUpdate = DateTimeUtil.hoursFromNow(timeOfUpload);
-                Log.d("TimeFromNow", String.valueOf(hoursFromLastUpdate));
+
+                if (timeOfLastUpdate != null) {
+                    if (timeOfLastUpdate.isAfter(timeOfUpload)) {
+                        return;
+                    }
+                }
 
                 String csvUrl = getFileUrl(csvString, "url");
-                Log.d("csvUrl", csvUrl);
 
                 FragmentManager manager = getSupportFragmentManager();
                 LoadingFragment loadScreen = new LoadingFragment();
