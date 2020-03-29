@@ -198,9 +198,8 @@ public class MainActivity extends AppCompatActivity
 
 
                 if (!updateRequested) {
-                    FragmentManager manager = getSupportFragmentManager();
                     AskForDownloadFragment downloadPrompt = new AskForDownloadFragment();
-                    downloadPrompt.show(manager,
+                    downloadPrompt.show(getSupportFragmentManager(),
                         "New data is available, would you like to download?");
                 }
                 if (updateConfirmed) {
