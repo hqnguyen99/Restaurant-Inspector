@@ -1,19 +1,27 @@
 package cmpt276.restaurant_inspector.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -23,7 +31,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cmpt276.restaurant_inspector.model.AppData;
+import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.DateTimeUtil;
+import cmpt276.restaurant_inspector.model.Inspection;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +42,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
@@ -40,6 +52,8 @@ import retrofit2.http.Url;
 public class MainActivity extends AppCompatActivity
 {
     private static final int MY_PERMISSIONS_REQUEST = 100;
+    private static final String BASE_URL = "http://data.surrey.ca/";
+    private final String INTERNAL_STORAGE_PATH = "/data/data/hqnguyen.sfu.restaurantinspector/files/";
     private final String RESTAURANT_FILENAME = "restaurants.csv";
     private final String INSPECTION_FILENAME = "fraserhealthrestaurantinspectionreports.csv";
     Runnable runnable;
@@ -69,9 +83,19 @@ public class MainActivity extends AppCompatActivity
 //        LoadingFragment loadScreen = new LoadingFragment();
 //        loadScreen.show(manager, "Loading");
 
-        //once loading is cone
-        checkForUpdateAndDownload("api/3/action/package_show?id=restaurants",
-            new File(getFilesDir() + RESTAURANT_FILENAME));
+        Log.d("FileDir", String.valueOf(getFilesDir()));
+
+        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
+        checkForUpdateAndDownload(RESTAURANT_METADATA_URL, getFilesDir() + File.separator + RESTAURANT_FILENAME);
+
+        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
+        checkForUpdateAndDownload(INSPECTION_METADATA_URL, getFilesDir() + File.separator + INSPECTION_FILENAME);
+
+        try {
+            createRestaurantList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Handler handler = new Handler();
         runnable = new Runnable() {
@@ -85,15 +109,35 @@ public class MainActivity extends AppCompatActivity
         handler.postDelayed(runnable, 3000);
     }
 
+    private void createRestaurantList() throws IOException {
+        DataSingleton data = AppData.INSTANCE;
+//        InputStream restaurantIs =
+//            getResources().openRawResource(R.raw.restaurants_itr1);
+//        InputStream inspectionIs =
+//            getResources().openRawResource(R.raw.inspectionreports_itr1);
+        FileInputStream restaurantFis = openFileInput(RESTAURANT_FILENAME);
+        FileInputStream inspectionFis = openFileInput(INSPECTION_FILENAME);
+        data.init(
+//            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
+//            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.ISO_8859_1))
+            new BufferedReader(new InputStreamReader(restaurantFis)),
+            new BufferedReader(new InputStreamReader(inspectionFis))
+        );
+
+        restaurantFis.close();
+        inspectionFis.close();
+    }
+
     public interface DownloadService {
         @GET
         Call<String> getJsonResponse(@Url String url);
         @GET
-        Call<ResponseBody> download(@Url String fileUrl);
+        Call<ResponseBody> download(@Url String url);
     }
 
-    private void checkForUpdateAndDownload(String url, File file) {
+    private void checkForUpdateAndDownload(String url, String filename) {
         LocalDateTime lastModifiedTime = null;
+        File file = new File(filename);
 
         if (file.exists()) {
             lastModifiedTime = Instant.ofEpochMilli(file.lastModified())
@@ -104,12 +148,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        downloadCSV(url, lastModifiedTime);
+        downloadCSV(url, lastModifiedTime, filename);
     }
 
-    private void downloadCSV(String url, LocalDateTime timeOfLastUpdate) {
+    private void downloadCSV(String url, LocalDateTime timeOfLastUpdate, String filename) {
         Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://data.surrey.ca/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
         DownloadService service = retrofit.create(DownloadService.class);
@@ -139,6 +183,7 @@ public class MainActivity extends AppCompatActivity
 
                 String csvUrl = getFileUrl(csvString, "url");
 
+                download(csvUrl, filename);
                 FragmentManager manager = getSupportFragmentManager();
                 LoadingFragment loadScreen = new LoadingFragment();
                 loadScreen.show(manager, "Loading");
@@ -151,34 +196,35 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void download(String url, String filename) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.surrey.ca/").build();
-        MainActivity.DownloadService service = retrofit.create(MainActivity.DownloadService.class);
+    private static void download(String url, String filename) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
+        DownloadService service = retrofit.create(MainActivity.DownloadService.class);
 
-        service.download(url).enqueue(new Callback<ResponseBody>() {
+        new AsyncTask<Void, Long, Void>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                new AsyncTask<Void, Void, Void>() {
+            protected Void doInBackground(Void... voids) {
+                service.download(url).enqueue(new Callback<ResponseBody>() {
                     @Override
-                    protected Void doInBackground(Void... voids) {
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         boolean written = writeResponseBodyToDisk(response.body(), filename);
-
-                        return null;
+                        Log.d("File Download status", String.valueOf(written));
                     }
-                }.execute();
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("download", t.getMessage());
+                    }
+                });
+
+                return null;
             }
-        });
+        }.execute();
     }
 
-    private boolean writeResponseBodyToDisk(ResponseBody body, String fileName) {
+    private static boolean writeResponseBodyToDisk(ResponseBody body, String fileName) {
         try {
             //change pathname to proper file directory
-            File csvFile = new File(getFilesDir() + File.separator + fileName);
+            File csvFile = new File(fileName);
             InputStream inputStream = null;
             OutputStream outputStream = null;
 

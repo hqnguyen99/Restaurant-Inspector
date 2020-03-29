@@ -31,21 +31,7 @@ public class RestaurantActivity extends AppCompatActivity
         setContentView(R.layout.activity_restaurant);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        createRestaurantList();
         buildRecyclerView();
-    }
-
-    private void createRestaurantList()
-    {
-        DataSingleton data = AppData.INSTANCE;
-        InputStream restaurantIs =
-            getResources().openRawResource(R.raw.restaurants);
-        InputStream inspectionIs =
-            getResources().openRawResource(R.raw.fraserhealthrestaurantinspectionreports);
-        data.init(
-            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
-            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.ISO_8859_1))
-        );
     }
 
     private void buildRecyclerView()
