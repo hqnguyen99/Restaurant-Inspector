@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
             runnable = new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(MainActivity.this, RestaurantActivity.class);
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     startActivity(intent);
                     finish();
                 }
