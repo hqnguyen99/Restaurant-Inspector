@@ -29,10 +29,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AskForDownloadFragment extends AppCompatDialogFragment {
-    public interface OnSelectionListener {
-        void sendStatus(boolean status);
-    }
-
     public OnSelectionListener listener;
     private boolean status;
 
@@ -42,7 +38,8 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
         try {
             listener = (OnSelectionListener) getActivity();
         } catch (ClassCastException e) {
-            throw e;
+            throw new ClassCastException(context.toString() +
+                "must implement onSelectionListener.");
         }
     }
 
@@ -65,10 +62,11 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
                         break;
                 }
 
-                listener.sendStatus(status);
+//                listener.sendStatus(status);
                 getDialog().dismiss();
             }
         };
+
         return new AlertDialog.Builder(getActivity())
                 .setTitle("New data is available, would you like to download?")
                 .setView(v)
@@ -77,8 +75,7 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
                 .create();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public interface OnSelectionListener {
+        void sendStatus(boolean status);
     }
 }

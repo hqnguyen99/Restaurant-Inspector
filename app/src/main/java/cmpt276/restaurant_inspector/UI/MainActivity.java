@@ -43,7 +43,7 @@ import retrofit2.http.Url;
  *  Splash screen to welcome user,
  *  also downloads new data from the Surrey data service if found.
  */
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements AskForDownloadFragment.OnSelectionListener
 {
     private static final int MY_PERMISSIONS_REQUEST = 100;
     private static final String BASE_URL = "http://data.surrey.ca/";
@@ -56,29 +56,16 @@ public class MainActivity extends AppCompatActivity
     Runnable runnable;
 
     @Override
+    public void sendStatus(boolean status) {
+        updateConfirmed = status;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        //grant access to download to disk
-//        if (ContextCompat.checkSelfPermission(MainActivity.this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(MainActivity.this,
-//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                    MY_PERMISSIONS_REQUEST);
-//        }
-//        download();
-//        Log.d("Start", " yes!");
-
-
-
-
-        //these 3 lines when you hit start download
-//        FragmentManager manager = getSupportFragmentManager();
-//        LoadingFragment loadScreen = new LoadingFragment();
-//        loadScreen.show(manager, "Loading");
 
         Log.d("FileDir", String.valueOf(getFilesDir()));
 
