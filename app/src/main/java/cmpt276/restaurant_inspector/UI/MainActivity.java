@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -35,6 +36,7 @@ import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.DateTimeUtil;
 import cmpt276.restaurant_inspector.model.Inspection;
+import cmpt276.restaurant_inspector.model.Restaurant;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,11 +87,13 @@ public class MainActivity extends AppCompatActivity
 
         Log.d("FileDir", String.valueOf(getFilesDir()));
 
-        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
-        checkForUpdateAndDownload(RESTAURANT_METADATA_URL, getFilesDir() + File.separator + RESTAURANT_FILENAME);
-
-        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
-        checkForUpdateAndDownload(INSPECTION_METADATA_URL, getFilesDir() + File.separator + INSPECTION_FILENAME);
+//        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
+//        checkForUpdateAndDownload(RESTAURANT_METADATA_URL,
+//            getFilesDir() + File.separator + RESTAURANT_FILENAME);
+//
+//        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
+//        checkForUpdateAndDownload(INSPECTION_METADATA_URL,
+//            getFilesDir() + File.separator + INSPECTION_FILENAME);
 
         try {
             createRestaurantList();
@@ -111,21 +115,35 @@ public class MainActivity extends AppCompatActivity
 
     private void createRestaurantList() throws IOException {
         DataSingleton data = AppData.INSTANCE;
-//        InputStream restaurantIs =
-//            getResources().openRawResource(R.raw.restaurants_itr1);
-//        InputStream inspectionIs =
-//            getResources().openRawResource(R.raw.inspectionreports_itr1);
-        FileInputStream restaurantFis = openFileInput(RESTAURANT_FILENAME);
-        FileInputStream inspectionFis = openFileInput(INSPECTION_FILENAME);
-        data.init(
-//            new BufferedReader(new InputStreamReader(restaurantIs, StandardCharsets.UTF_8)),
-//            new BufferedReader(new InputStreamReader(inspectionIs, StandardCharsets.ISO_8859_1))
-            new BufferedReader(new InputStreamReader(restaurantFis)),
-            new BufferedReader(new InputStreamReader(inspectionFis))
-        );
 
-        restaurantFis.close();
-        inspectionFis.close();
+        if (!new File(getFilesDir() + File.separator + RESTAURANT_FILENAME).exists() ||
+            !new File(getFilesDir() + File.separator + INSPECTION_FILENAME).exists()) {
+            InputStream restaurantIs =
+                getResources().openRawResource(R.raw.restaurants_itr1);
+            InputStream inspectionIs =
+                getResources().openRawResource(R.raw.inspectionreports_itr1);
+
+            data.init(
+                new BufferedReader(new InputStreamReader(
+                    restaurantIs, StandardCharsets.UTF_8)),
+                new BufferedReader(new InputStreamReader(
+                    inspectionIs, StandardCharsets.ISO_8859_1))
+            );
+
+            restaurantIs.close();
+            inspectionIs.close();
+        } else {
+
+            FileInputStream restaurantFis = openFileInput(RESTAURANT_FILENAME);
+            FileInputStream inspectionFis = openFileInput(INSPECTION_FILENAME);
+            data.init(
+                new BufferedReader(new InputStreamReader(restaurantFis)),
+                new BufferedReader(new InputStreamReader(inspectionFis))
+            );
+
+            restaurantFis.close();
+            inspectionFis.close();
+        }
     }
 
     public interface DownloadService {
