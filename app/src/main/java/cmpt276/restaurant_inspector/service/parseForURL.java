@@ -34,9 +34,9 @@ public class parseForURL extends AsyncTask<Void,Void,Void> {
             JSONArray JA = new JSONArray(restaurantData);
             for(int i =0 ;i < JA.length(); i++){
                 JSONObject JO = (JSONObject) JA.get(i);
-
-
-
+                if(JO.getString("format").equals("CSV")) { //if format == csv
+                    restaurantCSV = JO.getString("URL");
+                }
             }
 
         } catch (MalformedURLException e) {
