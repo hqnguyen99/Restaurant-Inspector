@@ -8,5 +8,6 @@ public enum HazardRating
 {
     LOW,
     MODERATE,
-    HIGH
+    HIGH,
+    NONE
 }

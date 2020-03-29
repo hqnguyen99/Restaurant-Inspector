@@ -57,7 +57,7 @@ public class Inspection implements Comparable<Inspection>
             case "High" :
                 return HazardRating.HIGH;
             default:
-                return null;
+                return HazardRating.NONE;
         }
     }
 

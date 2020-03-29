@@ -249,34 +249,37 @@ public class MapsActivity extends AppCompatActivity
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
             String address = current.getRestaurant().getAddress();
-            String hazardLevel;
+            String hazardLevel = "None";
             String title = name;
             String snippet = address;
             List<Inspection> inspections = current.getInspections();
 
+            BitmapDescriptor icon = null;
+
             if (inspections.size() > 0) {
+                Log.d("InspectionsSize", String.valueOf(inspections.size()));
                 inspection = inspections.get(0);
-            }
+                Log.d("Inspection", inspection.toString());
 
-            BitmapDescriptor icon;
-
-            switch (inspection.getHazardRating()) {
-                case LOW:
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    hazardLevel = "Low";
-                    break;
-                case MODERATE:
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
-                    hazardLevel = "Moderate";
-                    break;
-                case HIGH:
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
-                    hazardLevel = "High";
-                    break;
-                default:
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
-                    hazardLevel = "Low";
-                    break;
+                switch (inspection.getHazardRating()) {
+                    case LOW:
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
+                        hazardLevel = "Low";
+                        break;
+                    case MODERATE:
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
+                        hazardLevel = "Moderate";
+                        break;
+                    case HIGH:
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
+                        hazardLevel = "High";
+                        break;
+                    case NONE:
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
+                        break;
+                }
+            } else {
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
             }
 
             MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,hazardLevel);
