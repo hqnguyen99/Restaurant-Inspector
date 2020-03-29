@@ -186,6 +186,8 @@ public class RestaurantAdapter
             case HIGH:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_high);
                 break;
+            case NONE:
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_none);
         }
     }
 

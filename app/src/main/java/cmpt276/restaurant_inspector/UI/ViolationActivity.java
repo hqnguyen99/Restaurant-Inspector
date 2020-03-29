@@ -92,6 +92,9 @@ public class ViolationActivity extends AppCompatActivity
             case HIGH:
                 imageViewHazardLevel.setImageResource(R.drawable.hazard_high);
                 break;
+            case NONE:
+                imageViewHazardLevel.setImageResource(R.drawable.hazard_none);
+                break;
         }
     }
 
