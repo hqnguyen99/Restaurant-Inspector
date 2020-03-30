@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AskForDownloadFragment extends AppCompatDialogFragment {
-    public OnSelectionListener listener;
+    private OnSelectionListener listener;
     private boolean status;
 
     @Override
@@ -45,34 +46,29 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = LayoutInflater.from(getActivity())
-                .inflate(R.layout.load_message_layout, null);
+            .inflate(R.layout.load_message_layout, null);
 
-        MainActivity callbackActivity = new MainActivity();
-
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        status = false;
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        status = true;
-                        break;
+        builder.setView(v)
+            .setTitle("New data is available, would you like to download?")
+            .setView(v)
+            .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    status = false;
                 }
+            })
+            .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    status = true;
+                }
+            });
 
-//                listener.sendStatus(status);
-                getDialog().dismiss();
-            }
-        };
+        listener.sendStatus(status);
 
-        return new AlertDialog.Builder(getActivity())
-                .setTitle("New data is available, would you like to download?")
-                .setView(v)
-                .setPositiveButton(android.R.string.no, listener)
-                .setNegativeButton(android.R.string.yes, listener)
-                .create();
+        return builder.create();
     }
 
     public interface OnSelectionListener {

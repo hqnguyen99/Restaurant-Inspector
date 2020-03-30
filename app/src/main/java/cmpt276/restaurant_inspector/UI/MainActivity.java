@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
 
         Log.d("FileDir", String.valueOf(getFilesDir()));
 
-//        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
-//        checkForUpdateAndDownload(RESTAURANT_METADATA_URL,
-//            getFilesDir() + File.separator + RESTAURANT_FILENAME + CSV);
-//
-//        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
-//        checkForUpdateAndDownload(INSPECTION_METADATA_URL,
-//            getFilesDir() + File.separator + INSPECTION_FILENAME + CSV);
+        String RESTAURANT_METADATA_URL = "api/3/action/package_show?id=restaurants";
+        checkForUpdateAndDownload(RESTAURANT_METADATA_URL,
+            getFilesDir() + File.separator + RESTAURANT_FILENAME + CSV);
+
+        String INSPECTION_METADATA_URL = "api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
+        checkForUpdateAndDownload(INSPECTION_METADATA_URL,
+            getFilesDir() + File.separator + INSPECTION_FILENAME + CSV);
 
         try {
             createRestaurantList();
@@ -183,12 +183,12 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
 
                 String csvUrl = getFileUrl(csvString, "url");
 
-
                 if (!updateRequested) {
                     AskForDownloadFragment downloadPrompt = new AskForDownloadFragment();
                     downloadPrompt.show(getSupportFragmentManager(),
                         "New data is available, would you like to download?");
                 }
+
                 if (updateConfirmed) {
                     download(csvUrl, filename);
                 }
