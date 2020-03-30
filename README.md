@@ -6,4 +6,5 @@ ROLES
 - Hoang - Project Owner
 
 Notes:
-- unable to finish downloadData
+- Can download data from server and access via internal storage,
+- but there is no dialog for it
