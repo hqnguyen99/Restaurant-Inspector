@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,7 +32,6 @@ import retrofit2.Retrofit;
 
 public class AskForDownloadFragment extends AppCompatDialogFragment {
     private OnSelectionListener listener;
-    private boolean status;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,22 +51,24 @@ public class AskForDownloadFragment extends AppCompatDialogFragment {
             .inflate(R.layout.load_message_layout, null);
 
         builder.setView(v)
-            .setTitle("New data is available, would you like to download?")
+            .setTitle("New data is available, would you like to download?" +
+                ", data will not be downloaded if no response in 2s")
             .setView(v)
             .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    status = false;
+                    listener.sendStatus(false);
+                    getDialog().dismiss();
                 }
             })
             .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    status = true;
+                    listener.sendStatus(true);
+                    getDialog().dismiss();
                 }
             });
 
-        listener.sendStatus(status);
 
         return builder.create();
     }

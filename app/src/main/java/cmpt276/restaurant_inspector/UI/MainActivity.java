@@ -1,10 +1,14 @@
 package cmpt276.restaurant_inspector.UI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -184,9 +188,8 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
                 String csvUrl = getFileUrl(csvString, "url");
 
                 if (!updateRequested) {
-                    AskForDownloadFragment downloadPrompt = new AskForDownloadFragment();
-                    downloadPrompt.show(getSupportFragmentManager(),
-                        "New data is available, would you like to download?");
+                    new AskForDownloadFragment().show(getSupportFragmentManager(),
+                        "AskForDownloadDialog");
                 }
 
                 if (updateConfirmed) {
