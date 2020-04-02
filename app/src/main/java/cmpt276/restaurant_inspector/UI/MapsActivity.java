@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cmpt276.restaurant_inspector.Filter.FilterFragment;
 import cmpt276.restaurant_inspector.MapsClass.CustomClusterRenderer;
 import cmpt276.restaurant_inspector.MapsClass.InfoFragment;
 import cmpt276.restaurant_inspector.MapsClass.MyItem;
@@ -58,7 +62,7 @@ import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
  * An activity that displays a map showing the available restaurants with inspection reports.
  */
 public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, FilterFragment.FilterDialogListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private static final String RESTAURANT_POSITION = "123" ;
@@ -124,6 +128,24 @@ public class MapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Set up search box and filter
+        setupSearchBox();
+    }
+
+    private void setupSearchBox() {
+        ImageButton filterBtn = (ImageButton) findViewById(R.id.maps_filter_btn);
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFilterDialog();
+            }
+
+            private void openFilterDialog() {
+                FilterFragment filterFragment = new FilterFragment();
+                filterFragment.show(getSupportFragmentManager(),"example dialog");
+            }
+        });
     }
 
     /**
@@ -521,5 +543,11 @@ public class MapsActivity extends AppCompatActivity
     {
         Intent intent = getIntent();
         restaurantPositionInList = intent.getIntExtra(RESTAURANT_POSITION, -1);
+    }
+
+    @Override
+    public void getInput(Boolean isFavorite, String hazardLevel, int numberOfviolations) {
+        Log.i("isChecked maps",String.valueOf(isFavorite));
+        Log.i("hazard level maps",hazardLevel);
     }
 }
