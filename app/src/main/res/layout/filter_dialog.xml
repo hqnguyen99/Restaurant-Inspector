@@ -20,7 +20,7 @@
             android:layout_height="55dp"
             android:text="Filter Box"
             android:textStyle="bold"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:gravity="center"/>
 
         <LinearLayout
@@ -34,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="In favourite list:" />
+                android:text="In favourite list only:"
+                android:checked="false"/>
         </LinearLayout>
 
         <LinearLayout

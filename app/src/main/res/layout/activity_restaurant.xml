@@ -20,6 +20,41 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_restaurant" />
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp">
+
+            <SearchView
+                android:id="@+id/restaurant_search_box"
+                android:layout_width="238dp"
+                android:layout_height="match_parent"
+
+                android:layout_marginRight="5dp"
+                android:layout_weight="5"
+                android:background="@drawable/background_rounded"
+                android:queryHint="Enter Restaurant's name"></SearchView>
+
+            <ImageButton
+                android:id="@+id/restaurant_filter_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/background_rounded"
+                android:src="@drawable/ic_filter"></ImageButton>
+        </LinearLayout>
+
+        <include layout="@layout/content_restaurant"></include>
+
+    </RelativeLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
