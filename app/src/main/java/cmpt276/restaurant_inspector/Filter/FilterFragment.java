@@ -51,8 +51,8 @@ public class FilterFragment extends AppCompatDialogFragment {
                     Log.i("hazard level",hazardLevel.getSelectedItem().toString());
                 })
                 .setPositiveButton("OK", (dialogInterface, i) -> {
-                    Log.i("isChecked",String.valueOf(isFavouriteList[0]));
-                    Log.i("hazard level",hazardLevel.getSelectedItem().toString());
+                    /*Log.i("isChecked",String.valueOf(isFavouriteList[0]));
+                    Log.i("hazard level",hazardLevel.getSelectedItem().toString());*/
                     String numberOfViolationsMoreThanString = numberOfViolationsMoreThanEditText.getText().toString();
                     int numberOfViolationsLessThan;
 

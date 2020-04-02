@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,14 +67,19 @@ public class MapsActivity extends AppCompatActivity
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private static final String RESTAURANT_POSITION = "123" ;
-    private static final String RESTAURANT_LONGTITUDE = "789" ;
-    //private LatLng restaurantLocation;
+
     private int restaurantPositionInList;
     private GoogleMap map;
     private CameraPosition cameraPosition;
     private ClusterManager<MyItem> clusterManager;
     private CustomClusterRenderer customClusterRenderer;
     private List<MyItem> myItemList = new ArrayList<>();
+
+    //input for search and filter box
+    private Boolean isFavoriteFilterBox = false;
+    private String hazardLevelFilterBox = "Select one";
+    private int numberOfViolationsMoreThanFilterBox = 0;
+    private final String[] searchRestaurant = new String[1];
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -134,6 +140,7 @@ public class MapsActivity extends AppCompatActivity
     }
 
     private void setupSearchBox() {
+        // Filter box
         ImageButton filterBtn = (ImageButton) findViewById(R.id.maps_filter_btn);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +153,27 @@ public class MapsActivity extends AppCompatActivity
                 filterFragment.show(getSupportFragmentManager(),"example dialog");
             }
         });
+
+        // Search box
+        SearchView searchBox = (SearchView) findViewById(R.id.maps_search_box);
+        searchRestaurant[0] = "";
+        searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchRestaurant[0] = s;
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        Log.i("msg", searchRestaurant[0]);
+        Log.i("msg", String.valueOf(isFavoriteFilterBox));
+        Log.i("msg", hazardLevelFilterBox);
+        Log.i("msg", String.valueOf(numberOfViolationsMoreThanFilterBox));
+
     }
 
     /**
@@ -228,14 +256,10 @@ public class MapsActivity extends AppCompatActivity
             clusterManager.setRenderer(customClusterRenderer);
 
             clusterManager.setOnClusterItemInfoWindowClickListener(
-                    new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onClusterItemInfoWindowClick(MyItem item) {
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            InfoFragment dialog = new InfoFragment(item);
-                            dialog.show(fragmentManager, "InfoDialog");
-                        }
+                    item -> {
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        InfoFragment dialog = new InfoFragment(item);
+                        dialog.show(fragmentManager, "InfoDialog");
                     });
 
             map.setOnMarkerClickListener(clusterManager);
@@ -546,8 +570,12 @@ public class MapsActivity extends AppCompatActivity
     }
 
     @Override
-    public void getInput(Boolean isFavorite, String hazardLevel, int numberOfviolations) {
-        Log.i("isChecked maps",String.valueOf(isFavorite));
-        Log.i("hazard level maps",hazardLevel);
+    public void getInput(Boolean isFavorite, String hazardLevel, int numberOfViolations) {
+        isFavoriteFilterBox = isFavorite;
+        hazardLevelFilterBox = hazardLevel;
+        numberOfViolationsMoreThanFilterBox = numberOfViolations;
+        Log.i("qqq", String.valueOf(isFavoriteFilterBox));
+        Log.i("qq", hazardLevelFilterBox);
+        Log.i("qqq", String.valueOf(numberOfViolationsMoreThanFilterBox));
     }
 }
