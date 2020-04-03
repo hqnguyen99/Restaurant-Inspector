@@ -5,20 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -56,6 +53,7 @@ import cmpt276.restaurant_inspector.MapsClass.InfoFragment;
 import cmpt276.restaurant_inspector.MapsClass.MyItem;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
+import cmpt276.restaurant_inspector.model.HazardRating;
 import cmpt276.restaurant_inspector.model.Inspection;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
@@ -79,7 +77,7 @@ public class MapsActivity extends AppCompatActivity
     private Boolean isFavoriteFilterBox = false;
     private String hazardLevelFilterBox = "Select one";
     private int numberOfViolationsMoreThanFilterBox = 0;
-    private final String[] searchRestaurant = new String[1];
+    private final String[] searchRestaurantByName = new String[1];
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -156,11 +154,12 @@ public class MapsActivity extends AppCompatActivity
 
         // Search box
         SearchView searchBox = (SearchView) findViewById(R.id.maps_search_box);
-        searchRestaurant[0] = "";
+        searchRestaurantByName[0] = "";
         searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                searchRestaurant[0] = s;
+                searchRestaurantByName[0] = s;
+                onMapReady(map);
                 return true;
             }
 
@@ -169,10 +168,11 @@ public class MapsActivity extends AppCompatActivity
                 return false;
             }
         });
-        Log.i("msg", searchRestaurant[0]);
+
         Log.i("msg", String.valueOf(isFavoriteFilterBox));
         Log.i("msg", hazardLevelFilterBox);
         Log.i("msg", String.valueOf(numberOfViolationsMoreThanFilterBox));
+        Toast.makeText(getApplicationContext(),String.valueOf(isFavoriteFilterBox),Toast.LENGTH_LONG).show();
 
     }
 
@@ -286,6 +286,7 @@ public class MapsActivity extends AppCompatActivity
     }
 
     private void addItems() {
+        clusterManager.clearItems();
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
 
@@ -294,43 +295,42 @@ public class MapsActivity extends AppCompatActivity
             double latitude = current.getRestaurant().getLatitude();
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
-            String address = current.getRestaurant().getAddress();
-            String hazardLevel = "None";
-            String title = name;
-            String snippet = address;
-            List<Inspection> inspections = current.getInspections();
+            if (searchRestaurantByName[0].equals("") || name.contains(searchRestaurantByName[0])) {
+                String address = current.getRestaurant().getAddress();
+                String hazardLevel = "None";
+                String title = name;
+                String snippet = address;
+                List<Inspection> inspections = current.getInspections();
 
-            BitmapDescriptor icon = null;
+                BitmapDescriptor icon = null;
+                if (inspections.size() > numberOfViolationsMoreThanFilterBox && hazardLevelFilterBox != "NONE") {
+                    inspection = inspections.get(0);
 
-            if (inspections.size() > 0) {
-                Log.d("InspectionsSize", String.valueOf(inspections.size()));
-                inspection = inspections.get(0);
-                Log.d("Inspection", inspection.toString());
-
-                switch (inspection.getHazardRating()) {
-                    case LOW:
+                    if (inspection.getHazardRating() == HazardRating.LOW && ( hazardLevelFilterBox == "LOW" || hazardLevelFilterBox == "Select one")){
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
                         hazardLevel = "Low";
-                        break;
-                    case MODERATE:
+                    }
+                     else if(inspection.getHazardRating() == HazardRating.MODERATE && ( hazardLevelFilterBox == "MODERATE" || hazardLevelFilterBox == "Select one")) {
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
                         hazardLevel = "Moderate";
-                        break;
-                    case HIGH:
+                    }
+                    else if(inspection.getHazardRating() == HazardRating.HIGH && ( hazardLevelFilterBox == "HIGH" || hazardLevelFilterBox == "Select one")) {
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
                         hazardLevel = "High";
-                        break;
-                    case NONE:
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
-                        break;
+                    }
+                    else if(inspection.getHazardRating() == HazardRating.NONE && (hazardLevelFilterBox == "NONE" || hazardLevelFilterBox == "Select one")) {
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
+                    }
                 }
-            } else {
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
+                else if(inspections.size() > numberOfViolationsMoreThanFilterBox && (hazardLevelFilterBox == "NONE" || hazardLevelFilterBox == "Select one")){
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
+                }
+                if(icon != null) {
+                    MyItem clusterItem = new MyItem(latitude, longitude, title, snippet, icon, position, hazardLevel);
+                    clusterManager.addItem(clusterItem);
+                    myItemList.add(clusterItem);
+                }
             }
-
-            MyItem clusterItem = new MyItem(latitude,longitude, title, snippet, icon, position,hazardLevel);
-            clusterManager.addItem(clusterItem);
-            myItemList.add(clusterItem);
         }
 
         //
@@ -574,8 +574,6 @@ public class MapsActivity extends AppCompatActivity
         isFavoriteFilterBox = isFavorite;
         hazardLevelFilterBox = hazardLevel;
         numberOfViolationsMoreThanFilterBox = numberOfViolations;
-        Log.i("qqq", String.valueOf(isFavoriteFilterBox));
-        Log.i("qq", hazardLevelFilterBox);
-        Log.i("qqq", String.valueOf(numberOfViolationsMoreThanFilterBox));
+        onMapReady(map);
     }
 }
