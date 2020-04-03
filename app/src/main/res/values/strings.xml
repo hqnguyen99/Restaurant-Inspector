@@ -1,36 +1,72 @@
 <resources>
-    <string name="app_name">Welcome</string>
+<!--    App Name-->
+    <string name="app_name">Restaurant Inspector</string>
+
+<!--    Activities' titles-->
     <string name="title_activity_restaurant">Restaurants</string>
     <string name="title_activity_inspection">Inspections</string>
     <string name="title_activity_violation">Violations</string>
-    <string name="welcome">Welcome!</string>
-    <string name="restaurant_icon">Restaurant Icon</string>
-    <string name="hazard_level_icon">Hazard Level Icon</string>
-    <string name="restaurant_name">Restaurant Name</string>
-    <string name="issue_found"># Issue Found: \t</string>
-    <string name="issue"># issue</string>
-    <string name="last_inspection">Last Inspection: \t</string>
-    <string name="how_long_ago">How long ago</string>
-    <string name="name">Name</string>
-    <string name="address">Address: \t</string>
-    <string name="latitude">Latitude: \t</string>
-    <string name="longitude">Longitude: \t</string>
-    <string name="violation_severity_icon">Violation Severity_Icon</string>
-    <string name="violation_nature_icon">Violation Nature Icon</string>
-    <string name="inspection_type">Inspection type: \t</string>
-    <string name="critical_issues_found">Critical issues found: \t</string>
-    <string name="non_critical_issues_found">Non-critical issues found: \t</string>
-    <string name="violation_hazard_level_icon">Violation Hazard Level Icon</string>
-    <string name="hazard_level">Hazard level: \t</string>
-    <string name="inspection_hazard_level_icon">Inspection Hazard Level Icon</string>
-    <string name="critical_issue_found">Critical issue found: \t</string>
-    <string name="non_critical_issue_found">Non-Critical issue found: \t</string>
     <string name="title_activity_maps">Map</string>
-    <string name="default_info_title">Default Location</string>
-    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
-    <string name="option_get_place">Get place</string>
-    <string name="pick_place">Choose a place</string>
-    <string name="restaurant_list">Restaurant List</string>
-    <string name="map">MAP</string>
-    <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">Do you want to see the restaurant\'s full information?</string>
+
+<!--    Main Activity-->
+    <string name="main_activity_welcome">Welcome!</string>
+
+<!--    Restaurant Activity-->
+    <string name="restaurant_activity_issue_found"># Issue Found: \t</string>
+    <string name="restaurant_activity_last_inspection">Last Inspection: \t</string>
+    <!--    Sample Output-->
+        <string name="restaurant_activity_restaurant_icon_description">Restaurant Icon</string>
+        <string name="restaurant_activity_hazard_level_icon_description">Hazard Level Icon</string>
+        <string name="restaurant_activity_restaurant_name">Restaurant Name</string>
+        <string name="restaurant_activity_issue_number"># issue</string>
+        <string name="restaurant_activity_how_long_ago">How long ago</string>
+
+<!--    Inspection Activity-->
+    <string name="inspection_activity_latitude">Latitude: \t</string>
+    <string name="inspection_activity_longitude">Longitude: \t</string>
+    <string name="inspection_activity_critical_issues_found">Critical issues found: \t</string>
+    <string name="inspection_activity_non_critical_issues_found">
+        Non-critical issues found: \t</string>
+    <string name="inspection_activity_last_inspection">Last Inspection: \t</string>
+    <!--    Sample Output-->
+        <string name="inspection_activity_restaurant_name">Restaurant Name</string>
+        <string name="inspection_activity_address">Address</string>
+        <string name="inspection_activity_latitude_coordinate">Latitude Coordinates</string>
+        <string name="inspection_activity_longitude_coordinate">longitude Coordinate</string>
+        <string name="inspection_activity_hazard_level_icon_description">
+            Inspection Hazard Level Icon</string>
+        <string name="inspection_activity_issue_number"># issue</string>
+        <string name="inspection_activity_how_long_ago">How long ago</string>
+
+<!--    Violation Activity-->
+    <string name="violation_activity_critical_issues_found">Critical issues found: \t</string>
+    <string name="violation_activity_non_critical_issues_found">
+        Non-critical issues found: \t</string>
+    <string name="violation_activity_hazard_level">Hazard level: \t</string>
+    <string name="violation_activity_inspection_type">Inspection type: \t</string>
+    <!--    Sample Output-->
+        <string name="violation_activity_date">Date</string>
+        <string name="violation_activity_inspection_type_sample">Type</string>
+        <string name="violation_activity_issue_number"># issue</string>
+        <string name="violation_activity_hazard_level_icon_description">
+            Violation Hazard Level Icon</string>
+        <string name="violation_activity_hazard_level_sample">Level</string>
+        <string name="violation_activity_nature_icon_description">Violation Nature Icon</string>
+        <string name="violation_activity_severity_icon_description">Violation Severity_Icon</string>
+        <string name="violation_activity_brief_description_sample">Critical/Not Critical</string>
+
+<!--    Switching Button for Map Activity and Restaurant Activity-->
+    <string name="current_place_menu_go_to_restaurant_list">Go to Restaurant Lists</string>
+    <string name="menu_restaurant_activity_go_to_map">Go to Map</string>
+
+<!--    Dialog Information-->
+    <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">
+        Do you want to see the restaurant\'s full information?</string>
+
+<!--    Map Activity-->
+    <string name="map_activity_default_info_title">Default Location</string>
+    <string name="map_activity_default_info_snippet">
+        No places found, because location permission is disabled.</string>
+    <string name="map_activity_option_get_place">Get place</string>
+    <string name="map_activity_pick_place">Choose a place</string>
 </resources>

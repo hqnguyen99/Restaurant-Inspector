@@ -10,13 +10,14 @@
         android:id="@+id/textView_inspection_activity_restaurant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name"
+        android:text="@string/inspection_activity_restaurant_name"
         android:textColor="@color/colorTextDark"
         android:textSize="35sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_address"
+        android:text="@string/inspection_activity_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_name"
@@ -28,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_address"
-        android:text="@string/latitude"
+        android:text="@string/inspection_activity_latitude"
         android:textSize="25sp"
         android:textStyle= "bold"/>
 
@@ -37,12 +38,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_latitude"
-        android:text="@string/longitude"
+        android:text="@string/inspection_activity_longitude"
         android:textSize="25sp"
         android:textStyle= "bold"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude"
+        android:text="@string/inspection_activity_latitude_coordinate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_address"
@@ -51,6 +53,7 @@
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude"
+        android:text="@string/inspection_activity_longitude_coordinate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_inspection_activity_restaurant_GPS_latitude"
