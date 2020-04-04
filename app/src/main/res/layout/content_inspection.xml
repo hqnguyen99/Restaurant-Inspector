@@ -40,8 +40,12 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_inspection_activity_restaurant_address"
+        app:layout_constraintEnd_toStartOf="@+id/textView_inspection_activity_restaurant_GPS_latitude"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
@@ -52,30 +56,36 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
+        app:layout_constraintEnd_toStartOf="@+id/textView_inspection_activity_restaurant_GPS_longitude"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_latitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="@string/inspection_activity_latitude_coordinate"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
-        app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title"
-        android:layout_marginStart="4dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_restaurant_GPS_latitude_title" />
 
     <TextView
         android:id="@+id/textView_inspection_activity_restaurant_GPS_longitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="@string/inspection_activity_longitude_coordinate"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
-        app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_restaurant_GPS_longitude_title"
-        android:layout_marginStart="4dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_restaurant_GPS_longitude_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inspection_recyclerView"

@@ -60,8 +60,13 @@
     <string name="menu_restaurant_activity_go_to_map">Go to Map</string>
 
 <!--    Dialog Information-->
+    <string name="dialog_information_title">Restaurant Information</string>
     <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">
         Do you want to see the restaurant\'s full information?</string>
+    <string name="dialog_information_restaurant_address">Address: \t</string>
+    <string name="dialog_information_restaurant_level">Hazard Level: \t</string>
+<!--    Sample Output-->
+    <string name="dialog_information_restaurant_name">Name</string>
 
 <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>

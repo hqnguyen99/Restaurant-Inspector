@@ -31,8 +31,12 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_inspection_activity_critical_issue_found"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView_inspection_activity_critical_issue_found"
@@ -41,6 +45,7 @@
             android:text="@string/inspection_activity_issue_number"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView_inspection_activity_critical_issue_found_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView_inspection_activity_critical_issue_found_title"
             app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_critical_issue_found_title" />
 
@@ -53,7 +58,11 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
             app:layout_constraintTop_toBottomOf="@+id/textView_inspection_activity_critical_issue_found_title"
-            android:layout_marginStart="4dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/textView_inspection_activity_noncritical_issue_found"
+            android:layout_marginStart="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView_inspection_activity_noncritical_issue_found"
@@ -62,6 +71,7 @@
             android:text="@string/inspection_activity_issue_number"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView_inspection_activity_noncritical_issue_found_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView_inspection_activity_noncritical_issue_found_title"
             app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_noncritical_issue_found_title" />
 
@@ -75,8 +85,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView_inspection_activity_hazard_level_icon"
             app:layout_constraintTop_toBottomOf="@+id/textView_inspection_activity_noncritical_issue_found_title"
+            app:layout_constraintEnd_toStartOf="@+id/textView_inspection_activity_date_title"
             android:layout_marginBottom="4dp"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView_inspection_activity_date_title"
@@ -85,6 +99,7 @@
             android:text="@string/inspection_activity_how_long_ago"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView_inspection_activity_date"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView_inspection_activity_date"
             app:layout_constraintTop_toTopOf="@+id/textView_inspection_activity_date" />
 

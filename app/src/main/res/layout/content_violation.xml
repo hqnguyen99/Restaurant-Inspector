@@ -28,8 +28,12 @@
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_violation_activity_full_date"
+        app:layout_constraintEnd_toStartOf="@+id/textView_violation_activity_inspection_type"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_inspection_type"
@@ -39,6 +43,7 @@
         android:textColor="@color/colorTextDark"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_violation_activity_inspection_type_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_violation_activity_inspection_type_title"
         app:layout_constraintTop_toTopOf="@+id/textView_violation_activity_inspection_type_title" />
 
@@ -50,8 +55,12 @@
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_violation_activity_inspection_type_title"
+        app:layout_constraintEnd_toStartOf="@+id/textView_violation_activity_critical_issues_found"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_critical_issues_found"
@@ -60,6 +69,7 @@
         android:text="@string/violation_activity_issue_number"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_violation_activity_critical_issues_found_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_violation_activity_critical_issues_found_title"
         app:layout_constraintTop_toTopOf="@+id/textView_violation_activity_critical_issues_found_title" />
 
@@ -71,8 +81,12 @@
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_violation_activity_critical_issues_found_title"
+        app:layout_constraintEnd_toStartOf="@+id/textView_violation_activity_noncritical_issues_found"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_noncritical_issues_found"
@@ -81,6 +95,7 @@
         android:text="@string/violation_activity_issue_number"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_violation_activity_noncritical_issues_found_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_violation_activity_noncritical_issues_found_title"
         app:layout_constraintTop_toTopOf="@+id/textView_violation_activity_noncritical_issues_found_title" />
 
@@ -104,7 +119,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView_violation_activity_hazard_level_icon"
         app:layout_constraintStart_toEndOf="@+id/imageView_violation_activity_hazard_level_icon"
         app:layout_constraintTop_toTopOf="@+id/imageView_violation_activity_hazard_level_icon"
-        android:layout_marginStart="8dp"/>
+        app:layout_constraintEnd_toStartOf="@+id/textView_violation_activity_hazard_level_words"
+        android:layout_marginStart="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
         android:id="@+id/textView_violation_activity_hazard_level_words"
@@ -113,6 +132,7 @@
         android:text="@string/violation_activity_hazard_level_sample"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_violation_activity_hazard_level_words_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_violation_activity_hazard_level_words_title"
         app:layout_constraintTop_toTopOf="@+id/textView_violation_activity_hazard_level_words_title" />
 

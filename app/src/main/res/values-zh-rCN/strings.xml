@@ -61,8 +61,13 @@
     <string name="menu_restaurant_activity_go_to_map">切换到地图</string>
 
     <!--    Dialog Information-->
+    <string name="dialog_information_title">餐厅信息</string>
     <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">
         你想要看餐厅的详细信息吗?</string>
+    <string name="dialog_information_restaurant_address">地址: \t</string>
+    <string name="dialog_information_restaurant_level">危害等级: \t</string>
+    <!--    Sample Output-->
+    <string name="dialog_information_restaurant_name">Name</string>
 
     <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>
