@@ -44,6 +44,11 @@
         Non-critical issues found: \t</string>
     <string name="violation_activity_hazard_level">Hazard level: \t</string>
     <string name="violation_activity_inspection_type">Inspection type: \t</string>
+    <string name="violation_activity_routine">Routine</string>
+    <string name="violation_activity_follow_up">Follow-Up</string>
+    <string name="violation_activity_hazard_level_low">LOW</string>
+    <string name="violation_activity_hazard_level_moderate">MODERATE</string>
+    <string name="violation_activity_hazard_level_high">HIGH</string>
     <!--    Sample Output-->
         <string name="violation_activity_date">Date</string>
         <string name="violation_activity_inspection_type_sample">Type</string>
@@ -67,6 +72,14 @@
     <string name="dialog_information_restaurant_level">Hazard Level: \t</string>
 <!--    Sample Output-->
     <string name="dialog_information_restaurant_name">Name</string>
+
+<!--    Restaurant Adapter-->
+    <string name="restaurant_adapter_days_before">\t days ago</string>
+    <string name="restaurant_adapter_none">None</string>
+
+<!--    Violation Adapter-->
+    <string name="violation_adapter_critical">, \tCritical</string>
+    <string name="violation_adapter_not_critical">, \tNot Critical</string>
 
 <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>

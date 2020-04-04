@@ -45,6 +45,11 @@
         发现的非关键问题: \t</string>
     <string name="violation_activity_hazard_level">危害等级: \t</string>
     <string name="violation_activity_inspection_type">检查类型: \t</string>
+    <string name="violation_activity_routine">常规</string>
+    <string name="violation_activity_follow_up">跟进</string>
+    <string name="violation_activity_hazard_level_low">低</string>
+    <string name="violation_activity_hazard_level_moderate">中</string>
+    <string name="violation_activity_hazard_level_high">高</string>
     <!--    Sample Output-->
     <string name="violation_activity_date">Date</string>
     <string name="violation_activity_inspection_type_sample">Type</string>
@@ -68,6 +73,15 @@
     <string name="dialog_information_restaurant_level">危害等级: \t</string>
     <!--    Sample Output-->
     <string name="dialog_information_restaurant_name">Name</string>
+
+    <!--    Restaurant Adapter-->
+    <string name="restaurant_adapter_days_before">天以前</string>
+    <string name="restaurant_adapter_none">无</string>
+
+
+    <!--    Violation Adapter-->
+    <string name="violation_adapter_critical">, \t关键</string>
+    <string name="violation_adapter_not_critical">, \t不关键</string>
 
     <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>

@@ -1,5 +1,6 @@
 package cmpt276.restaurant_inspector.UIClasses;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,7 +152,7 @@ public class RestaurantAdapter
             setViewHazardLevelIcon(holder, newestInspection);
             setViewDateFromNow(holder, newestInspection);
         } else {
-            holder.textViewDateFromNow.setText("None");
+            holder.textViewDateFromNow.setText(holder.itemView.getResources().getString(R.string.restaurant_adapter_none));
         }
     }
 
@@ -161,7 +162,7 @@ public class RestaurantAdapter
 
         if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(
-                String.format(Locale.ENGLISH,"%d days ago", daysFromNewestInspection)
+                String.format(Locale.ENGLISH,"%d" + holder.itemView.getResources().getString(R.string.restaurant_adapter_days_before), daysFromNewestInspection)
             );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(

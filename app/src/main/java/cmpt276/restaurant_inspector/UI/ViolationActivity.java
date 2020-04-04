@@ -20,6 +20,7 @@ import cmpt276.restaurant_inspector.UIClasses.ViolationAdapter;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.DateTimeUtil;
+import cmpt276.restaurant_inspector.model.HazardRating;
 import cmpt276.restaurant_inspector.model.Inspection;
 
 /**
@@ -77,10 +78,23 @@ public class ViolationActivity extends AppCompatActivity
 
         textViewInspectionDate.setText(
             DateTimeUtil.MONTH_DAY_YEAR.getDateString(inspection.getDate()));
-        textViewInspectionType.setText(inspection.getInspType());
+
+        if (inspection.getInspType().equals("Routine")){
+            textViewInspectionType.setText(getResources().getString(R.string.violation_activity_routine));
+        }else{
+            textViewInspectionType.setText(getResources().getString(R.string.violation_activity_follow_up));
+        }
+
         textViewNumberOfCriticalIssues.setText(String.valueOf(inspection.getNumCrit()));
         textViewNumberOfNonCriticalIssues.setText(String.valueOf(inspection.getNumNonCrit()));
-        textViewHazardLevel.setText(String.valueOf(inspection.getHazardRating()));
+
+        if (inspection.getHazardRating() == HazardRating.LOW){
+            textViewHazardLevel.setText(getResources().getString(R.string.violation_activity_hazard_level_low));
+        }else if(inspection.getHazardRating() == HazardRating.MODERATE){
+            textViewHazardLevel.setText(getResources().getString(R.string.violation_activity_hazard_level_moderate));
+        }else if(inspection.getHazardRating() == HazardRating.HIGH){
+            textViewHazardLevel.setText(getResources().getString(R.string.violation_activity_hazard_level_high));
+        }
 
         switch (inspection.getHazardRating()) {
             case LOW:
