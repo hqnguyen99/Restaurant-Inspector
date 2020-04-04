@@ -159,8 +159,9 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String s) {
                 searchRestaurantByName[0] = s;
-                onMapReady(map);
-                return true;
+
+                setupRestaurantCluster();
+                return false;
             }
 
             @Override
@@ -220,6 +221,7 @@ public class MapsActivity extends AppCompatActivity
      */
     @Override
     public void onMapReady(GoogleMap map) {
+
         this.map = map;
         extractDataFromIntent();
 
@@ -244,9 +246,9 @@ public class MapsActivity extends AppCompatActivity
 
     public void setupRestaurantCluster(){
         if(map != null){
-            if (clusterManager == null){
+            /*if (clusterManager == null){*/
                 clusterManager = new ClusterManager<MyItem>(this, map);
-            }
+            //}
 
             if(customClusterRenderer == null){
                 customClusterRenderer = new CustomClusterRenderer(getApplicationContext(), map, clusterManager);
@@ -286,7 +288,8 @@ public class MapsActivity extends AppCompatActivity
     }
 
     private void addItems() {
-        clusterManager.clearItems();
+        //clusterManager.clearItems();
+
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
 
@@ -301,11 +304,12 @@ public class MapsActivity extends AppCompatActivity
                 String title = name;
                 String snippet = address;
                 List<Inspection> inspections = current.getInspections();
-
+                //Log.i("marker",String.valueOf(inspections.size()));
                 BitmapDescriptor icon = null;
                 if (inspections.size() > numberOfViolationsMoreThanFilterBox && hazardLevelFilterBox != "NONE") {
                     inspection = inspections.get(0);
-
+                    //Log.i("msg","lollll");
+                    //Log.i("marker",String.valueOf(inspections.size()));
                     if (inspection.getHazardRating() == HazardRating.LOW && ( hazardLevelFilterBox == "LOW" || hazardLevelFilterBox == "Select one")){
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
                         hazardLevel = "Low";
@@ -326,13 +330,15 @@ public class MapsActivity extends AppCompatActivity
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                 }
                 if(icon != null) {
+                    Log.i("msg","lollll");
                     MyItem clusterItem = new MyItem(latitude, longitude, title, snippet, icon, position, hazardLevel);
                     clusterManager.addItem(clusterItem);
                     myItemList.add(clusterItem);
                 }
             }
         }
-
+        Toast.makeText(getApplicationContext(),String.valueOf(clusterManager.getAlgorithm().getItems().size()), Toast.LENGTH_LONG).show();
+        clusterManager.cluster();
         //
 
     }
@@ -574,6 +580,7 @@ public class MapsActivity extends AppCompatActivity
         isFavoriteFilterBox = isFavorite;
         hazardLevelFilterBox = hazardLevel;
         numberOfViolationsMoreThanFilterBox = numberOfViolations;
-        onMapReady(map);
+        //onMapReady(map);
+        setupRestaurantCluster();
     }
 }
