@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cmpt276.restaurant_inspector.Filter.FilterData;
 import cmpt276.restaurant_inspector.Filter.FilterFragment;
 import cmpt276.restaurant_inspector.MapsClass.CustomClusterRenderer;
 import cmpt276.restaurant_inspector.MapsClass.InfoFragment;
@@ -74,10 +75,7 @@ public class MapsActivity extends AppCompatActivity
     private List<MyItem> myItemList = new ArrayList<>();
 
     //input for search and filter box
-    private Boolean isFavoriteFilterBox = false;
-    private String hazardLevelFilterBox = "Select one";
-    private int numberOfViolationsMoreThanFilterBox = 0;
-    private final String[] searchRestaurantByName = new String[1];
+    FilterData filterData = FilterData.getInstance();
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -154,11 +152,10 @@ public class MapsActivity extends AppCompatActivity
 
         // Search box
         SearchView searchBox = (SearchView) findViewById(R.id.maps_search_box);
-        searchRestaurantByName[0] = "";
         searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                searchRestaurantByName[0] = s;
+                filterData.setSearchRestaurantByName(s);
 
                 setupRestaurantCluster();
                 return false;
@@ -166,14 +163,18 @@ public class MapsActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String s) {
+                if (searchBox.getQuery().length() == 0) {
+                    filterData.setSearchRestaurantByName(s);
+                    setupRestaurantCluster();
+                }
                 return false;
             }
         });
 
-        Log.i("msg", String.valueOf(isFavoriteFilterBox));
+       /* Log.i("msg", String.valueOf(isFavoriteFilterBox));
         Log.i("msg", hazardLevelFilterBox);
         Log.i("msg", String.valueOf(numberOfViolationsMoreThanFilterBox));
-        Toast.makeText(getApplicationContext(),String.valueOf(isFavoriteFilterBox),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),String.valueOf(isFavoriteFilterBox),Toast.LENGTH_LONG).show();*/
 
     }
 
@@ -246,13 +247,14 @@ public class MapsActivity extends AppCompatActivity
 
     public void setupRestaurantCluster(){
         if(map != null){
-            /*if (clusterManager == null){*/
+            if (clusterManager == null){
                 clusterManager = new ClusterManager<MyItem>(this, map);
-            //}
+            }
 
             if(customClusterRenderer == null){
                 customClusterRenderer = new CustomClusterRenderer(getApplicationContext(), map, clusterManager);
             }
+
 
             customClusterRenderer.setMinClusterSize(3);
             clusterManager.setRenderer(customClusterRenderer);
@@ -288,49 +290,52 @@ public class MapsActivity extends AppCompatActivity
     }
 
     private void addItems() {
-        //clusterManager.clearItems();
+        clusterManager.clearItems();
 
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
-
+        String searchRestaurantByName = filterData.getSearchRestaurantByName();
+        int numberOfViolationsMoreThan = filterData.getNumberOfViolationsMoreThan();
+        String hazardLevelFilter = filterData.getHazardLevel();
+        Log.i("marker",String.valueOf(numberOfViolationsMoreThan));
+        Log.i("marker",searchRestaurantByName);
+        Log.i("marker",String.valueOf(hazardLevelFilter.equals("Select one")));
         for (int position = 0; position < data.size(); position++) {
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
             double latitude = current.getRestaurant().getLatitude();
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();
-            if (searchRestaurantByName[0].equals("") || name.contains(searchRestaurantByName[0])) {
+            String checkName = name.toLowerCase();
+            if (searchRestaurantByName.equals("") || checkName.contains(searchRestaurantByName)) {
                 String address = current.getRestaurant().getAddress();
                 String hazardLevel = "None";
                 String title = name;
                 String snippet = address;
                 List<Inspection> inspections = current.getInspections();
-                //Log.i("marker",String.valueOf(inspections.size()));
+
                 BitmapDescriptor icon = null;
-                if (inspections.size() > numberOfViolationsMoreThanFilterBox && hazardLevelFilterBox != "NONE") {
+                if (inspections.size() > numberOfViolationsMoreThan && !hazardLevelFilter.equals("NONE")) {
                     inspection = inspections.get(0);
-                    //Log.i("msg","lollll");
-                    //Log.i("marker",String.valueOf(inspections.size()));
-                    if (inspection.getHazardRating() == HazardRating.LOW && ( hazardLevelFilterBox == "LOW" || hazardLevelFilterBox == "Select one")){
+                    if (inspection.getHazardRating() == HazardRating.LOW && ( hazardLevelFilter.equals("LOW") || hazardLevelFilter.equals("Select one"))){
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
                         hazardLevel = "Low";
                     }
-                     else if(inspection.getHazardRating() == HazardRating.MODERATE && ( hazardLevelFilterBox == "MODERATE" || hazardLevelFilterBox == "Select one")) {
+                     else if(inspection.getHazardRating() == HazardRating.MODERATE && (hazardLevelFilter.equals("MODERATE") || hazardLevelFilter.equals("Select one"))) {
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_medium);
                         hazardLevel = "Moderate";
                     }
-                    else if(inspection.getHazardRating() == HazardRating.HIGH && ( hazardLevelFilterBox == "HIGH" || hazardLevelFilterBox == "Select one")) {
+                    else if(inspection.getHazardRating() == HazardRating.HIGH && (hazardLevelFilter.equals("HIGH") || hazardLevelFilter.equals("Select one"))) {
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_high);
                         hazardLevel = "High";
                     }
-                    else if(inspection.getHazardRating() == HazardRating.NONE && (hazardLevelFilterBox == "NONE" || hazardLevelFilterBox == "Select one")) {
+                    else if(inspection.getHazardRating() == HazardRating.NONE && (hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one"))) {
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                     }
                 }
-                else if(inspections.size() > numberOfViolationsMoreThanFilterBox && (hazardLevelFilterBox == "NONE" || hazardLevelFilterBox == "Select one")){
+                else if(hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one")){
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                 }
                 if(icon != null) {
-                    Log.i("msg","lollll");
                     MyItem clusterItem = new MyItem(latitude, longitude, title, snippet, icon, position, hazardLevel);
                     clusterManager.addItem(clusterItem);
                     myItemList.add(clusterItem);
@@ -577,9 +582,9 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void getInput(Boolean isFavorite, String hazardLevel, int numberOfViolations) {
-        isFavoriteFilterBox = isFavorite;
-        hazardLevelFilterBox = hazardLevel;
-        numberOfViolationsMoreThanFilterBox = numberOfViolations;
+        filterData.setFavorite(isFavorite);
+        filterData.setHazardLevel(hazardLevel);
+        filterData.setNumberOfViolationsMoreThan(numberOfViolations);
         //onMapReady(map);
         setupRestaurantCluster();
     }
