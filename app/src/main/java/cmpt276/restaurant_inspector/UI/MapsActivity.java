@@ -441,9 +441,9 @@ public class MapsActivity extends AppCompatActivity
 
             // Add a default marker, because the user hasn't selected a place.
             map.addMarker(new MarkerOptions()
-                    .title(getString(R.string.default_info_title))
+                    .title(getString(R.string.map_activity_default_info_title))
                     .position(defaultLocation)
-                    .snippet(getString(R.string.default_info_snippet)));
+                    .snippet(getString(R.string.map_activity_default_info_snippet)));
 
             // Prompt the user for permission.
             getLocationPermission();
@@ -481,7 +481,7 @@ public class MapsActivity extends AppCompatActivity
 
         // Display the dialog.
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.pick_place)
+                .setTitle(R.string.map_activity_pick_place)
                 .setItems(likelyPlaceNames, listener)
                 .show();
     }

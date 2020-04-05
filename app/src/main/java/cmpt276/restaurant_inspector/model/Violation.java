@@ -21,7 +21,7 @@ public class Violation
         return critOrNot + ", " + description + ", " + repeat;
     }
     public String getBriefDescription(){
-        return violationNum + ", " + critOrNot;
+        return "" + violationNum;
     }
 
     public ViolationType getType(){
