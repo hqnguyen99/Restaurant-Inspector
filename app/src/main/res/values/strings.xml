@@ -20,6 +20,7 @@
         <string name="restaurant_activity_restaurant_name">Restaurant Name</string>
         <string name="restaurant_activity_issue_number"># issue</string>
         <string name="restaurant_activity_how_long_ago">How long ago</string>
+        <string name="restaurant_activity_restaurant_favorite_icon_description">Favorite Icon</string>
 
 <!--    Inspection Activity-->
     <string name="inspection_activity_latitude">Latitude: \t</string>

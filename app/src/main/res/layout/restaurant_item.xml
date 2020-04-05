@@ -28,9 +28,9 @@
             android:contentDescription="@string/restaurant_activity_hazard_level_icon_description"
             android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_favorite_icon"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="4dp"/>
+            android:layout_marginEnd="8dp"/>
 
         <TextView
             android:id="@+id/textView_restaurant_activity_restaurant_name"
@@ -95,5 +95,16 @@
             app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_warning_level"
             app:layout_constraintStart_toEndOf="@+id/textView_restaurant_activity_date_title"
             app:layout_constraintTop_toTopOf="@+id/textView_restaurant_activity_date_title" />
+
+        <ImageView
+            android:contentDescription="@string/restaurant_activity_restaurant_favorite_icon_description"
+            android:id="@+id/imageView_restaurant_activity_favorite_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="4dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
