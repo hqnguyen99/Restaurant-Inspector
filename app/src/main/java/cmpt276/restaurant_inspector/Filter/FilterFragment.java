@@ -47,8 +47,7 @@ public class FilterFragment extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
-                    Log.i("isChecked",String.valueOf(isFavouriteList[0]));
-                    Log.i("hazard level",hazardLevel.getSelectedItem().toString());
+
                 })
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     /*Log.i("isChecked",String.valueOf(isFavouriteList[0]));
@@ -64,6 +63,12 @@ public class FilterFragment extends AppCompatDialogFragment {
                     }
 
                     listener.getInput(isFavouriteList[0],hazardLevel.getSelectedItem().toString(),numberOfViolationsLessThan);
+                })
+                .setNeutralButton("Reset Filter", (dialogInterface, i) -> {
+                    int numberOfViolationsLessThan = 0;
+                    isFavouriteList[0] = false;
+                    String hazardLevelToString = "Select one";
+                    listener.getInput(isFavouriteList[0],hazardLevelToString,numberOfViolationsLessThan);
                 });
 
         return builder.create();

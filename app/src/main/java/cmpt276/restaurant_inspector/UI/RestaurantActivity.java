@@ -59,13 +59,10 @@ public class RestaurantActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-            Intent intent =
-                InspectionActivity.makeLaunchIntent(RestaurantActivity.this,filterData.getRestaurantPositionInFilterBox().get(position));
-            startActivity(intent);
-            }
+        adapter.setOnItemClickListener(position -> {
+        Intent intent =
+            InspectionActivity.makeLaunchIntent(RestaurantActivity.this,filterData.getRestaurantPositionInFilterBox().get(position));
+        startActivity(intent);
         });
     }
 
