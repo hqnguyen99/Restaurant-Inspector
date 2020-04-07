@@ -94,6 +94,7 @@ public class RestaurantActivity extends AppCompatActivity
                 setupRestaurantFilter();
                 buildRecyclerView();
                 Log.i("activity", String.valueOf(filterData.getNumberOfViolationsMoreThan()));
+                Log.i("activity", String.valueOf(filterData.getRestaurantPositionInFilterBox().size()));
                 Log.i("msg", filterData.getHazardLevel());
                 Log.i("msg",filterData.getSearchRestaurantByName());
                 return false;
@@ -139,7 +140,7 @@ public class RestaurantActivity extends AppCompatActivity
                 hazardLevel = "NONE";
             }
 
-            if(filterData.getSearchRestaurantByName().contains(restaurantName)
+            if(restaurantName.contains(filterData.getSearchRestaurantByName())
                     && (filterData.getHazardLevel().equals("Select one") || filterData.getHazardLevel().equals(hazardLevel) )
                     &&  numberOfViolations > filterData.getNumberOfViolationsMoreThan()){
                 filterData.addRestaurantPosition(position);
