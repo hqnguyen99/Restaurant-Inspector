@@ -93,10 +93,6 @@ public class RestaurantActivity extends AppCompatActivity
                 filterData.clearRestaurantPosition();
                 setupRestaurantFilter();
                 buildRecyclerView();
-                Log.i("activity", String.valueOf(filterData.getNumberOfViolationsMoreThan()));
-                Log.i("activity", String.valueOf(filterData.getRestaurantPositionInFilterBox().size()));
-                Log.i("msg", filterData.getHazardLevel());
-                Log.i("msg",filterData.getSearchRestaurantByName());
                 return false;
             }
 
@@ -127,12 +123,16 @@ public class RestaurantActivity extends AppCompatActivity
                 switch (data.getEntryAtIndex(position).getInspections().get(0).getHazardRating()) {
                     case LOW:
                         hazardLevel = "LOW";
+                        break;
                     case MODERATE:
                         hazardLevel = "MODERATE";
+                        break;
                     case HIGH:
                         hazardLevel = "HIGH";
+                        break;
                     case NONE:
                         hazardLevel = "NONE";
+                        break;
 
                 }
             }

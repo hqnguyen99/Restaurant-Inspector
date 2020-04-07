@@ -340,7 +340,6 @@ public class MapsActivity extends AppCompatActivity
                 }
             }
         }
-        Toast.makeText(getApplicationContext(),String.valueOf(clusterManager.getAlgorithm().getItems().size()), Toast.LENGTH_LONG).show();
         clusterManager.cluster();
         //
 
