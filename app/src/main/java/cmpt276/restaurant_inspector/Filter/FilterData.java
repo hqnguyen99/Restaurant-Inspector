@@ -3,11 +3,15 @@ package cmpt276.restaurant_inspector.Filter;
 Save data for filter box
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FilterData {
     private Boolean isFavorite = false;
     private String hazardLevel = "Select one";
     private int numberOfViolationsMoreThan = 0;
     private String searchRestaurantByName = "";
+    private List<Integer> restaurantPositionInFilterBox = new ArrayList<>();
 
     private static FilterData instance;
     public FilterData(){
@@ -49,5 +53,16 @@ public class FilterData {
     }
     public void setSearchRestaurantByName(String s) {
         searchRestaurantByName = s.toLowerCase();
+    }
+
+    public List<Integer> getRestaurantPositionInFilterBox() {
+        return restaurantPositionInFilterBox;
+    }
+
+    public void addRestaurantPosition(int position) {
+        this.restaurantPositionInFilterBox.add(position);
+    }
+    public void clearRestaurantPosition() {
+        this.restaurantPositionInFilterBox.clear();
     }
 }

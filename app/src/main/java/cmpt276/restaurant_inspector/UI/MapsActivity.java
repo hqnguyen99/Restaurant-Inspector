@@ -66,7 +66,6 @@ public class MapsActivity extends AppCompatActivity
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private static final String RESTAURANT_POSITION = "123" ;
-
     private int restaurantPositionInList;
     private GoogleMap map;
     private CameraPosition cameraPosition;
@@ -156,7 +155,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String s) {
                 filterData.setSearchRestaurantByName(s);
-
+                filterData.clearRestaurantPosition();
                 setupRestaurantCluster();
                 return false;
             }
@@ -165,6 +164,7 @@ public class MapsActivity extends AppCompatActivity
             public boolean onQueryTextChange(String s) {
                 if (searchBox.getQuery().length() == 0) {
                     filterData.setSearchRestaurantByName(s);
+                    filterData.clearRestaurantPosition();
                     setupRestaurantCluster();
                 }
                 return false;
@@ -297,9 +297,6 @@ public class MapsActivity extends AppCompatActivity
         String searchRestaurantByName = filterData.getSearchRestaurantByName();
         int numberOfViolationsMoreThan = filterData.getNumberOfViolationsMoreThan();
         String hazardLevelFilter = filterData.getHazardLevel();
-        Log.i("marker",String.valueOf(numberOfViolationsMoreThan));
-        Log.i("marker",searchRestaurantByName);
-        Log.i("marker",String.valueOf(hazardLevelFilter.equals("Select one")));
         for (int position = 0; position < data.size(); position++) {
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
             double latitude = current.getRestaurant().getLatitude();
@@ -339,6 +336,7 @@ public class MapsActivity extends AppCompatActivity
                     MyItem clusterItem = new MyItem(latitude, longitude, title, snippet, icon, position, hazardLevel);
                     clusterManager.addItem(clusterItem);
                     myItemList.add(clusterItem);
+                    filterData.addRestaurantPosition(position);
                 }
             }
         }
@@ -585,6 +583,7 @@ public class MapsActivity extends AppCompatActivity
         filterData.setFavorite(isFavorite);
         filterData.setHazardLevel(hazardLevel);
         filterData.setNumberOfViolationsMoreThan(numberOfViolations);
+        filterData.clearRestaurantPosition();
         //onMapReady(map);
         setupRestaurantCluster();
     }

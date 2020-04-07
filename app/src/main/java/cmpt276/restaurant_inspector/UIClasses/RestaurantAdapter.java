@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Locale;
 import java.util.Random;
 
+import cmpt276.restaurant_inspector.Filter.FilterData;
 import cmpt276.restaurant_inspector.UI.R;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
@@ -35,6 +36,7 @@ public class RestaurantAdapter
 {
     private DataSingleton data;
     private OnItemClickListener restaurantListener;
+    private FilterData newFilterData;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -81,7 +83,7 @@ public class RestaurantAdapter
 
     public RestaurantAdapter() {
         data = AppData.INSTANCE;
-        Log.i("restaurant", String.valueOf(data.size()));
+        newFilterData = FilterData.getInstance();
     }
 
     @NonNull
@@ -96,65 +98,57 @@ public class RestaurantAdapter
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position)
     {
-        RestaurantInspectionsPair current = data.getEntryAtIndex(position);
-        holder.textViewRestaurantName.setText(current.getRestaurant().getName());
-        holder.textViewNumberFound.setText(String.valueOf(current.getNumViolations()));
+        FilterData newFilterData = FilterData.getInstance();
+        if (newFilterData.getRestaurantPositionInFilterBox().size() > 0) {
+            RestaurantInspectionsPair current = data.getEntryAtIndex(newFilterData.getRestaurantPositionInFilterBox().get(position));
+            holder.textViewRestaurantName.setText(current.getRestaurant().getName());
+            holder.textViewNumberFound.setText(String.valueOf(current.getNumViolations()));
 
-        // Random generate restaurant icon
-        Random rand = new Random();
-        int n = rand.nextInt(4);
+            // Random generate restaurant icon
+            Random rand = new Random();
+            int n = rand.nextInt(4);
 
-        if(current.getRestaurant().getName().contains("McDonald")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.mcdonald_logo);
-        }
-        else if (current.getRestaurant().getName().contains("7-Eleven")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.seveneleven_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Panago")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.panago_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Pizza Hut")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.pizzahut_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Save On Foods")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.saveonfoods_logo);
-        }
-        else if (current.getRestaurant().getName().contains("A&W") || current.getRestaurant().getName().contains("A & W")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.a_w_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Starbucks")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.starbucks_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Subway")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.subway_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Tim Hortons")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.timhortons_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Wendy's")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.wendys_logo);
-        }
-        else if (current.getRestaurant().getName().contains("Quizno")){
-            holder.imageViewRestaurantIcon.setImageResource(R.drawable.quiznos_logo);
-        }
-        else {
-            if (n == 0){
-                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
-            } else if (n == 1){
-                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
-            } else if (n == 2){
-                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
-            } else if(n == 3) {
-                holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
+            if (current.getRestaurant().getName().contains("McDonald")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.mcdonald_logo);
+            } else if (current.getRestaurant().getName().contains("7-Eleven")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.seveneleven_logo);
+            } else if (current.getRestaurant().getName().contains("Panago")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.panago_logo);
+            } else if (current.getRestaurant().getName().contains("Pizza Hut")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.pizzahut_logo);
+            } else if (current.getRestaurant().getName().contains("Save On Foods")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.saveonfoods_logo);
+            } else if (current.getRestaurant().getName().contains("A&W") || current.getRestaurant().getName().contains("A & W")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.a_w_logo);
+            } else if (current.getRestaurant().getName().contains("Starbucks")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.starbucks_logo);
+            } else if (current.getRestaurant().getName().contains("Subway")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.subway_logo);
+            } else if (current.getRestaurant().getName().contains("Tim Hortons")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.timhortons_logo);
+            } else if (current.getRestaurant().getName().contains("Wendy's")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.wendys_logo);
+            } else if (current.getRestaurant().getName().contains("Quizno")) {
+                holder.imageViewRestaurantIcon.setImageResource(R.drawable.quiznos_logo);
+            } else {
+                if (n == 0) {
+                    holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_0);
+                } else if (n == 1) {
+                    holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_1);
+                } else if (n == 2) {
+                    holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_2);
+                } else if (n == 3) {
+                    holder.imageViewRestaurantIcon.setImageResource(R.drawable.restaurant_3);
+                }
             }
-        }
 
-        if (!current.getInspections().isEmpty()) {
-            Inspection newestInspection = current.getInspections().get(0);
-            setViewHazardLevelIcon(holder, newestInspection);
-            setViewDateFromNow(holder, newestInspection);
-        } else {
-            holder.textViewDateFromNow.setText("None");
+            if (!current.getInspections().isEmpty()) {
+                Inspection newestInspection = current.getInspections().get(0);
+                setViewHazardLevelIcon(holder, newestInspection);
+                setViewDateFromNow(holder, newestInspection);
+            } else {
+                holder.textViewDateFromNow.setText("None");
+            }
         }
     }
 
@@ -196,6 +190,6 @@ public class RestaurantAdapter
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return newFilterData.getRestaurantPositionInFilterBox().size() ;
     }
 }

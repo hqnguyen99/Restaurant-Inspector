@@ -3,12 +3,14 @@ package cmpt276.restaurant_inspector.UI;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,6 +25,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import cmpt276.restaurant_inspector.Filter.FilterData;
 import cmpt276.restaurant_inspector.Filter.FilterFragment;
 import cmpt276.restaurant_inspector.UIClasses.RestaurantAdapter;
+import cmpt276.restaurant_inspector.model.AppData;
+import cmpt276.restaurant_inspector.model.DataSingleton;
+import cmpt276.restaurant_inspector.model.HazardRating;
+import cmpt276.restaurant_inspector.model.Restaurant;
 
 /**
  *  Show data of restaurants by recycler view
@@ -32,7 +38,7 @@ public class RestaurantActivity extends AppCompatActivity
         implements FilterFragment.FilterDialogListener
 {
     //input for search and filter box
-    FilterData filterData = FilterData.getInstance();
+     private FilterData filterData = FilterData.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,7 @@ public class RestaurantActivity extends AppCompatActivity
 
     private void setupSearchBox() {
         // Filter box
-        ImageButton filterBtn = (ImageButton) findViewById(R.id.maps_filter_btn);
+        ImageButton filterBtn = (ImageButton) findViewById(R.id.restaurant_filter_btn);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,13 +85,17 @@ public class RestaurantActivity extends AppCompatActivity
         });
 
         // Search box
-        SearchView searchBox = (SearchView) findViewById(R.id.maps_search_box);
+        SearchView searchBox = (SearchView) findViewById(R.id.restaurant_search_box);
         searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 filterData.setSearchRestaurantByName(s);
-
-                //setupRestaurantCluster();
+                filterData.clearRestaurantPosition();
+                setupRestaurantFilter();
+                buildRecyclerView();
+                Log.i("activity", String.valueOf(filterData.getNumberOfViolationsMoreThan()));
+                Log.i("msg", filterData.getHazardLevel());
+                Log.i("msg",filterData.getSearchRestaurantByName());
                 return false;
             }
 
@@ -93,16 +103,48 @@ public class RestaurantActivity extends AppCompatActivity
             public boolean onQueryTextChange(String s) {
                 if (searchBox.getQuery().length() == 0) {
                     filterData.setSearchRestaurantByName(s);
-                    //setupRestaurantCluster();
+                    filterData.clearRestaurantPosition();
+                    setupRestaurantFilter();
+                    buildRecyclerView();
                 }
                 return false;
             }
         });
 
-       /* Log.i("msg", String.valueOf(isFavoriteFilterBox));
-        Log.i("msg", hazardLevelFilterBox);
-        Log.i("msg", String.valueOf(numberOfViolationsMoreThanFilterBox));
-        Toast.makeText(getApplicationContext(),String.valueOf(isFavoriteFilterBox),Toast.LENGTH_LONG).show();*/
+
+
+    }
+
+    private void setupRestaurantFilter() {
+        DataSingleton data = AppData.INSTANCE;
+        for (int position = 0; position < data.size(); position++) {
+            Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
+            String restaurantName = restaurant.getName().toLowerCase();
+            int numberOfViolations = data.getEntryAtIndex(position).getNumViolations();
+            String hazardLevel = null;
+            if(data.getEntryAtIndex(position).getInspections().size() > 0) {
+                switch (data.getEntryAtIndex(position).getInspections().get(0).getHazardRating()) {
+                    case LOW:
+                        hazardLevel = "LOW";
+                    case MODERATE:
+                        hazardLevel = "MODERATE";
+                    case HIGH:
+                        hazardLevel = "HIGH";
+                    case NONE:
+                        hazardLevel = "NONE";
+
+                }
+            }
+            else {
+                hazardLevel = "NONE";
+            }
+
+            if(filterData.getSearchRestaurantByName().contains(restaurantName)
+                    && (filterData.getHazardLevel().equals("Select one") || filterData.getHazardLevel().equals(hazardLevel) )
+                    &&  numberOfViolations > filterData.getNumberOfViolationsMoreThan()){
+                filterData.addRestaurantPosition(position);
+            }
+        }
 
     }
 
@@ -128,6 +170,11 @@ public class RestaurantActivity extends AppCompatActivity
         filterData.setFavorite(isFavorite);
         filterData.setHazardLevel(hazardLevel);
         filterData.setNumberOfViolationsMoreThan(numberOfViolations);
+        filterData.clearRestaurantPosition();
+        setupRestaurantFilter();
+        buildRecyclerView();
+
+
 
     }
 }
