@@ -330,7 +330,7 @@ public class MapsActivity extends AppCompatActivity
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                     }
                 }
-                else if(hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one")){
+                else if(inspections.size() == numberOfViolationsMoreThan && (hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one"))){
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                 }
                 if(icon != null) {
