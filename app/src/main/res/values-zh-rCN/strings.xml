@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    App Name-->
+    <string name="app_name">餐厅检查员</string>
+
+    <!--    Activities' titles-->
+    <string name="title_activity_restaurant">餐厅</string>
+    <string name="title_activity_inspection">检查</string>
+    <string name="title_activity_violation">违规</string>
+    <string name="title_activity_maps">地图</string>
+
+    <!--    Main Activity-->
+    <string name="main_activity_welcome">欢迎光临!</string>
+
+    <!--    Restaurant Activity-->
+    <string name="restaurant_activity_issue_found">发现的问题数量: \t</string>
+    <string name="restaurant_activity_last_inspection">上一次检查: \t</string>
+    <!--    Sample Output-->
+    <string name="restaurant_activity_restaurant_icon_description">Restaurant Icon</string>
+    <string name="restaurant_activity_hazard_level_icon_description">Hazard Level Icon</string>
+    <string name="restaurant_activity_restaurant_name">Restaurant Name</string>
+    <string name="restaurant_activity_issue_number"># issue</string>
+    <string name="restaurant_activity_how_long_ago">How long ago</string>
+    <string name="restaurant_activity_restaurant_favorite_icon_description">Favorite Icon</string>
+
+    <!--    Inspection Activity-->
+    <string name="inspection_activity_latitude">纬度: \t</string>
+    <string name="inspection_activity_longitude">经度: \t</string>
+    <string name="inspection_activity_critical_issues_found">发现的关键问题: \t</string>
+    <string name="inspection_activity_non_critical_issues_found">
+        发现的非关键问题: \t</string>
+    <string name="inspection_activity_last_inspection">上一次检查: \t</string>
+    <!--    Sample Output-->
+    <string name="inspection_activity_restaurant_name">Restaurant Name</string>
+    <string name="inspection_activity_address">Address</string>
+    <string name="inspection_activity_latitude_coordinate">Latitude Coordinates</string>
+    <string name="inspection_activity_longitude_coordinate">longitude Coordinate</string>
+    <string name="inspection_activity_hazard_level_icon_description">
+                Inspection Hazard Level Icon</string>
+    <string name="inspection_activity_issue_number"># issue</string>
+    <string name="inspection_activity_how_long_ago">How long ago</string>
+
+    <!--    Violation Activity-->
+    <string name="violation_activity_critical_issues_found">发现的关键问题: \t</string>
+    <string name="violation_activity_non_critical_issues_found">
+        发现的非关键问题: \t</string>
+    <string name="violation_activity_hazard_level">危害等级: \t</string>
+    <string name="violation_activity_inspection_type">检查类型: \t</string>
+    <string name="violation_activity_routine">常规</string>
+    <string name="violation_activity_follow_up">跟进</string>
+    <string name="violation_activity_hazard_level_low">低</string>
+    <string name="violation_activity_hazard_level_moderate">中</string>
+    <string name="violation_activity_hazard_level_high">高</string>
+    <!--    Sample Output-->
+    <string name="violation_activity_date">Date</string>
+    <string name="violation_activity_inspection_type_sample">Type</string>
+    <string name="violation_activity_issue_number"># issue</string>
+    <string name="violation_activity_hazard_level_icon_description">
+                Violation Hazard Level Icon</string>
+    <string name="violation_activity_hazard_level_sample">Level</string>
+    <string name="violation_activity_nature_icon_description">Violation Nature Icon</string>
+    <string name="violation_activity_severity_icon_description">Violation Severity_Icon</string>
+    <string name="violation_activity_brief_description_sample">Critical/Not Critical</string>
+
+    <!--    Switching Button for Map Activity and Restaurant Activity-->
+    <string name="current_place_menu_go_to_restaurant_list">切换到餐厅列表</string>
+    <string name="menu_restaurant_activity_go_to_map">切换到地图</string>
+
+    <!--    Dialog Information-->
+    <string name="dialog_information_title">餐厅信息</string>
+    <string name="do_you_want_to_go_to_the_restaurant_s_inspection_page">
+        你想要看餐厅的详细信息吗?</string>
+    <string name="dialog_information_restaurant_address">地址: \t</string>
+    <string name="dialog_information_restaurant_level">危害等级: \t</string>
+    <!--    Sample Output-->
+    <string name="dialog_information_restaurant_name">Name</string>
+
+    <!--    Restaurant Adapter-->
+    <string name="restaurant_adapter_days_before">天以前</string>
+    <string name="restaurant_adapter_none">无</string>
+
+
+    <!--    Violation Adapter-->
+    <string name="violation_adapter_critical">, \t关键</string>
+    <string name="violation_adapter_not_critical">, \t不关键</string>
+
+    <!--    Map Activity-->
+    <string name="map_activity_default_info_title">Default Location</string>
+    <string name="map_activity_default_info_snippet">
+        No places found, because location permission is disabled.</string>
+    <string name="map_activity_option_get_place">Get place</string>
+    <string name="map_activity_pick_place">Choose a place</string>
+</resources>

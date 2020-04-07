@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/switch_to_map_activity"
-        android:title="@string/map"
+        android:title="@string/menu_restaurant_activity_go_to_map"
         app:showAsAction="always" />
 </menu>

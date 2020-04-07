@@ -6,76 +6,105 @@
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="4dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:contentDescription="@string/restaurant_icon"
             android:id="@+id/imageView_restaurant_activity_restaurant_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="@string/restaurant_activity_restaurant_icon_description"
             android:padding="2dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"/>
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="4dp"/>
 
         <ImageView
-            android:contentDescription="@string/hazard_level_icon"
             android:id="@+id/imageView_restaurant_activity_warning_level"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/restaurant_activity_hazard_level_icon_description"
             android:padding="2dp"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_favorite_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp"/>
 
         <TextView
             android:id="@+id/textView_restaurant_activity_restaurant_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/restaurant_name"
-            android:textSize="20sp"
-
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/restaurant_activity_restaurant_name"
             android:textColor="@android:color/black"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
-            android:layout_marginStart="8dp" />
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_warning_level"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_restaurant_activity_issue_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/issue_found"
+            android:layout_marginStart="8dp"
+            android:text="@string/restaurant_activity_issue_found"
             android:textSize="15sp"
-            android:layout_below="@+id/textView_restaurant_activity_restaurant_name"
-            android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
-            android:layout_marginStart="8dp"/>
+            app:layout_constraintStart_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
+            app:layout_constraintTop_toBottomOf="@+id/textView_restaurant_activity_restaurant_name"
+            app:layout_constraintEnd_toStartOf="@+id/textView_restaurant_activity_issue"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView_restaurant_activity_issue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/issue"
+            android:text="@string/restaurant_activity_issue_number"
             android:textSize="15sp"
-            android:layout_below="@+id/textView_restaurant_activity_restaurant_name"
-            android:layout_toEndOf="@+id/textView_restaurant_activity_issue_title" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView_restaurant_activity_issue_title"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_warning_level"
+            app:layout_constraintStart_toEndOf="@+id/textView_restaurant_activity_issue_title"
+            app:layout_constraintTop_toTopOf="@+id/textView_restaurant_activity_issue_title" />
 
         <TextView
             android:id="@+id/textView_restaurant_activity_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_restaurant_activity_issue_title"
-            android:layout_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
-            android:text="@string/last_inspection"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:text="@string/restaurant_activity_last_inspection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView_restaurant_activity_restaurant_icon"
+            app:layout_constraintTop_toBottomOf="@+id/textView_restaurant_activity_issue_title"
+            app:layout_constraintEnd_toStartOf="@+id/textView_restaurant_activity_date"
+            android:layout_marginBottom="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView_restaurant_activity_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_restaurant_activity_issue_title"
-            android:layout_toEndOf="@+id/textView_restaurant_activity_date_title"
-            android:text="@string/how_long_ago" />
-    </RelativeLayout>
+            android:text="@string/restaurant_activity_how_long_ago"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_restaurant_activity_date_title"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_restaurant_activity_warning_level"
+            app:layout_constraintStart_toEndOf="@+id/textView_restaurant_activity_date_title"
+            app:layout_constraintTop_toTopOf="@+id/textView_restaurant_activity_date_title" />
+
+        <ImageView
+            android:contentDescription="@string/restaurant_activity_restaurant_favorite_icon_description"
+            android:id="@+id/imageView_restaurant_activity_favorite_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="4dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

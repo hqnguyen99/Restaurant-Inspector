@@ -1,5 +1,6 @@
 package cmpt276.restaurant_inspector.UIClasses;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,14 @@ public class ViolationAdapter
     public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position)
     {
         Violation violation = violationList.get(position);
-        holder.briefDescription.setText(violation.getBriefDescription());
+        if (violation.isCrit()){
+            holder.briefDescription.setText(violation.getBriefDescription() +
+                    holder.itemView.getResources().getString(R.string.violation_adapter_critical));
+        }else{
+            holder.briefDescription.setText(violation.getBriefDescription() +
+                    holder.itemView.getResources()
+                            .getString(R.string.violation_adapter_not_critical));
+        }
 
         switch(violation.getType()) {
             case FOOD:

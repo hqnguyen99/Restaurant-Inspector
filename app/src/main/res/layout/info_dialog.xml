@@ -13,6 +13,7 @@
 
         <TextView
             android:id="@+id/info_dialog_rest_name"
+            android:text="@string/dialog_information_restaurant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -21,6 +22,7 @@
 
         <TextView
             android:id="@+id/info_dialog_rest_address"
+            android:text="@string/dialog_information_restaurant_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -29,6 +31,7 @@
 
         <TextView
             android:id="@+id/info_dialog_hazard_level"
+            android:text="@string/dialog_information_restaurant_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
