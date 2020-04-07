@@ -275,6 +275,7 @@ public class MapsActivity extends AppCompatActivity
         map.setOnMarkerClickListener(clusterManager);
         // Add cluster items (markers) to the cluster manager.
         addItems();
+        Toast.makeText(getApplicationContext(), String.valueOf(myItemList.size()), Toast.LENGTH_LONG).show();
         getAndPointCameraToChosenRestaurant();
     }
 
@@ -336,6 +337,7 @@ public class MapsActivity extends AppCompatActivity
                     MyItem clusterItem = new MyItem(latitude, longitude, title, snippet, icon, position, hazardLevel);
                     clusterManager.addItem(clusterItem);
                     myItemList.add(clusterItem);
+                    //Toast.makeText(getApplicationContext(), String.valueOf(myItemList.size()), Toast.LENGTH_LONG).show();
                     filterData.addRestaurantPosition(position);
                 }
             }

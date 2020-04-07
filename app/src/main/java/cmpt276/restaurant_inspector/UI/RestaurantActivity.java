@@ -63,7 +63,7 @@ public class RestaurantActivity extends AppCompatActivity
             @Override
             public void onItemClick(int position) {
             Intent intent =
-                InspectionActivity.makeLaunchIntent(RestaurantActivity.this, position);
+                InspectionActivity.makeLaunchIntent(RestaurantActivity.this,filterData.getRestaurantPositionInFilterBox().get(position));
             startActivity(intent);
             }
         });
@@ -113,6 +113,7 @@ public class RestaurantActivity extends AppCompatActivity
     }
 
     private void setupRestaurantFilter() {
+        filterData.clearRestaurantPosition();
         DataSingleton data = AppData.INSTANCE;
         for (int position = 0; position < data.size(); position++) {
             Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
