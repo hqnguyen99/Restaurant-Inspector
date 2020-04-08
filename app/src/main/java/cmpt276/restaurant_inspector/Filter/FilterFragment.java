@@ -32,6 +32,7 @@ public class FilterFragment extends AppCompatDialogFragment {
         super.onCreateDialog(savedInstanceState);
         final Boolean[] isFavouriteList = new Boolean[1];
         isFavouriteList[0] = false;
+        final String[] hazardLevelToString = {"Select one"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.filter_dialog, null);
         isFavourite = (Switch) view.findViewById(R.id.switch_filter_box_isFavourite);
@@ -43,6 +44,33 @@ public class FilterFragment extends AppCompatDialogFragment {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.hazard_level, R.layout.support_simple_spinner_dropdown_item);
         hazardLevel.setAdapter(adapter);
+        hazardLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0 :
+                        break;
+                    case 1 :
+                        hazardLevelToString[0] = "NONE";
+                        break;
+                    case 2:
+                        hazardLevelToString[0] = "LOW";
+                        break;
+                    case 3:
+                        hazardLevelToString[0] = "MODERATE";
+                        break;
+                    case 4 :
+                        hazardLevelToString[0] = "HIGH";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
 
         builder.setView(view)
                 .setNegativeButton(getResources().getString(R.string.filter_box_negative_button)
@@ -63,14 +91,13 @@ public class FilterFragment extends AppCompatDialogFragment {
                         numberOfViolationsMoreThan = Integer.parseInt(numberOfViolationsMoreThanString);
                     }
 
-                    listener.getInput(isFavouriteList[0],hazardLevel.getSelectedItem().toString(),numberOfViolationsMoreThan);
+                    listener.getInput(isFavouriteList[0],hazardLevelToString[0],numberOfViolationsMoreThan);
                 })
                 .setNeutralButton(getResources().getString(R.string.filter_box_reset_filter_box), (dialogInterface, i) -> {
                     int numberOfViolationsLessThan = -1;
                     isFavouriteList[0] = false;
-                    String hazardLevelToString = "Select one";
-
-                    listener.getInput(isFavouriteList[0],hazardLevelToString,numberOfViolationsLessThan);
+                    hazardLevelToString[0] = "Select one";
+                    listener.getInput(isFavouriteList[0], hazardLevelToString[0],numberOfViolationsLessThan);
                 });
 
         return builder.create();
