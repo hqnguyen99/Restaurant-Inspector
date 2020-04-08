@@ -14,6 +14,7 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
     private Restaurant restaurant;
     private List<Inspection> inspections;
     private int numViolations;
+    private boolean isFavourite = false;
 
     RestaurantInspectionsPair(Restaurant restaurant, List<Inspection> inspections) {
         this.restaurant = restaurant;
@@ -28,6 +29,15 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         return inspections;
     }
 
+    // returns 0 is no inspections
+    public int getNewestInspectionDate() {
+        if (inspections.size() == 0) {
+            return 0;
+        }
+
+        return inspections.get(0).getDate();
+    }
+
     public int getNumViolations() {
         return numViolations;
     }
@@ -37,6 +47,10 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         inspections.add(inspection);
         sort(inspections, Collections.<Inspection>reverseOrder());
         numViolations += inspection.numCrit + inspection.numNonCrit;
+    }
+
+    public void changeFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 
     @Override

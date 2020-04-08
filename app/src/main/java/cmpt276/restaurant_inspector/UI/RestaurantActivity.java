@@ -104,9 +104,6 @@ public class RestaurantActivity extends AppCompatActivity
                 return false;
             }
         });
-
-
-
     }
 
     private void setupRestaurantFilter() {
@@ -172,8 +169,5 @@ public class RestaurantActivity extends AppCompatActivity
         filterData.clearRestaurantPosition();
         setupRestaurantFilter();
         buildRecyclerView();
-
-
-
     }
 }

@@ -9,6 +9,5 @@ public class Favourite {
     @PrimaryKey
     public String id;
 
-    @ColumnInfo
     public int newestInspectionDate;
 }
