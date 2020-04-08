@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="hazard_level">
-        <item>Select one</item>
-        <item>NONE</item>
-        <item>LOW</item>
-        <item>MODERATE</item>
-        <item>HIGH</item>
+        <item>@string/filter_box_select_one</item>
+        <item>@string/filter_box_hazard_level_none</item>
+        <item>@string/filter_box_hazard_level_low</item>
+        <item>@string/filter_box_hazard_level_moderate</item>
+        <item>@string/filter_box_hazard_level_high</item>
     </string-array>
 </resources>

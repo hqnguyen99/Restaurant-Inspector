@@ -71,6 +71,10 @@
         Do you want to see the restaurant\'s full information?</string>
     <string name="dialog_information_restaurant_address">Address: \t</string>
     <string name="dialog_information_restaurant_level">Hazard Level: \t</string>
+    <string name="dialog_information_hazard_level_low">Low</string>
+    <string name="dialog_information_hazard_level_moderate">Moderate</string>
+    <string name="dialog_information_hazard_level_high">High</string>
+    <string name="dialog_information_hazard_level_none">None</string>
 <!--    Sample Output-->
     <string name="dialog_information_restaurant_name">Name</string>
 
@@ -81,6 +85,22 @@
 <!--    Violation Adapter-->
     <string name="violation_adapter_critical">, \tCritical</string>
     <string name="violation_adapter_not_critical">, \tNot Critical</string>
+    
+<!--    Filter Box-->
+    <string name="filter_box_title">Filter Box</string>
+    <string name="filter_box_favourite_only">Favourite Restaurant Only:</string>
+    <string name="filter_box_hazard_level">Pick the Hazard Level:</string>
+    <string name="filter_box_number_of_violations_title">Least Number of Violations:</string>
+    <string name="filter_box_violation_number">Enter number</string>
+    <string name="filter_box_negative_button">Cancel</string>
+    <string name="filter_box_positive_button">OK</string>
+    <string name="filter_box_reset_filter_box">Reset Filter</string>
+    <string name="filter_box_select_one">Select One</string>
+    <string name="filter_box_hazard_level_low">Low</string>
+    <string name="filter_box_hazard_level_moderate">Moderate</string>
+    <string name="filter_box_hazard_level_high">High</string>
+    <string name="filter_box_hazard_level_none">None</string>
+
 
 <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>

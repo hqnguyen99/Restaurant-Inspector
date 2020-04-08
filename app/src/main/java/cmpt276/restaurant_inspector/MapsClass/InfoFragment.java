@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import cmpt276.restaurant_inspector.UI.InspectionActivity;
 import cmpt276.restaurant_inspector.UI.R;
+import cmpt276.restaurant_inspector.model.HazardRating;
 
 // This class generate infor window when tap to the restaurant icon
 
@@ -38,7 +39,19 @@ public class InfoFragment extends AppCompatDialogFragment {
         TextView hazardLevel =  (TextView) view.findViewById(R.id.info_dialog_hazard_level);
         name.setText(marker.getTitle());
         address.setText(getResources().getString(R.string.dialog_information_restaurant_address) + marker.getSnippet());
-        hazardLevel.setText(getResources().getString(R.string.dialog_information_restaurant_level) + marker.getHarzardLevel());
+        if (marker.getHarzardLevel().equals("Low")){
+            hazardLevel.setText(getResources().getString(R.string.dialog_information_restaurant_level)
+                    + getResources().getString(R.string.dialog_information_hazard_level_low));
+        }else if(marker.getHarzardLevel().equals("Moderate")){
+            hazardLevel.setText(getResources().getString(R.string.dialog_information_restaurant_level)
+                    + getResources().getString(R.string.dialog_information_hazard_level_moderate));
+        }else if (marker.getHarzardLevel().equals("High")){
+            hazardLevel.setText(getResources().getString(R.string.dialog_information_restaurant_level)
+                    + getResources().getString(R.string.dialog_information_hazard_level_high));
+        }else if (marker.getHarzardLevel().equals("None")){
+            hazardLevel.setText(getResources().getString(R.string.dialog_information_restaurant_level)
+                    + getResources().getString(R.string.dialog_information_hazard_level_none));
+        }
         // Create button Listener
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)

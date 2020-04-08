@@ -182,7 +182,9 @@ public class RestaurantAdapter
 
         if (daysFromNewestInspection <= 30) {
             holder.textViewDateFromNow.setText(
-                String.format(Locale.ENGLISH,"%d days ago", daysFromNewestInspection)
+                String.format("%d" + holder.itemView.getResources()
+                        .getString(R.string.restaurant_adapter_days_before)
+                        , daysFromNewestInspection)
             );
         } else if (daysFromNewestInspection < 365) {
             holder.textViewDateFromNow.setText(

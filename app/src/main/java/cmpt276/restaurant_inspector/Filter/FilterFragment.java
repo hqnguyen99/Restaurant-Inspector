@@ -45,10 +45,12 @@ public class FilterFragment extends AppCompatDialogFragment {
         hazardLevel.setAdapter(adapter);
 
         builder.setView(view)
-                .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                .setNegativeButton(getResources().getString(R.string.filter_box_negative_button)
+                        , (dialogInterface, i) -> {
 
                 })
-                .setPositiveButton("OK", (dialogInterface, i) -> {
+                .setPositiveButton(getResources().getString(R.string.filter_box_positive_button)
+                        , (dialogInterface, i) -> {
                     /*Log.i("isChecked",String.valueOf(isFavouriteList[0]));
                     Log.i("hazard level",hazardLevel.getSelectedItem().toString());*/
                     String numberOfViolationsMoreThanString = numberOfViolationsMoreThanEditText.getText().toString();
@@ -63,10 +65,11 @@ public class FilterFragment extends AppCompatDialogFragment {
 
                     listener.getInput(isFavouriteList[0],hazardLevel.getSelectedItem().toString(),numberOfViolationsMoreThan);
                 })
-                .setNeutralButton("Reset Filter", (dialogInterface, i) -> {
+                .setNeutralButton(getResources().getString(R.string.filter_box_reset_filter_box), (dialogInterface, i) -> {
                     int numberOfViolationsLessThan = -1;
                     isFavouriteList[0] = false;
                     String hazardLevelToString = "Select one";
+
                     listener.getInput(isFavouriteList[0],hazardLevelToString,numberOfViolationsLessThan);
                 });
 
