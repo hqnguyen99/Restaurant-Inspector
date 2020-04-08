@@ -104,13 +104,19 @@ public class RestaurantActivity extends AppCompatActivity
                 return false;
             }
         });
+
+
+
     }
 
     private void setupRestaurantFilter() {
         filterData.clearRestaurantPosition();
         DataSingleton data = AppData.INSTANCE;
+        Log.i("haha", String.valueOf(data.size()));
+        int counter =0;
         for (int position = 0; position < data.size(); position++) {
             Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
+            counter ++;
             String restaurantName = restaurant.getName().toLowerCase();
             int numberOfViolations = data.getEntryAtIndex(position).getNumViolations();
             String hazardLevel = null;
@@ -131,17 +137,18 @@ public class RestaurantActivity extends AppCompatActivity
 
                 }
             }
-            else {
+            else if (data.getEntryAtIndex(position).getInspections().size() == 0) {
+                Log.i("kkkkk", String.valueOf(data.getEntryAtIndex(position).getInspections().size()));
                 hazardLevel = "NONE";
             }
 
             if(restaurantName.contains(filterData.getSearchRestaurantByName())
                     && (filterData.getHazardLevel().equals("Select one") || filterData.getHazardLevel().equals(hazardLevel) )
-                    &&  numberOfViolations > filterData.getNumberOfViolationsMoreThan()){
+                    &&  numberOfViolations >= filterData.getNumberOfViolationsMoreThan()){
                 filterData.addRestaurantPosition(position);
+                //Log.i("huhu", String.valueOf(data.getEntryAtIndex(position).getInspections().size()));
             }
         }
-
     }
 
     @Override
@@ -166,8 +173,9 @@ public class RestaurantActivity extends AppCompatActivity
         filterData.setFavorite(isFavorite);
         filterData.setHazardLevel(hazardLevel);
         filterData.setNumberOfViolationsMoreThan(numberOfViolations);
-        filterData.clearRestaurantPosition();
+        Log.i("nooo", hazardLevel);
         setupRestaurantFilter();
         buildRecyclerView();
+
     }
 }

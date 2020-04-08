@@ -42,7 +42,6 @@ public class FilterFragment extends AppCompatDialogFragment {
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.hazard_level, R.layout.support_simple_spinner_dropdown_item);
-        hazardLevel.setPrompt("Select harzard level...");
         hazardLevel.setAdapter(adapter);
 
         builder.setView(view)
@@ -53,19 +52,19 @@ public class FilterFragment extends AppCompatDialogFragment {
                     /*Log.i("isChecked",String.valueOf(isFavouriteList[0]));
                     Log.i("hazard level",hazardLevel.getSelectedItem().toString());*/
                     String numberOfViolationsMoreThanString = numberOfViolationsMoreThanEditText.getText().toString();
-                    int numberOfViolationsLessThan;
+                    int numberOfViolationsMoreThan;
 
                     if ("".equals(numberOfViolationsMoreThanString)){
-                        numberOfViolationsLessThan = 0;
+                        numberOfViolationsMoreThan = -1;
                     }
                     else {
-                        numberOfViolationsLessThan = Integer.parseInt(numberOfViolationsMoreThanString);
+                        numberOfViolationsMoreThan = Integer.parseInt(numberOfViolationsMoreThanString);
                     }
 
-                    listener.getInput(isFavouriteList[0],hazardLevel.getSelectedItem().toString(),numberOfViolationsLessThan);
+                    listener.getInput(isFavouriteList[0],hazardLevel.getSelectedItem().toString(),numberOfViolationsMoreThan);
                 })
                 .setNeutralButton("Reset Filter", (dialogInterface, i) -> {
-                    int numberOfViolationsLessThan = 0;
+                    int numberOfViolationsLessThan = -1;
                     isFavouriteList[0] = false;
                     String hazardLevelToString = "Select one";
                     listener.getInput(isFavouriteList[0],hazardLevelToString,numberOfViolationsLessThan);
