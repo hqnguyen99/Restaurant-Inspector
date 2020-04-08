@@ -284,7 +284,7 @@ public class MapsActivity extends AppCompatActivity
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
         String searchRestaurantByName = filterData.getSearchRestaurantByName();
-        int numberOfViolationsMoreThan = filterData.getNumberOfViolationsMoreThan();
+        int numberOfCritViolationsMoreThan = filterData.getNumberOfViolationsMoreThan();
         String hazardLevelFilter = filterData.getHazardLevel();
         for (int position = 0; position < data.size(); position++) {
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
@@ -303,7 +303,7 @@ public class MapsActivity extends AppCompatActivity
                 List<Inspection> inspections = current.getInspections();
 
                 BitmapDescriptor icon = null;
-                if (inspections.size() > 0 && inspections.size() > numberOfViolationsMoreThan && !hazardLevelFilter.equals("NONE")) {
+                if (inspections.size() > 0 && current.getNumYearlyCriticalViolations() > numberOfCritViolationsMoreThan && !hazardLevelFilter.equals("NONE")) {
                     inspection = inspections.get(0);
                     if (inspection.getHazardRating() == HazardRating.LOW && ( hazardLevelFilter.equals("LOW") || hazardLevelFilter.equals("Select one"))){
                         icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_low);
@@ -321,7 +321,7 @@ public class MapsActivity extends AppCompatActivity
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                     }
                 }
-                else if(inspections.size() == 0 && inspections.size() > numberOfViolationsMoreThan && (hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one"))){
+                else if(inspections.size() == 0 && current.getNumYearlyCriticalViolations() > numberOfCritViolationsMoreThan && (hazardLevelFilter.equals("NONE") || hazardLevelFilter.equals("Select one"))){
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.hazard_none);
                 }
                 if(icon != null) {

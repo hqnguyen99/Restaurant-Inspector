@@ -142,7 +142,7 @@ public class RestaurantActivity extends AppCompatActivity
                 continue;
             }
             String restaurantName = restaurant.getName().toLowerCase();
-            int numberOfViolations = data.getEntryAtIndex(position).getNumViolations();
+            int numberOfViolations = data.getEntryAtIndex(position).getNumYearlyCriticalViolations();
             String hazardLevel = null;
             if(data.getEntryAtIndex(position).getInspections().size() > 0) {
                 switch (data.getEntryAtIndex(position).getInspections().get(0).getHazardRating()) {

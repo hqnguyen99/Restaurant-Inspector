@@ -13,7 +13,7 @@
     <string name="main_activity_welcome">Xin chào!</string>
 
     <!--    Restaurant Activity-->
-    <string name="restaurant_activity_issue_found">Số lượng vấn đề được tìm thấy: \t</string>
+    <string name="restaurant_activity_issue_found">Số lượng vấn đề: \t</string>
     <string name="restaurant_activity_last_inspection">Kiểm tra lần cuối: \t</string>
     <!--    Sample Output-->
     <string name="restaurant_activity_restaurant_icon_description">Restaurant Icon</string>
@@ -26,9 +26,9 @@
     <!--    Inspection Activity-->
     <string name="inspection_activity_latitude">Vĩ độ: \t</string>
     <string name="inspection_activity_longitude">Kinh độ: \t</string>
-    <string name="inspection_activity_critical_issues_found">Vấn đề nghiêm trọng được tìm thấy: \t</string>
+    <string name="inspection_activity_critical_issues_found">Vấn đề nghiêm trọng: \t</string>
     <string name="inspection_activity_non_critical_issues_found">
-        Các vấn đề không quan trọng được tìm thấy: \t</string>
+        Các vấn đề không quan trọng: \t</string>
     <string name="inspection_activity_last_inspection">Kiểm tra lần cuối: \t</string>
     <!--    Sample Output-->
     <string name="inspection_activity_restaurant_name">Restaurant Name</string>
@@ -41,7 +41,7 @@
     <string name="inspection_activity_how_long_ago">How long ago</string>
 
     <!--    Violation Activity-->
-    <string name="violation_activity_critical_issues_found">Vấn đề nghiêm trọng được tìm thấy: \t</string>
+    <string name="violation_activity_critical_issues_found">Vấn đề nghiêm trọng: \t</string>
     <string name="violation_activity_non_critical_issues_found">
         Các vấn đề không quan trọng được tìm thấy: \t</string>
     <string name="violation_activity_hazard_level">Cấp độ nguy hiểm: \t</string>
@@ -63,8 +63,8 @@
     <string name="violation_activity_brief_description_sample">Critical/Not Critical</string>
 
     <!--    Switching Button for Map Activity and Restaurant Activity-->
-    <string name="current_place_menu_go_to_restaurant_list">Chuyển sang danh sách nhà hàng</string>
-    <string name="menu_restaurant_activity_go_to_map">Chuyển sang bản đồ</string>
+    <string name="current_place_menu_go_to_restaurant_list">Danh sách nhà hàng</string>
+    <string name="menu_restaurant_activity_go_to_map">Bản đồ</string>
 
     <!--    Dialog Information-->
     <string name="dialog_information_title">Thông tin nhà hàng</string>
@@ -85,14 +85,14 @@
 
 
     <!--    Violation Adapter-->
-    <string name="violation_adapter_critical">, \tChìa khóa</string>
+    <string name="violation_adapter_critical">, \tNghiêm trọng</string>
     <string name="violation_adapter_not_critical">, \tKhông nghiêm trọng</string>
 
     <!--    Filter Box-->
     <string name="filter_box_title">Bộ lọc</string>
-    <string name="filter_box_favourite_only">Chỉ hiển thị các nhà hàng yêu thích:</string>
+    <string name="filter_box_favourite_only">Chỉ hiển thị nhà hàng yêu thích:</string>
     <string name="filter_box_hazard_level">Chọn mức độ nguy hiểm:</string>
-    <string name="filter_box_number_of_violations_title">Số lượng mối nguy hiểm nhiều hơn:</string>
+    <string name="filter_box_number_of_violations_title">Số vấn đề nghiêm trọng nhiều hơn:</string>
     <string name="filter_box_violation_number">Nhập số</string>
     <string name="filter_box_negative_button">Hủy bỏ</string>
     <string name="filter_box_positive_button">OK</string>
