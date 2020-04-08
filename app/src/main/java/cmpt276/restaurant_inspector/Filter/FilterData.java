@@ -9,7 +9,7 @@ import java.util.List;
 public class FilterData {
     private Boolean isFavorite = false;
     private String hazardLevel = "Select one";
-    private int numberOfViolationsMoreThan = 0;
+    private int numberOfViolationsMoreThan = -1;
     private String searchRestaurantByName = "";
     private List<Integer> restaurantPositionInFilterBox = new ArrayList<>();
 
