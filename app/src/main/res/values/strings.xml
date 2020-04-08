@@ -101,7 +101,6 @@
     <string name="filter_box_hazard_level_high">High</string>
     <string name="filter_box_hazard_level_none">None</string>
 
-
 <!--    Map Activity-->
     <string name="map_activity_default_info_title">Default Location</string>
     <string name="map_activity_default_info_snippet">
