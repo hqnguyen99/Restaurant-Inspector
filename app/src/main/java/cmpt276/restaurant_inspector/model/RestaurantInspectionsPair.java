@@ -38,6 +38,18 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         return inspections.get(0).getDate();
     }
 
+    public int getNumYearlyCriticalViolations() {
+        int result = 0;
+
+        for (Inspection inspection : inspections) {
+            if (DateTimeUtil.daysFromNow(inspection.getDate()) <= 365) {
+                result += inspection.numCrit;
+            }
+        }
+
+        return result;
+    }
+
     public int getNumViolations() {
         return numViolations;
     }
