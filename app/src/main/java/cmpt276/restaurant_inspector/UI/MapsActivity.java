@@ -288,6 +288,9 @@ public class MapsActivity extends AppCompatActivity
         String hazardLevelFilter = filterData.getHazardLevel();
         for (int position = 0; position < data.size(); position++) {
             RestaurantInspectionsPair current = data.getEntryAtIndex(position);
+            if (filterData.getFavorite() && !current.isFavourite()) {
+                    continue;
+            }
             double latitude = current.getRestaurant().getLatitude();
             double longitude = current.getRestaurant().getLongitude();
             String name = current.getRestaurant().getName();

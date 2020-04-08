@@ -135,7 +135,10 @@ public class RestaurantActivity extends AppCompatActivity
         int counter =0;
         for (int position = 0; position < data.size(); position++) {
             Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
-            counter ++;
+            boolean isFavorite = data.getEntryAtIndex(position).isFavourite();
+            if(filterData.getFavorite() && !isFavorite) {
+                continue;
+            }
             String restaurantName = restaurant.getName().toLowerCase();
             int numberOfViolations = data.getEntryAtIndex(position).getNumViolations();
             String hazardLevel = null;
@@ -157,7 +160,6 @@ public class RestaurantActivity extends AppCompatActivity
                 }
             }
             else if (data.getEntryAtIndex(position).getInspections().size() == 0) {
-                Log.i("kkkkk", String.valueOf(data.getEntryAtIndex(position).getInspections().size()));
                 hazardLevel = "NONE";
             }
 
@@ -192,7 +194,6 @@ public class RestaurantActivity extends AppCompatActivity
         filterData.setFavorite(isFavorite);
         filterData.setHazardLevel(hazardLevel);
         filterData.setNumberOfViolationsMoreThan(numberOfViolations);
-        Log.i("nooo", hazardLevel);
         setupRestaurantFilter();
         buildRecyclerView();
     }
