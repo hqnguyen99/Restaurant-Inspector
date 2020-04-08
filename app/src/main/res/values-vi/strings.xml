@@ -10,7 +10,7 @@
     <string name="title_activity_maps">Bản đồ</string>
 
     <!--    Main Activity-->
-    <string name="main_activity_welcome">Chào mừng đến với!</string>
+    <string name="main_activity_welcome">Xin chào!</string>
 
     <!--    Restaurant Activity-->
     <string name="restaurant_activity_issue_found">Số lượng vấn đề được tìm thấy: \t</string>
@@ -26,7 +26,7 @@
     <!--    Inspection Activity-->
     <string name="inspection_activity_latitude">Vĩ độ: \t</string>
     <string name="inspection_activity_longitude">Kinh độ: \t</string>
-    <string name="inspection_activity_critical_issues_found">Vấn đề chính được tìm thấy: \t</string>
+    <string name="inspection_activity_critical_issues_found">Vấn đề nghiêm trọng được tìm thấy: \t</string>
     <string name="inspection_activity_non_critical_issues_found">
         Các vấn đề không quan trọng được tìm thấy: \t</string>
     <string name="inspection_activity_last_inspection">Kiểm tra lần cuối: \t</string>
@@ -41,7 +41,7 @@
     <string name="inspection_activity_how_long_ago">How long ago</string>
 
     <!--    Violation Activity-->
-    <string name="violation_activity_critical_issues_found">Vấn đề chính được tìm thấy: \t</string>
+    <string name="violation_activity_critical_issues_found">Vấn đề nghiêm trọng được tìm thấy: \t</string>
     <string name="violation_activity_non_critical_issues_found">
         Các vấn đề không quan trọng được tìm thấy: \t</string>
     <string name="violation_activity_hazard_level">Cấp độ nguy hiểm: \t</string>
@@ -49,7 +49,7 @@
     <string name="violation_activity_routine">Thông thường</string>
     <string name="violation_activity_follow_up">Theo dõi</string>
     <string name="violation_activity_hazard_level_low">Thấp</string>
-    <string name="violation_activity_hazard_level_moderate">Trong</string>
+    <string name="violation_activity_hazard_level_moderate">Vừa phải</string>
     <string name="violation_activity_hazard_level_high">Cao</string>
     <!--    Sample Output-->
     <string name="violation_activity_date">Date</string>
@@ -73,33 +73,33 @@
     <string name="dialog_information_restaurant_address">Địa chỉ: \t</string>
     <string name="dialog_information_restaurant_level">Cấp độ nguy hiểm: \t</string>
     <string name="dialog_information_hazard_level_low">Thấp</string>
-    <string name="dialog_information_hazard_level_moderate">Trong</string>
+    <string name="dialog_information_hazard_level_moderate">Vừa phải</string>
     <string name="dialog_information_hazard_level_high">Cao</string>
     <string name="dialog_information_hazard_level_none">Không có</string>
     <!--    Sample Output-->
     <string name="dialog_information_restaurant_name">Name</string>
 
     <!--    Restaurant Adapter-->
-    <string name="restaurant_adapter_days_before">Ngày trước</string>
-    <string name="restaurant_adapter_none">Không có</string>
+    <string name="restaurant_adapter_days_before">ngày trước</string>
+    <string name="restaurant_adapter_none">Không</string>
 
 
     <!--    Violation Adapter-->
     <string name="violation_adapter_critical">, \tChìa khóa</string>
-    <string name="violation_adapter_not_critical">, \tKhông quan trọng</string>
+    <string name="violation_adapter_not_critical">, \tKhông nghiêm trọng</string>
 
     <!--    Filter Box-->
     <string name="filter_box_title">Bộ lọc</string>
     <string name="filter_box_favourite_only">Chỉ hiển thị các nhà hàng yêu thích:</string>
     <string name="filter_box_hazard_level">Chọn mức độ nguy hiểm:</string>
-    <string name="filter_box_number_of_violations_title">Số lượng mối nguy hiểm:</string>
+    <string name="filter_box_number_of_violations_title">Số lượng mối nguy hiểm nhiều hơn:</string>
     <string name="filter_box_violation_number">Nhập số</string>
     <string name="filter_box_negative_button">Hủy bỏ</string>
-    <string name="filter_box_positive_button">Được rồi</string>
+    <string name="filter_box_positive_button">OK</string>
     <string name="filter_box_reset_filter_box">Đặt lại</string>
     <string name="filter_box_select_one">Vui lòng chọn một</string>
     <string name="filter_box_hazard_level_low">Thấp</string>
-    <string name="filter_box_hazard_level_moderate">Trong</string>
+    <string name="filter_box_hazard_level_moderate">Vừa phải</string>
     <string name="filter_box_hazard_level_high">Cao</string>
     <string name="filter_box_hazard_level_none">Không có</string>
 
