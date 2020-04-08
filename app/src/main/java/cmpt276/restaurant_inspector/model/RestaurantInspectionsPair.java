@@ -49,6 +49,10 @@ public class RestaurantInspectionsPair implements Comparable<RestaurantInspectio
         numViolations += inspection.numCrit + inspection.numNonCrit;
     }
 
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
     public void changeFavourite(boolean isFavourite) {
         this.isFavourite = isFavourite;
     }

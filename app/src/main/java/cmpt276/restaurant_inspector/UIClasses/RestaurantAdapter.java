@@ -53,6 +53,7 @@ public class RestaurantAdapter
         TextView textViewDateFromNow;
         ImageView imageViewRestaurantIcon;
         ImageView imageViewHazardLevelIcon;
+        ImageView imageViewFavouriteIcon;
 
         RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -66,6 +67,8 @@ public class RestaurantAdapter
                     itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
             imageViewHazardLevelIcon =
                     itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
+            imageViewFavouriteIcon =
+                    itemView.findViewById(R.id.imageView_restaurant_activity_favorite_icon);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,6 +106,13 @@ public class RestaurantAdapter
             RestaurantInspectionsPair current = data.getEntryAtIndex(newFilterData.getRestaurantPositionInFilterBox().get(position));
             holder.textViewRestaurantName.setText(current.getRestaurant().getName());
             holder.textViewNumberFound.setText(String.valueOf(current.getNumViolations()));
+
+            // favouriteIcon
+            if (current.isFavourite()) {
+                holder.imageViewFavouriteIcon.setImageResource(R.drawable.restaurant_favourite);
+            } else {
+                holder.imageViewFavouriteIcon.setImageResource(R.drawable.restaurant_nonfavourite);
+            }
 
             // Random generate restaurant icon
             Random rand = new Random();
