@@ -29,6 +29,7 @@ import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.HazardRating;
 import cmpt276.restaurant_inspector.model.Restaurant;
+import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 
 /**
  *  Show data of restaurants by recycler view
@@ -59,10 +60,31 @@ public class RestaurantActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(position -> {
-        Intent intent =
-            InspectionActivity.makeLaunchIntent(RestaurantActivity.this,filterData.getRestaurantPositionInFilterBox().get(position));
-        startActivity(intent);
+        adapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent =
+                    InspectionActivity.makeLaunchIntent(
+                        RestaurantActivity.this,
+                        filterData.getRestaurantPositionInFilterBox().get(position));
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFavouriteIconClick(int position) {
+                RestaurantInspectionsPair dataInstance =
+                    AppData.INSTANCE.getEntryAtIndex(FilterData.getInstance()
+                        .getRestaurantPositionInFilterBox().get(position));
+
+                if (dataInstance.isFavourite()) {
+                    dataInstance.changeFavourite(false);
+                } else {
+                    dataInstance.changeFavourite(true);
+                }
+
+                buildRecyclerView();
+            }
         });
     }
 
@@ -104,9 +126,6 @@ public class RestaurantActivity extends AppCompatActivity
                 return false;
             }
         });
-
-
-
     }
 
     private void setupRestaurantFilter() {
@@ -176,6 +195,5 @@ public class RestaurantActivity extends AppCompatActivity
         Log.i("nooo", hazardLevel);
         setupRestaurantFilter();
         buildRecyclerView();
-
     }
 }

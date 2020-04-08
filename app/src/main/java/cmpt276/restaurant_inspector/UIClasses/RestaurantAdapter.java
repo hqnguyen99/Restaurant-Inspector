@@ -40,6 +40,7 @@ public class RestaurantAdapter
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+        void onFavouriteIconClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -58,25 +59,37 @@ public class RestaurantAdapter
         RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textViewRestaurantName =
-                    itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
+                itemView.findViewById(R.id.textView_restaurant_activity_restaurant_name);
             textViewNumberFound =
-                    itemView.findViewById(R.id.textView_restaurant_activity_issue);
+                itemView.findViewById(R.id.textView_restaurant_activity_issue);
             textViewDateFromNow =
-                    itemView.findViewById(R.id.textView_restaurant_activity_date);
+                itemView.findViewById(R.id.textView_restaurant_activity_date);
             imageViewRestaurantIcon =
-                    itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
+                itemView.findViewById(R.id.imageView_restaurant_activity_restaurant_icon);
             imageViewHazardLevelIcon =
-                    itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
+                itemView.findViewById(R.id.imageView_restaurant_activity_warning_level);
             imageViewFavouriteIcon =
-                    itemView.findViewById(R.id.imageView_restaurant_activity_favorite_icon);
+                itemView.findViewById(R.id.imageView_restaurant_activity_favorite_icon);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
+                    if (listener != null) {
                         int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            imageViewFavouriteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onFavouriteIconClick(position);
                         }
                     }
                 }
