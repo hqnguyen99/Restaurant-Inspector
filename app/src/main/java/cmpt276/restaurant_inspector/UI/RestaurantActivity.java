@@ -112,6 +112,7 @@ public class RestaurantActivity extends AppCompatActivity
     private void setupRestaurantFilter() {
         filterData.clearRestaurantPosition();
         DataSingleton data = AppData.INSTANCE;
+        //Log.i("haha", String.valueOf(data.size()));
         for (int position = 0; position < data.size(); position++) {
             Restaurant restaurant = data.getEntryAtIndex(position).getRestaurant();
             String restaurantName = restaurant.getName().toLowerCase();
@@ -134,7 +135,8 @@ public class RestaurantActivity extends AppCompatActivity
 
                 }
             }
-            else {
+            else if (data.getEntryAtIndex(position).getInspections().size() == 0) {
+                Log.i("kkkkk", String.valueOf(data.getEntryAtIndex(position).getInspections().size()));
                 hazardLevel = "NONE";
             }
 
@@ -142,6 +144,7 @@ public class RestaurantActivity extends AppCompatActivity
                     && (filterData.getHazardLevel().equals("Select one") || filterData.getHazardLevel().equals(hazardLevel) )
                     &&  numberOfViolations > filterData.getNumberOfViolationsMoreThan()){
                 filterData.addRestaurantPosition(position);
+                //Log.i("huhu", String.valueOf(data.getEntryAtIndex(position).getInspections().size()));
             }
         }
 
@@ -169,11 +172,9 @@ public class RestaurantActivity extends AppCompatActivity
         filterData.setFavorite(isFavorite);
         filterData.setHazardLevel(hazardLevel);
         filterData.setNumberOfViolationsMoreThan(numberOfViolations);
-        filterData.clearRestaurantPosition();
+        Log.i("nooo", hazardLevel);
         setupRestaurantFilter();
         buildRecyclerView();
-
-
 
     }
 }

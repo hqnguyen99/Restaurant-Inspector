@@ -280,7 +280,7 @@ public class MapsActivity extends AppCompatActivity
 
     private void addItems() {
         clusterManager.clearItems();
-
+        filterData.clearRestaurantPosition();
         Inspection inspection = null;
         DataSingleton data = AppData.INSTANCE;
         String searchRestaurantByName = filterData.getSearchRestaurantByName();

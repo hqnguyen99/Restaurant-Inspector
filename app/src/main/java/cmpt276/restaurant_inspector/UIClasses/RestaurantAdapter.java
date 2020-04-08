@@ -148,6 +148,7 @@ public class RestaurantAdapter
                 setViewDateFromNow(holder, newestInspection);
             } else {
                 holder.textViewDateFromNow.setText("None");
+                holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_none);
             }
         }
     }
@@ -173,6 +174,7 @@ public class RestaurantAdapter
 
     private void setViewHazardLevelIcon(RestaurantViewHolder holder, Inspection inspection)
     {
+
         switch (inspection.getHazardRating()) {
             case LOW:
                 holder.imageViewHazardLevelIcon.setImageResource(R.drawable.hazard_low);

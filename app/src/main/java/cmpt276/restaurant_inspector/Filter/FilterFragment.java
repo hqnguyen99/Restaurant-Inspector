@@ -42,7 +42,6 @@ public class FilterFragment extends AppCompatDialogFragment {
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.hazard_level, R.layout.support_simple_spinner_dropdown_item);
-        hazardLevel.setPrompt("Select harzard level...");
         hazardLevel.setAdapter(adapter);
 
         builder.setView(view)
