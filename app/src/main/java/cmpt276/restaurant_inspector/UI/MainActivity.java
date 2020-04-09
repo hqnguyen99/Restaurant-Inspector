@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -31,6 +33,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cmpt276.restaurant_inspector.Filter.FilterData;
+import cmpt276.restaurant_inspector.UIClasses.RestaurantAdapter;
 import cmpt276.restaurant_inspector.database.Favourite;
 import cmpt276.restaurant_inspector.database.FavouriteDao;
 import cmpt276.restaurant_inspector.database.FavouriteDb;
@@ -38,6 +42,7 @@ import cmpt276.restaurant_inspector.database.QueryFavouriteAsyncTask;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
 import cmpt276.restaurant_inspector.model.DateTimeUtil;
+import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -156,6 +161,18 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
         for (Favourite favourite : favouriteList) {
             data.entries().get(favourite.getId()).changeFavourite(true);
         }
+
+    }
+
+    private void buildRecyclerView()
+    {
+        RecyclerView recyclerView = findViewById(R.id.restaurant_recyclerView);
+        RestaurantAdapter adapter = new RestaurantAdapter();
+        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
     }
 
