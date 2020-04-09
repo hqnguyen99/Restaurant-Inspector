@@ -109,3 +109,4 @@
         No places found, because location permission is disabled.</string>
     <string name="map_activity_option_get_place">Get place</string>
     <string name="map_activity_pick_place">Choose a place</string>
+</resources>
