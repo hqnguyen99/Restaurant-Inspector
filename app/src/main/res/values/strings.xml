@@ -90,7 +90,7 @@
     <string name="filter_box_title">Filter Box</string>
     <string name="filter_box_favourite_only">Favourite Restaurant Only:</string>
     <string name="filter_box_hazard_level">Pick the Hazard Level:</string>
-    <string name="filter_box_number_of_violations_title">Least Number of Violations:</string>
+    <string name="filter_box_number_of_violations_title">Least Number of Critical Violations:</string>
     <string name="filter_box_violation_number">Enter number</string>
     <string name="filter_box_negative_button">Cancel</string>
     <string name="filter_box_positive_button">OK</string>
