@@ -1,10 +1,15 @@
 ROLES
 
-- Hank - Scrum Master
-- Art - Repo Manager
-- Jordan- Team Member
-- Hoang - Project Owner
+- Hank - Project Manager
+- Art - Team Memeber
+- Jordan - Repo Manager
+- Hoang - Scrum Master
 
 Notes:
-- Can download data from server and access via internal storage,
-- but there is no dialog for it
+Languages Supported:
+    English
+    Vietnamese
+    French(France)
+    Chinese(Simplified)
+    Chinese(Traditional)
+
