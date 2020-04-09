@@ -9,15 +9,15 @@ import java.util.List;
 
 @Dao
 public interface FavouriteDao {
-    @Query("SELECT * FROM favourites")
-    List<Favourite> getAll();
-
     @Query("SELECT * FROM favourites WHERE id=:id")
+    Favourite getFavourite(String id);
+
+    @Query("SELECT newestInspectionDate FROM favourites WHERE id=:id")
     public int getNewestInspectionDate(String id);
 
     @Insert
     void insert(Favourite favourite);
 
-    @Delete
-    void delete(Favourite favourite);
+    @Query("DELETE FROM favourites WHERE id=:id")
+    void delete(String id);
 }
