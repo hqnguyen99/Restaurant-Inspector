@@ -1,19 +1,15 @@
 package cmpt276.restaurant_inspector.UI;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,9 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
 import cmpt276.restaurant_inspector.Filter.FilterData;
 import cmpt276.restaurant_inspector.Filter.FilterFragment;
@@ -35,7 +28,6 @@ import cmpt276.restaurant_inspector.database.FavouriteDb;
 import cmpt276.restaurant_inspector.database.InsertFavouriteAsyncTask;
 import cmpt276.restaurant_inspector.model.AppData;
 import cmpt276.restaurant_inspector.model.DataSingleton;
-import cmpt276.restaurant_inspector.model.HazardRating;
 import cmpt276.restaurant_inspector.model.Restaurant;
 import cmpt276.restaurant_inspector.model.RestaurantInspectionsPair;
 

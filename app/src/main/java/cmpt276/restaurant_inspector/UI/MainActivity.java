@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cmpt276.restaurant_inspector.Filter.FilterData;
+import cmpt276.restaurant_inspector.UIClasses.FavouriteAdapter;
 import cmpt276.restaurant_inspector.UIClasses.RestaurantAdapter;
 import cmpt276.restaurant_inspector.database.Favourite;
 import cmpt276.restaurant_inspector.database.FavouriteDao;
@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
         }
 
         try {
+            buildRecyclerView();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
             setFavourites(FavouriteDb.getInstance(getApplicationContext()).favouriteDao());
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
@@ -113,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
                 }
             };
 
-            handler.postDelayed(runnable, 3000);
+            handler.postDelayed(runnable, 5000);
         }
     }
 
@@ -151,29 +157,50 @@ public class MainActivity extends AppCompatActivity implements AskForDownloadFra
         }
     }
 
+    private List<RestaurantInspectionsPair> getNewFavouriteRestaurants()
+        throws ExecutionException, InterruptedException {
+        List<Favourite> favouriteList = queryFavourites();
+        DataSingleton data = AppData.INSTANCE;
+        List<RestaurantInspectionsPair> result = new ArrayList<>();
+
+        for (Favourite favourite : favouriteList) {
+            RestaurantInspectionsPair favouriteRestaurant =
+                data.entries().get(favourite.getId());
+
+            if (favourite.getNewestInspectionDate() <
+                favouriteRestaurant.getNewestInspectionDate()) {
+                result.add(favouriteRestaurant);
+            }
+        }
+
+        return result;
+    }
+
     private void setFavourites(FavouriteDao favouriteDao)
         throws ExecutionException, InterruptedException {
-        List<Favourite> favouriteList =
-            new QueryFavouriteAsyncTask(favouriteDao).execute().get();
+        List<Favourite> favouriteList = queryFavourites();
 
         DataSingleton data = AppData.INSTANCE;
 
         for (Favourite favourite : favouriteList) {
             data.entries().get(favourite.getId()).changeFavourite(true);
         }
-
     }
 
-    private void buildRecyclerView()
-    {
-        RecyclerView recyclerView = findViewById(R.id.restaurant_recyclerView);
-        RestaurantAdapter adapter = new RestaurantAdapter();
+    private List<Favourite> queryFavourites()
+        throws ExecutionException, InterruptedException {
+        return new QueryFavouriteAsyncTask(FavouriteDb.getInstance(getApplicationContext())
+            .favouriteDao()).execute().get();
+    }
+
+    private void buildRecyclerView() throws ExecutionException, InterruptedException {
+        RecyclerView recyclerView = findViewById(R.id.main_recyclerView);
+        FavouriteAdapter adapter = new FavouriteAdapter(getNewFavouriteRestaurants());
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
     }
 
     public interface DownloadService {
