@@ -3,7 +3,7 @@ package cmpt276.restaurant_inspector.database;
 import android.os.AsyncTask;
 
 public class InsertFavouriteAsyncTask extends AsyncTask<Favourite, Void, Void> {
-    FavouriteDao favouriteDao;
+    private FavouriteDao favouriteDao;
 
     public InsertFavouriteAsyncTask(FavouriteDao favouriteDao) {
         this.favouriteDao = favouriteDao;

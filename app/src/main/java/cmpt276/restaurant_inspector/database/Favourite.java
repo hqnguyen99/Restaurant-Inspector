@@ -9,12 +9,11 @@ import androidx.room.PrimaryKey;
 public class Favourite {
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "id")
-    public String id;
+    private String id;
 
     @NonNull
     @ColumnInfo(name = "newestInspectionDate")
-    public int newestInspectionDate;
+    private int newestInspectionDate;
 
     public Favourite(@NonNull String id, int newestInspectionDate) {
         this.id = id;
